@@ -8,7 +8,7 @@ Mod name: Danielas WIll
 
 Mod release date: 15.02.2022
 
--About this Mod
+- About this Mod
 
 You are followed by Danielas apprentices into new alcatraz, oberursel, the ivory train, the tunnel and hew because you fought Danielas WIll and stole her scroll. After defeating the mayor you sensed something from a far away country named Kshatriyana. You go in the country and fight through Danielas and her archenemies troops! Find the WIll and enjoy the new items, abilites and enemies. You also find another friend who was taught into using the earth element as it's fighting skill. Then you enter Utopia, where you encounter very weird things. Currently only the first Chapter is there.
 
