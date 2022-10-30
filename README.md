@@ -10,7 +10,7 @@ Mod release date: 15.02.2022
 
 # About this Mod
 
-You are followed by Danielas apprentices into new alcatraz, oberursel, the ivory train, the tunnel and hew because you fought Danielas WIll and stole her scroll. After defeating the mayor you sensed something from a far away country named Kshatriyana. You go in the country and fight through Danielas and her archenemies troops! Find the WIll and enjoy the new items, abilites and enemies. You also find another friend who was taught into using the earth element as it's fighting skill. Then you enter Utopia, where you encounter very weird things. Currently only the first Chapter is there.
+You are followed by Danielas apprentices into new alcatraz, oberursel, the ivory train, the tunnel and hew because you fought Danielas WIll and stole her scroll. After defeating the mayor you sensed something from a far away country named Kshatriyana. You go in the country and fight through Danielas and her archenemies troops! Find the WIll and enjoy the new items, abilites and enemies. You also find another friend who was taught into using the earth element as it's fighting skill. Then you enter Utopia, where you encounter very weird things. Currently only the first two Chapters are there.
 
 This mod is huge so I recommend taking your time to play it.
 
@@ -60,9 +60,9 @@ Chapter 4
 
 1.101: Dark infusion had 99 power scaling fixed it
 
-# Upcoming updates
-
 1.2: Chapter 2 is done. Max level increased to 34. new ally. new allies have a face sprite in the inventory screen now. new sounds from sonny 2017. The green extra side story is doable 5 times per day then you wait one day. This time the side story tells you about the past of utopia. New sprite armor (Blackflame armor) pictures incoming. 6 types of ZPCIs. New battlebackgrounds (forest, day snow, zpci stroghold). +100 new abilities and buffs. added another difficulty. Achievement change and more! This chapter brings a lot of new things! The Ally works right if you start a new save else its not working. Redfield reworked. Extra training fight button for Chapter 2
+
+# Upcoming updates
 
 1.21: New class (Blackflame + Fire)
 
