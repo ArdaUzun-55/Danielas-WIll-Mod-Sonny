@@ -66,7 +66,7 @@ Chapter 4
 
 1.21: New class (Blackflame + Fire)
 
-# IMAGES(NEXT UPDATE)
+# IMAGES
 
 Blackflame Elite Set: https://i.imgur.com/1A36QmV.png Ally Faces: https://i.imgur.com/1LpjCG3.png
 
@@ -78,9 +78,11 @@ Elite Priests Trident: https://i.imgur.com/hn04vyz.png Wanna see more pics? Mess
 
 New Ally : https://i.imgur.com/eXKGhFa.png
 
+New classes: https://i.imgur.com/Qd3gTyD.png
+
 # Extras
 
-There is another .zip file which needs a password in order to be opened. In the zip file there is a .txt file which includes secrets for example how to play psycho. Also there are some other things in there. Another thing I would like to mention is that the password can be found ingame. It is easy to find.
+There is another .zip file which needs a password in order to be opened.I would like to mention is that the password can be found ingame. It is easy to find.
 
 Suggestions&Feedbacks Are Welcome
 
