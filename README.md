@@ -1,7 +1,7 @@
 # Danielas-WIll-Mod-Sonny
 Starting at Chapter 1 I will release all versions here including "pre-releases"
 
-*Danielas WIll (Sonny 2 Mod)*
+# Danielas WIll (Sonny 2 Mod)
 Mod Information
 
 Mod name: Danielas WIll
