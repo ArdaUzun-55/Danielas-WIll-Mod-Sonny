@@ -4,7 +4,7 @@ Starting at Chapter 1 I will release all versions here including "pre-releases"
 # Danielas WIll (Sonny 2 Mod)
 Mod Information
 
-Mod name: Danielas WIll!      [grafik](https://user-images.githubusercontent.com/93215080/198873693-00c7eebe-0deb-4827-89b8-0fb32c9f375c.png)     
+Mod name: Danielas WIll!    
 
 Mod release date: 15.02.2022
 
