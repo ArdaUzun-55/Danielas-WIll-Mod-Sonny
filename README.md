@@ -8,13 +8,13 @@ Mod name: Danielas WIll
 
 Mod release date: 15.02.2022
 
-About this Mod
+-About this Mod
 
 You are followed by Danielas apprentices into new alcatraz, oberursel, the ivory train, the tunnel and hew because you fought Danielas WIll and stole her scroll. After defeating the mayor you sensed something from a far away country named Kshatriyana. You go in the country and fight through Danielas and her archenemies troops! Find the WIll and enjoy the new items, abilites and enemies. You also find another friend who was taught into using the earth element as it's fighting skill. Then you enter Utopia, where you encounter very weird things. Currently only the first Chapter is there.
 
 This mod is huge so I recommend taking your time to play it.
 
-Story
+-Story
 
 Chapter 1
 
@@ -24,7 +24,7 @@ Chapter 3
 
 Chapter 4
 
-List of new things or what it changes!
+-List of new things or what it changes!
 New Enemies
 New Stages
 New Element, which got its own battle animations
@@ -46,7 +46,7 @@ Level cap increased to 32
 
 Every Zone is accessible in every difficulty. No achievements are needed.
 
-Version Changes
+-Version Changes
 
 1.01: new class ; new zone which is currently nothing though its work in progress ; Changed something about Fundas allies ; I also added another shop to Kshatriyana ; Remember: You dont need to edit your save file in order to play the other classes open the txt.file in order to find out;
 
@@ -60,13 +60,13 @@ Version Changes
 
 1.101: Dark infusion had 99 power scaling fixed it
 
-Upcoming update
+-Upcoming update
 
 1.2: Chapter 2 is done. Max level increased to 34. new ally. new allies have a face sprite in the inventory screen now. new sounds from sonny 2017. The green extra side story is doable 5 times per day then you wait one day. This time the side story tells you about the past of utopia. New sprite armor (Blackflame armor) pictures incoming. 6 types of ZPCIs. New battlebackgrounds (forest, day snow, zpci stroghold). +100 new abilities and buffs. added another difficulty. Achievement change and more! This chapter brings a lot of new things! The Ally works right if you start a new save else its not working. Redfield reworked. Extra training fight button for Chapter 2
 
 1.21: New class (Blackflame + Fire)
 
-IMAGES(NEXT UPDATE)
+-IMAGES(NEXT UPDATE)
 
 Blackflame Elite Set: https://i.imgur.com/1A36QmV.png Ally Faces: https://i.imgur.com/1LpjCG3.png
 
@@ -78,11 +78,7 @@ Elite Priests Trident: https://i.imgur.com/hn04vyz.png Wanna see more pics? Mess
 
 New Ally : https://i.imgur.com/eXKGhFa.png
 
-Download Link
-
-Download Link new version: https://drive.google.com/file/d/1Be-U1qe7duBCC1E5tAs8MDtQT-9YyNCW/view?usp=sharing
-
-Extras
+-Extras
 
 There is another .zip file which needs a password in order to be opened. In the zip file there is a .txt file which includes secrets for example how to play psycho. Also there are some other things in there. Another thing I would like to mention is that the password can be found ingame. It is easy to find.
 
