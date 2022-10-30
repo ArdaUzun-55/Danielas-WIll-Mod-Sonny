@@ -42,7 +42,7 @@ Chapter 4
 - Roald, Felicity and Veradux also have 1 more ability
 - Il Sanctus name changed
 - Exp taken reduced
-- Level cap increased to 32
+- Level cap increased to 34
 
 *Every Zone is accessible in every difficulty. No achievements are needed.*
 
