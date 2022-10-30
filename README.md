@@ -1,20 +1,20 @@
 # Danielas-WIll-Mod-Sonny
 Starting at Chapter 1 I will release all versions here including "pre-releases"
 
-Danielas WIll (Sonny 2 Mod)
+*Danielas WIll (Sonny 2 Mod)*
 Mod Information
 
 Mod name: Danielas WIll
 
 Mod release date: 15.02.2022
 
-- About this Mod
+*About this Mod*
 
 You are followed by Danielas apprentices into new alcatraz, oberursel, the ivory train, the tunnel and hew because you fought Danielas WIll and stole her scroll. After defeating the mayor you sensed something from a far away country named Kshatriyana. You go in the country and fight through Danielas and her archenemies troops! Find the WIll and enjoy the new items, abilites and enemies. You also find another friend who was taught into using the earth element as it's fighting skill. Then you enter Utopia, where you encounter very weird things. Currently only the first Chapter is there.
 
 This mod is huge so I recommend taking your time to play it.
 
--Story
+# Story
 
 Chapter 1
 
@@ -24,7 +24,7 @@ Chapter 3
 
 Chapter 4
 
--List of new things or what it changes!
+*List of new things or what it changes!*
 New Enemies
 New Stages
 New Element, which got its own battle animations
