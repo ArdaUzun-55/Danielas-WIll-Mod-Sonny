@@ -61,7 +61,7 @@ Chapter 4
 
 1.2: Chapter 2 is done. Max level increased to 34. new ally. new allies have a face sprite in the inventory screen now. new sounds from sonny 2017. The green extra side story is doable 5 times per day then you wait one day. This time the side story tells you about the past of utopia. New sprite armor (Blackflame armor) pictures incoming. 6 types of ZPCIs. New battlebackgrounds (forest, day snow, zpci stroghold). +100 new abilities and buffs. added another difficulty. Achievement change and more! This chapter brings a lot of new things! The Ally works right if you start a new save else its not working. Redfield reworked. Extra training fight button for Chapter 2
 
-1.21:- New class "ZPCI Teachings"
+1.21: - New class "ZPCI Teachings"
      - Baron & Cult Leader boss fight got a Boss theme
      - Item Icon from ZPCI Elite armor fixed
      - ZPCI Sniper & Medic got 2 new abilities
