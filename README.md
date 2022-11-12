@@ -67,6 +67,8 @@ Chapter 4
 - Item Icon from ZPCI Elite armor fixed
 - ZPCI Sniper & Medic got 2 new abilities
 - Bug fix
+- Twin Guardians shield got nerved 10000 to 5000 700 healing to 300 (10.11.2022)
+- Zone 6 Shotul Shelf is now optional and isnt required to go to Kshatriyana and Utopia. Daniela got nerved (Her Super Heal got removed). (12.11.2022)
 
 # IMAGES
 
