@@ -34,11 +34,6 @@ function executeMove(IDKM, IDKM2, IDKC, IDKT)
       {
          _root.GridShaker.play();
          coEFKN6724 = 0.016666667 * Math.pow(CRITCALC_X + 1,4) - 0.25 * Math.pow(CRITCALC_X + 1,3) + 1.233333 * Math.pow(CRITCALC_X + 1,2) - 1.9000000000000001 * (CRITCALC_X + 1) + 1.9000000000000001;
-         if(IDKM[10] != "Melee" || IDKM[10] != "Melee2")
-         {
-            coEFN6724 *= IDKC.CRITMODIFER;
-         }
-         coEFN6724 *= IDKM2[89];
          if(coEFKN6724 < 0)
          {
             coEFKN6724 = 0;
@@ -541,6 +536,14 @@ function executeMove(IDKM, IDKM2, IDKC, IDKT)
       }
       _root.DamageOutputKrinFinal = Math.ceil(IDKC.DMG + IDKT.IDMG + IDKC.DEFU[IDKM2[0]] * IDKM2[77] * IDKT.DEFENSE + numberOutputInner1 * focusCoEF * coEFKN6723 * (coEFKN6724 * IDKM2[72]) * (1 + IDKC.DMG2) * (1 + IDKT.IDMG2) * IDKT.IDMGP2);
       _root.DamageOutputKrinFinal2 = 0;
+      if(_root.perKSuccess)
+      {
+         if(IDKM[10] != "Melee" && IDKM[10] != "Melee2")
+         {
+            _root.DamageOutputKrinFinal *= IDKC.CRITMODIFIER;
+         }
+         _root.DamageOutputKrinFinal *= IDKM2[89];
+      }
       if(IDKT.playerName == "Iron Guard")
       {
          IDKT.FOCUSPLUS += 0.25;
@@ -729,6 +732,14 @@ function executeMove(IDKM, IDKM2, IDKC, IDKT)
       }
       _root.DamageOutputKrinFinal = Math.ceil(numberOutputInner1 * focusCoEF * coEFKN6723 * coEFKN6724 * IDKC.HEALMOD * IDKT.HEALMOD_PLUS * IDKT.HEALMOD_MINUS);
       _root.DamageOutputKrinFinal2 = Math.ceil(numberOutputInner1 * focusCoEF * coEFKN6723 * coEFKN6724 * IDKC.HEALMOD * IDKT.HEALMOD_PLUS * IDKT.HEALMOD_MINUS);
+      if(_root.perKSuccess)
+      {
+         if(IDKM[10] != "Melee" && IDKM[10] != "Melee2")
+         {
+            _root.DamageOutputKrinFinal *= IDKC.CRITMODIFIER;
+         }
+         _root.DamageOutputKrinFinal *= IDKM2[89];
+      }
       if(IDKM2[59] < 0)
       {
          _root.DamageOutputKrinFinal -= IDKM2[59] * IDKT.LIFEN;
@@ -828,6 +839,11 @@ function executeMove(IDKM, IDKM2, IDKC, IDKT)
       {
          _root.GridShaker.play();
          coEFKN6724 = 1.5;
+         if(IDKM[10] != "Melee" && IDKM[10] != "Melee2")
+         {
+            coEFN6724 *= IDKC.CRITMODIFIER;
+         }
+         coEFN6724 *= IDKM2[89];
          if(IDKC.playerName == "Felicity")
          {
             _root.addSound("Effects","crit_felicity3");
@@ -843,6 +859,14 @@ function executeMove(IDKM, IDKM2, IDKC, IDKT)
       }
       _root.DamageOutputKrinFinal = Math.ceil(numberOutputInner1 * focusCoEF * coEFKN6723 * coEFKN6724 * IDKC.HEALMOD * IDKT.HEALMOD_PLUS * IDKT.HEALMOD_MINUS);
       _root.DamageOutputKrinFinal2 = Math.ceil(numberOutputInner1 * focusCoEF * coEFKN6723 * coEFKN6724 * IDKC.HEALMOD * IDKT.HEALMOD_PLUS * IDKT.HEALMOD_MINUS);
+      if(_root.perKSuccess)
+      {
+         if(IDKM[10] != "Melee" && IDKM[10] != "Melee2")
+         {
+            _root.DamageOutputKrinFinal *= IDKC.CRITMODIFIER;
+         }
+         _root.DamageOutputKrinFinal *= IDKM2[89];
+      }
       if(_root.DamageOutputKrinFinal <= 0)
       {
          _root.DamageOutputKrinFinal = 0;
@@ -935,6 +959,11 @@ function executeMove(IDKM, IDKM2, IDKC, IDKT)
       {
          _root.GridShaker.play();
          coEFKN6724 = 0.016666667 * Math.pow(CRITCALC_X + 1,4) - 0.25 * Math.pow(CRITCALC_X + 1,3) + 1.233333 * Math.pow(CRITCALC_X + 1,2) - 1.9000000000000001 * (CRITCALC_X + 1) + 1.9000000000000001;
+         if(IDKM[10] != "Melee" && IDKM[10] != "Melee2")
+         {
+            coEFN6724 *= IDKC.CRITMODIFIER;
+         }
+         coEFN6724 *= IDKM2[89];
          if(coEFKN6724 < 0)
          {
             coEFKN6724 = 0;
@@ -992,6 +1021,14 @@ function executeMove(IDKM, IDKM2, IDKC, IDKT)
          }
       }
       _root.DamageOutputKrinFinal = Math.ceil(IDKC.DMG + IDKT.IDMG + IDKC.DEFU[IDKM2[0]] * IDKM2[77] * IDKT.DEFENSE + numberOutputInner1 * focusCoEF * coEFKN6723 * (coEFKN6724 * IDKM2[72]) * (1 + IDKC.DMG2) * (1 + IDKT.IDMG2) * IDKT.IDMGP2);
+      if(_root.perKSuccess)
+      {
+         if(IDKM[10] != "Melee" && IDKM[10] != "Melee2")
+         {
+            _root.DamageOutputKrinFinal *= IDKC.CRITMODIFIER;
+         }
+         _root.DamageOutputKrinFinal *= IDKM2[89];
+      }
       _root.DamageOutputKrinFinal2 = 0;
       if(IDKT.playerName == "Iron Guard")
       {
