@@ -96,7 +96,6 @@ onClipEvent(enterFrame){
                      }
                      _root.checkStatus(mCaster,mTarget,mAry2,mAry1);
                      _root.checkBuff(mCaster,mTarget,mAry2,mAry1,FIRE2,FIRE3,FIRE4,FIRE5,FIRE6);
-                     _root.checkBuffAfter(mCaster,mTarget,mAry2,mAry1,JI);
                      if(JI == 1)
                      {
                         _root.KrinNumberShow(_root.DamageOutputKrinFinal,"player" + mTarget.playerID,IDKM2[0]);
@@ -418,6 +417,7 @@ onClipEvent(enterFrame){
                      }
                   }
                   _root.applyChangesKrin(mTarget);
+                  _root.checkBuffafter(mCaster,mTarget,mAry2,mAry1,JI);
                }
                else
                {
@@ -852,7 +852,7 @@ onClipEvent(enterFrame){
                         {
                            _root[theGuy].abilityCoolDown[_root.moveCoolDownBreaker] = mAry1[7];
                            _root.krinToMove._visible = false;
-                           if(!_root.turnBasedKrin)
+                           if(_root.turnBasedKrin)
                            {
                            }
                         }
@@ -908,7 +908,7 @@ onClipEvent(enterFrame){
                               {
                                  if(_root["playerKrin" + (mTarget.teamSide + owegwe * 2)].active)
                                  {
-                                    _root.krinBoltMake(_root.BATTLESCREEN[mCaster2],_root.BATTLESCREEN["player" + _root["playerKrin" + (mTarget.teamSide + owegwe * 2)].playerID],mAry1[11],mAry1[12],mAry1[13]);
+                                    _root.krinBoltMake(_root.BATTLESCREEN[mCaster2],_root.BATTLESCREEN["player" + _root["playerKrin" + (mTarget.teamSide + owegwe * 2)].playerID],mAry1[11],mAry1[12],mAry1[13],mAry2[45]);
                                  }
                                  owegwe++;
                               }
@@ -984,7 +984,7 @@ onClipEvent(enterFrame){
                               _root.GridZoomer.gotoAndPlay("KrinZoomGo");
                               _root.zoomPause = 5;
                            }
-                           _root.krinBoltMake(_root.BATTLESCREEN[mCaster2],_root.BATTLESCREEN[mTarget2],mAry1[11],mAry1[12],mAry1[13],mAry2);
+                           _root.krinBoltMake(_root.BATTLESCREEN[mCaster2],_root.BATTLESCREEN[mTarget2],mAry1[11],mAry1[12],mAry1[13],mAry2[45]);
                         }
                         else
                         {
@@ -993,7 +993,7 @@ onClipEvent(enterFrame){
                            {
                               if(_root["playerKrin" + (7 - (mCaster.teamSide + owegwe * 2))].active)
                               {
-                                 _root.krinBoltMake(_root.BATTLESCREEN[mCaster2],_root.BATTLESCREEN["player" + _root["playerKrin" + (7 - (mCaster.teamSide + owegwe * 2))].playerID],mAry1[11],mAry1[12],mAry1[13],mAry2);
+                                 _root.krinBoltMake(_root.BATTLESCREEN[mCaster2],_root.BATTLESCREEN["player" + _root["playerKrin" + (7 - (mCaster.teamSide + owegwe * 2))].playerID],mAry1[11],mAry1[12],mAry1[13],mAry2[45]);
                               }
                               owegwe++;
                            }
@@ -1107,7 +1107,7 @@ onClipEvent(enterFrame){
                         _root.krinToMove.toolTipTitle = _root.krinToMove.thinger1;
                         _root.krinToMove.toolTip = _root.krinToMove.thinger2;
                         _root.krinToMove._visible = false;
-                        if(!_root.turnBasedKrin)
+                        if(_root.turnBasedKrin)
                         {
                         }
                      }
@@ -1159,7 +1159,7 @@ onClipEvent(enterFrame){
                   _root.krinToMove.toolTipTitle = _root.krinToMove.thinger1;
                   _root.krinToMove.toolTip = _root.krinToMove.thinger2;
                   _root.krinToMove._visible = false;
-                  if(!_root.turnBasedKrin)
+                  if(_root.turnBasedKrin)
                   {
                   }
                }
