@@ -4,12 +4,100 @@ function addNewBuffKrin(a, b, c)
    _root["KRINBUFF" + a][0] = b;
    _root["KRINBUFF" + a][1] = c;
    i = 2;
-   while(i < 139)
+   while(i < 140)
    {
       _root["KRINBUFF" + a][i] = 0;
       i++;
    }
    _root.hackMove2 = _root["KRINBUFF" + a];
+}
+function ModifyHP(Damage, element, ignoreDefense, mCaster, mTarget)
+{
+   num2 = 0;
+   num = 0;
+   num3 = 0;
+   if(Damage > 0)
+   {
+      num = ignoreDefense * (100 + mTarget.plevel * 15) / (mTarget.DEFU[element] * mTarget.DEFENSE);
+      if(num == 0)
+      {
+         num = 1;
+      }
+      num2 = Damage * num;
+      num3 = Math.ceil(mTarget.IDMG + num2 * (1 + mTarget.IDMG2) * mTarget.IDMGP2);
+   }
+   else
+   {
+      num3 = Math.ceil(Damage * mTarget.HEALMOD_PLUS * mTarget.HEALMOD_MINUS);
+   }
+   if(mTarget.SSWITCH == 1)
+   {
+      num3 *= -1;
+   }
+   if(num3 > 0)
+   {
+      differenceForSH = 0;
+      if(mTarget.SHIELD > 0)
+      {
+         differenceForSH = mTarget.SHIELD - num3;
+      }
+      if(differenceForSH > 0)
+      {
+         mTarget.SHIELD -= num3;
+         _root.BATTLESCREEN["player" + mTarget.playerID].shield.play();
+         _root.addSound("Effects","sfx_shield");
+         _root.KrinNumberShow("shield","player" + mTarget.playerID,element);
+      }
+      else
+      {
+         num3 -= mTarget.SHIELD;
+         _root.KrinNumberShow(num3,"player" + mTarget.playerID,element);
+         mTarget.SHIELD = 0;
+         _root.KrinNumberShow(num3,"player" + mTarget.playerID,element);
+         mTarget.LIFEN -= num3;
+         if(mTarget.LIFEN <= 0)
+         {
+            mTarget.LIFEN = 0;
+            mTarget.FOCUSN = 0;
+         }
+         if(mTarget.LIFEN == 0)
+         {
+            _root.BATTLESCREEN["player" + mTarget.playerID].inner.gotoAndPlay("dead");
+            mTarget.active = false;
+            wefvergrervw = 1;
+            while(wefvergrervw < 7)
+            {
+               if(!_root.arenaMode)
+               {
+                  if(mTarget.playerID == _root.Krin.playerNumber)
+                  {
+                     _root["KrinSelector" + wefvergrervw]._x = -300;
+                     _root["KrinSelector" + wefvergrervw]._y = -300;
+                  }
+                  if(_root["KrinSelector" + wefvergrervw].TargetEr == mTarget.playerID)
+                  {
+                     _root["KrinSelector" + wefvergrervw]._x = -300;
+                     _root["KrinSelector" + wefvergrervw]._y = -300;
+                  }
+               }
+               wefvergrervw++;
+            }
+            _root.krinAddMove(mTarget.playerID,mTarget.playerID,0);
+         }
+         _root.lifeBarUpdate(mTarget.playerID);
+      }
+   }
+   if(num3 < 0)
+   {
+      num3 *= -1;
+      _root.KrinNumberShow(num3,"player" + mTarget.playerID,"HEAL");
+      mTarget.LIFEN += num3;
+      if(mTarget.LIFEN > mTarget.LIFEU)
+      {
+         mTarget.LIFEN = mTarget.LIFEU;
+      }
+      _root.lifeBarUpdate(mTarget.playerID);
+   }
 }
 function buffTicker(ukcb3)
 {
@@ -867,9 +955,9 @@ function precheckBuff(mCaster, mTarget, mAry2, mAry1)
    }
    while(f < _root.maxBuffLimit)
    {
-      if(_root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][70] > 0 && mCaster.BUFFARRAYK[f].CD != 0)
+      if(_root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][70] != 0 && mCaster.BUFFARRAYK[f].CD != 0)
       {
-         _root.applyBuffKrin(mCaster,mAry2[61],1,mCaster);
+         _root.applyBuffKrin(mCaster,_root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][70],1,mCaster);
          _root.applyChangesKrin(mCaster);
       }
       if(_root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][75] > 0 && mCaster.BUFFARRAYK[f].CD != 0)
@@ -902,23 +990,11 @@ function precheckBuff(mCaster, mTarget, mAry2, mAry1)
       }
       if(mCaster.FURY > 0 && mCaster.BUFFARRAYK[f].CD != 0 && (mAry1[10] == "Melee2" || mAry1[10] == "Melee"))
       {
-         mCaster.LIFEN -= mTarget.STRENGTHU * _root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][68];
-         if(mCaster.LIFEN > mCaster.LIFEU)
-         {
-            mCaster.LIFEN = mCaster.LIFEU;
-         }
-         _root.KrinNumberShow(mTarget.STRENGTHU * _root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][68],"player" + mCaster.playerID,mAry2[0]);
-         _root.lifeBarUpdate(mCaster.playerID);
+         ModifyHP(mTarget.STRENGTHU * _root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][68],mTarget.STRENGTHU * _root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][1],0,mTarget,mCaster);
       }
       if(mCaster.FURY < 0 && mCaster.BUFFARRAYK[f].CD != 0 && (mAry1[10] == "Shock2" || mAry1[10] == "Missile" || mAry1[10] == "Missile2" || mAry1[10] == "Shock"))
       {
-         mCaster.LIFEN += mTarget.STRENGTHU * _root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][68];
-         if(mCaster.LIFEN > mCaster.LIFEU)
-         {
-            mCaster.LIFEN = mCaster.LIFEU;
-         }
-         _root.KrinNumberShow(mTarget.STRENGTHU * -1 * _root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][68],"player" + mCaster.playerID,mAry2[0]);
-         _root.lifeBarUpdate(mCaster.playerID);
+         ModifyHP(mTarget.STRENGTHU * _root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][68],mTarget.STRENGTHU * _root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][1],0,mTarget,mCaster);
       }
       if(_root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][78] > 0 && mCaster.BUFFARRAYK[f].CD > 0)
       {
@@ -1033,18 +1109,16 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIRE5, F
    }
    if(mAry2[73] != 0 && _root.DamageOutputKrinFinal2 == 0)
    {
-      mCaster.LIFEN += _root.DamageOutputKrinFinal * mAry2[73] * mCaster.HEALMOD_MINUS;
-      _root.KrinNumberShow(_root.DamageOutputKrinFinal * mAry2[73] * mCaster.HEALMOD_MINUS,"player" + mCaster.playerID,"HEAL");
-      _root.lifeBarUpdate(mCaster.playerID);
+      ModifyHP(_root.DamageOutputKrinFinal * mAry2[73],mAry2[0],0,mTarget,mCaster);
    }
    DER = true;
    UN = false;
    x = 0;
    while(x < _root.maxBuffLimit)
    {
-      if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][67] > 0 && mAry1[14] == "Heal" && mCaster.BUFFARRAYK[x].CD != 0)
+      if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][67] != 0 && mAry1[14] == "Heal" && mCaster.BUFFARRAYK[x].CD != 0)
       {
-         _root.applyBuffKrin(mCaster,mAry2[56],1,mCaster);
+         _root.applyBuffKrin(mCaster,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][67],1,mCaster);
          _root.applyChangesKrin(mCaster);
       }
       if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][126] != 0 && mAry1[0] == _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][125] && mCaster.BUFFARRAYK[x].CD > 0)
@@ -1111,15 +1185,7 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIRE5, F
          }
          if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][57] != 0 && mCaster.BUFFARRAYK[x].CD != 0)
          {
-            mCaster.LIFEN += _root.DamageOutputKrinFinal * _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][57];
-            if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][57] < 0)
-            {
-               _root.KrinNumberShow(_root.DamageOutputKrinFinal * _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][57] * -1,"player" + mCaster.playerID,mAry2[0]);
-            }
-            else
-            {
-               _root.KrinNumberShow(_root.DamageOutputKrinFinal * _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][57],"player" + mCaster.playerID,"HEAL");
-            }
+            ModifyHP(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][57] * _root.DamageOutputKrinFinal,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][1],0,mTarget,mCaster);
          }
          if(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][59] == 1 && mTarget.BUFFARRAYK[x].CD != 0)
          {
@@ -1217,25 +1283,16 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIRE5, F
          {
             if(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][64] != 3)
             {
-               mTarget.LIFEN -= mCaster.STRENGTHU * _root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][64];
-               _root.KrinNumberShow(mCaster.STRENGTHU * _root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][64],"player" + mTarget.playerID,_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][1]);
+               ModifyHP(mCaster.STRENGTHU * _root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][64],_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][1],0,mCaster,mTarget);
             }
             else
             {
-               mTarget.LIFEN -= mTarget.STRENGTHU * _root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][64];
-               _root.KrinNumberShow(mTarget.STRENGTHU * _root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][64],"player" + mTarget.playerID,_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][1]);
+               ModifyHP(mTarget.STRENGTHU * _root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][64],_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][1],0,mCaster,mTarget);
             }
-            _root.lifeBarUpdate(mTarget.playerID);
          }
-         if(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][66] > 0 && mTarget.BUFFARRAYK[x].CD != 0)
+         if(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][66] != 0 && mTarget.BUFFARRAYK[x].CD != 0)
          {
-            mCaster.LIFEN -= _root.DamageOutputKrinFinal * _root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][66] * (1 + mCaster.IDMG2);
-            _root.KrinNumberShow(_root.DamageOutputKrinFinal * _root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][66] * (1 + mCaster.IDMG2),"player" + mCaster.playerID,_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][1]);
-            if(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][66] < 0)
-            {
-               _root.KrinNumberShow(-1 * _root.DamageOutputKrinFinal * _root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][66] * (1 + mCaster.IDMG2),"player" + mCaster.playerID,"HEAL");
-            }
-            _root.lifeBarUpdate(mCaster.playerID);
+            ModifyHP(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][66] * _root.DamageOutputKrinFinal,_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][1],1,mTarget,mCaster);
          }
          if(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][113] != 0 && mTarget.BUFFARRAYK[x].CD != 0)
          {
@@ -1244,9 +1301,7 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIRE5, F
          }
          if(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][112] > 0 && mTarget.BUFFARRAYK[x].CD != 0 && mTarget.LIFEN <= 0)
          {
-            mCaster.LIFEN -= _root.DamageOutputKrinFinal * _root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][112] * (1 + mCaster.IDMG2);
-            _root.KrinNumberShow(_root.DamageOutputKrinFinal * _root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][112] * (1 + mCaster.IDMG2),"player" + mCaster.playerID,_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][1]);
-            _root.lifeBarUpdate(mCaster.playerID);
+            ModifyHP(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][112] * _root.DamageOutputKrinFinal,_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][1],0,mTarget,mCaster);
          }
          if(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][81] < -1 && mTarget.BUFFARRAYK[x].CD != 0)
          {
@@ -1261,21 +1316,11 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIRE5, F
          }
          if(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][72] > 0 && mTarget.BUFFARRAYK[x].CD != 0 && (mAry1[10] == "Melee" || mAry1[10] == "Melee2"))
          {
-            mCaster.LIFEN -= mTarget.STRENGTHU * _root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][72];
-            _root.KrinNumberShow(mTarget.STRENGTHU * _root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][72],"player" + mCaster.playerID,mAry2[0]);
-            _root.lifeBarUpdate(mCaster.playerID);
-         }
-         if(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][66] < 0 && mTarget.BUFFARRAYK[x].CD != 0)
-         {
-            mCaster.LIFEN -= _root.DamageOutputKrinFinal * _root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][66];
-            _root.KrinNumberShow(_root.DamageOutputKrinFinal * _root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][66],"player" + mCaster.playerID,"HEAL");
-            _root.lifeBarUpdate(mCaster.playerID);
+            ModifyHP(mTarget.STRENGTHU * _root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][72],_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][1],0,mTarget,mCaster);
          }
          if(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][117] != 0 && mTarget.BUFFARRAYK[x].CD != 0)
          {
-            mCaster.LIFEN += mTarget.STRENGTHU * _root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][117];
-            _root.KrinNumberShow(mTarget.STRENGTHU * _root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][117],"player" + mCaster.playerID,"HEAL");
-            _root.lifeBarUpdate(mCaster.playerID);
+            ModifyHP(mTarget.STRENGTHU * _root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][117],_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][1],0,mTarget,mCaster);
          }
          if(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][71] > 0 && mTarget.BUFFARRAYK[x].CD > 0)
          {
@@ -1299,7 +1344,7 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIRE5, F
             numberRandomerBuffHit = Math.random();
             if(numberRandomerBuffHit < _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][69])
             {
-               _root.applyBuffKrin(mTarget,mAry2[62],1,mTarget);
+               _root.applyBuffKrin(mTarget,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][139],1,mTarget);
                _root.applyChangesKrin(mTarget);
             }
          }
@@ -1308,9 +1353,9 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIRE5, F
             _root.applyBuffKrin(mTarget,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][118],1,mTarget);
             _root.applyChangesKrin(mTarget);
          }
-         if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][74] > 0 && mCaster.BUFFARRAYK[x].CD != 0)
+         if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][74] != 0 && mCaster.BUFFARRAYK[x].CD != 0)
          {
-            _root.applyBuffKrin(mCaster,mAry2[66],1,mCaster);
+            _root.applyBuffKrin(mCaster,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][74],1,mCaster);
             _root.applyChangesKrin(mCaster);
          }
          if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][73] > 0 && mCaster.BUFFARRAYK[x].CD != 0)
@@ -2475,14 +2520,14 @@ _root.hackMove2[20] = 1;
 _root.hackMove2[32] = 0.1;
 _root.hackMove2[25] = BUFF_DESC1[50] + _root.hackMove2[29] * -100 + BUFF_DESC2[50];
 addNewBuffKrin("BLOODFLAMESHADOWREGEN",BUFF_NAME[50],"Shadow");
-_root.hackMove2[29] = -3;
+_root.hackMove2[29] = -12;
 _root.hackMove2[16] = 1;
 _root.hackMove2[20] = 1;
 _root.hackMove2[32] = 0.1;
 _root.hackMove2[25] = BUFF_DESC1[50] + _root.hackMove2[29] * -100 + BUFF_DESC2[50];
 addNewBuffKrin("BLOODFLAMESHADOWREGEN2",BUFF_NAME[50],"Shadow");
-_root.hackMove2[29] = -2;
-_root.hackMove2[28] = -2;
+_root.hackMove2[29] = -7;
+_root.hackMove2[28] = -7;
 _root.hackMove2[16] = 1;
 _root.hackMove2[20] = 1;
 _root.hackMove2[32] = 0.1;
@@ -5924,7 +5969,7 @@ addNewBuffKrin("DEADLINEB",BUFF_NAME[523],"Blackflame");
 _root.hackMove2[37] = -0.5;
 _root.hackMove2[16] = 20;
 _root.hackMove2[20] = 1;
-_root.hackMove2[32] = 0.1;
+_root.hackMove2[32] = 1;
 _root.hackMove2[25] = BUFF_DESC1[523];
 addNewBuffKrin("BLACKFLAMEBLADE",BUFF_NAME[524],"Blackflame");
 _root.hackMove2[11] = 0.35;
@@ -5968,7 +6013,7 @@ _root.hackMove2[16] = 20;
 _root.hackMove2[37] = -0.5;
 _root.hackMove2[20] = 1;
 _root.hackMove2[41] = 1;
-_root.hackMove2[32] = 0.1;
+_root.hackMove2[32] = 1;
 _root.hackMove2[25] = BUFF_DESC1[529];
 addNewBuffKrin("BLACKFLAMESHIELD",BUFF_NAME[528],"Blackflame");
 _root.hackMove2[38] = 5;
@@ -6943,7 +6988,7 @@ _root.hackMove2[16] = 5;
 _root.hackMove2[20] = 1;
 _root.hackMove2[25] = BUFF_DESC1[631];
 addNewBuffKrin("WOODWEAVE",BUFF_NAME[632],"Poison");
-_root.hackMove2[67] = 1;
+_root.hackMove2[67] = "WOODWEAVE2";
 _root.hackMove2[16] = -1;
 _root.hackMove2[20] = 1;
 _root.hackMove2[27] = 1;
@@ -7091,13 +7136,14 @@ _root.hackMove2[25] = BUFF_DESC1[511];
 addNewBuffKrin("EXPOSE",BUFF_NAME[632],"Fire");
 _root.hackMove2[16] = -1;
 _root.hackMove2[69] = 0.2;
+_root.hackMove2[139] = 0.2;
 _root.hackMove2[20] = 1;
 _root.hackMove2[27] = 1;
 _root.hackMove2[32] = 1;
 _root.hackMove2[25] = BUFF_DESC1[632];
 addNewBuffKrin("SHARPENSTEEL",BUFF_NAME[632],"Fire");
 _root.hackMove2[16] = -1;
-_root.hackMove2[70] = 0.05;
+_root.hackMove2[70] = "SHARPENSTEEL2";
 _root.hackMove2[90] = 0.05;
 _root.hackMove2[91] = 0.05;
 _root.hackMove2[20] = 1;
@@ -7172,7 +7218,7 @@ _root.hackMove2[25] = BUFF_DESC1[655];
 addNewBuffKrin("NUKECALIBRATION",BUFF_NAME[647],"Fire");
 _root.hackMove2[16] = -1;
 _root.hackMove2[20] = 1;
-_root.hackMove2[74] = 0.5;
+_root.hackMove2[74] = "NUKECALIBRATION2";
 _root.hackMove2[25] = BUFF_DESC1[647];
 addNewBuffKrin("NUKECALIBRATION2",BUFF_NAME[647],"Fire");
 _root.hackMove2[16] = -1;
@@ -8170,28 +8216,28 @@ _root.hackMove2[25] = BUFF_DESC1[736];
 addNewBuffKrin("PYROBLEND1",BUFF_NAME[737],"Fire");
 _root.hackMove2[16] = 3;
 _root.hackMove2[20] = 1;
-_root.hackMove2[7] = 1.25;
+_root.hackMove2[7] = 1;
 _root.hackMove2[131] = 32.5;
 _root.hackMove2[31] = 5;
 _root.hackMove2[25] = BUFF_DESC1[737] + _root.hackMove2[7] * 100 + BUFF_DESC2[737];
 addNewBuffKrin("PYROBLEND2",BUFF_NAME[737],"Fire");
 _root.hackMove2[16] = 3;
 _root.hackMove2[20] = 1;
-_root.hackMove2[7] = 1.75;
+_root.hackMove2[7] = 1.25;
 _root.hackMove2[131] = 32.5;
 _root.hackMove2[31] = 5;
 _root.hackMove2[25] = BUFF_DESC1[737] + _root.hackMove2[7] * 100 + BUFF_DESC2[737];
 addNewBuffKrin("PYROBLEND3",BUFF_NAME[737],"Fire");
 _root.hackMove2[16] = 3;
 _root.hackMove2[20] = 1;
-_root.hackMove2[7] = 2.25;
+_root.hackMove2[7] = 1.5;
 _root.hackMove2[31] = 5;
 _root.hackMove2[131] = 32.5;
 _root.hackMove2[25] = BUFF_DESC1[737] + _root.hackMove2[7] * 100 + BUFF_DESC2[737];
 addNewBuffKrin("PYROBLEND4",BUFF_NAME[737],"Fire");
 _root.hackMove2[16] = 4;
 _root.hackMove2[20] = 1;
-_root.hackMove2[7] = 2.5;
+_root.hackMove2[7] = 1.75;
 _root.hackMove2[31] = 5;
 _root.hackMove2[131] = 32.5;
 _root.hackMove2[25] = BUFF_DESC1[737] + _root.hackMove2[7] * 100 + BUFF_DESC2[737];
