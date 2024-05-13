@@ -53,7 +53,6 @@ function ModifyHP(Damage, element, ignoreDefense, mCaster, mTarget)
          num3 -= mTarget.SHIELD;
          _root.KrinNumberShow(num3,"player" + mTarget.playerID,element);
          mTarget.SHIELD = 0;
-         _root.KrinNumberShow(num3,"player" + mTarget.playerID,element);
          mTarget.LIFEN -= num3;
          if(mTarget.LIFEN <= 0)
          {
