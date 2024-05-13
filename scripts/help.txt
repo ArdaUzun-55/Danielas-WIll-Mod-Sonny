@@ -1,0 +1,13 @@
+!THE CODES ARE NEWER THAN THE CURRENT VERSION OF THE MOD!
+  
+How to find Sonny 2017 Buffs:
+1. Every _root.hackMove2[], from which the array is 52 -> 124 
+2. Every entry after 124 is for chapter 3 of my mod
+How to find Sonny 2017 abilities mechanics:
+1. Every entry before _root.hackMove[79] and after 25
+
+DO NOTE:
+The implementations of some mechanics are coded differently than how it actually should be.
+One example is Flame Jet. Since its mechanic is only available for one enemy,
+I was a bit lazy to make it 100% like in SOnny 2017. But I actually have something which can be used for Flame Jet now, 
+alled abilityhistory. It can store a value of the latest ability used. The good thing is that it can store anything.
