@@ -1,5 +1,7 @@
 function executeMove(IDKM, IDKM2, IDKC, IDKT)
 {
+   IDKC.abilityhistory[0] = IDKM[10];
+   IDKC.abilityhistory2[0] = IDKM2[0];
    AVGNUMC = 100 + 15 * IDKC.plevel;
    SPEEDCRITCALC = IDKC.SPEEDU / getStat(10,IDKC.plevel) - 3;
    PERCALK = IDKC.PERU[IDKM2[0]] / AVGNUMC;
