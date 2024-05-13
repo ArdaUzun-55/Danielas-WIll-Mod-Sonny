@@ -158,15 +158,15 @@ There is another .zip file which needs a password in order to be opened.I would 
 
 Here is what I allow one to use without asking permission if you would like to take the code for the new mechanics for your own mod:
 
-Every Sonny 2017 Mechanic which was added
-Every Sonny 2017 Stuff like Sprites
+-Every Sonny 2017 Mechanic which was added
+-Every Sonny 2017 Stuff like Sprites
 
 Here is what I dont allow one to use without asking permission (dm me and maybe I say yes or no) if you would like to take the code for the new mechanics for your own mod:
 
-New mechanics including: Bleed and Frostbite
-Mechanics which did not exist in Sonny 2017, Sonny 1 and Sonny 2 e.g. Fundas Misery (many more which are in the github code)
-The Blackflame Element
-And maybe more
+-New mechanics including: Bleed and Frostbite
+-Mechanics which did not exist in Sonny 2017, Sonny 1 and Sonny 2 e.g. Fundas Misery (many more which are in the github code)
+-The Blackflame Element
+-And maybe more
 
 Also credit me if you take my code :)
 
