@@ -1,6 +1,6 @@
-function executeMove(IDKM, IDKM2, IDKC, IDKT)
+function executeMove(IDKM, IDKM2, IDKC, IDKT, JI)
 {
-   IDKC.abilityhistory[0] = IDKM[10];
+   IDKC.abilityhistory[0] = IDKM[14];
    IDKC.abilityhistory2[0] = IDKM2[0];
    AVGNUMC = 100 + 15 * IDKC.plevel;
    SPEEDCRITCALC = IDKC.SPEEDU / getStat(10,IDKC.plevel) - 3;
@@ -545,6 +545,10 @@ function executeMove(IDKM, IDKM2, IDKC, IDKT)
             _root.DamageOutputKrinFinal *= IDKC.CRITMODIFIER;
          }
          _root.DamageOutputKrinFinal *= IDKM2[89];
+      }
+      if(JI == IDKM2[45] - 1 && IDKM2[91] != 0)
+      {
+         _root.DamageOutputKrinFinal *= IDKM2[91];
       }
       if(IDKT.playerName == "Iron Guard")
       {
@@ -1193,11 +1197,15 @@ lifeBarUpdate = function(PWLC)
    {
       _root["p" + PWLC + "BAR"].inner.focusMax20 = ghjul.FOCUSPLUS * 100;
    }
-   if(_root.Krin.BattlePick == 7001)
+   else if(_root.Krin.BattlePick == 7001)
    {
       _root["p" + PWLC + "BAR"].inner.focusMax20 = ghjul.STRENGTH;
    }
-   if(ghjul.BLEED < ghjul.BLEEDMAX)
+   else if(ghjul.STANCE < ghjul.STANCEMAX)
+   {
+      _root["p" + PWLC + "BAR"].inner.focusMax20 = "Stance:" + ghjul.STANCE + "/" + ghjul.BLEED;
+   }
+   else if(ghjul.BLEED < ghjul.BLEEDMAX)
    {
       _root["p" + PWLC + "BAR"].inner.focusMax20 = "Bleed:" + ghjul.BLEED;
    }
