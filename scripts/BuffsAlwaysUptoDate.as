@@ -4,12 +4,44 @@ function addNewBuffKrin(a, b, c)
    _root["KRINBUFF" + a][0] = b;
    _root["KRINBUFF" + a][1] = c;
    i = 2;
-   while(i < 140)
+   while(i < 143)
    {
       _root["KRINBUFF" + a][i] = 0;
       i++;
    }
    _root.hackMove2 = _root["KRINBUFF" + a];
+}
+function checkDispellAoe(mCaster, mTarget, mAry1, mAry2)
+{
+   dispelCounterXYUX = mAry2[16];
+   eged = 0;
+   while(eged < _root.maxBuffLimit)
+   {
+      for(neinh in mAry2[15])
+      {
+         if(mTarget.BUFFARRAYK[eged].CD > 0 && mAry2[15][neinh] == _root["KRINBUFF" + mTarget.BUFFARRAYK[eged].buffId][1])
+         {
+            if(dispelCounterXYUX > 0)
+            {
+               if(mAry2[19] == _root["KRINBUFF" + mTarget.BUFFARRAYK[eged].buffId][20])
+               {
+                  dispelCounterXYUX--;
+                  numberRandomerBuffHit = Math.random();
+                  if(numberRandomerBuffHit <= mAry2[22])
+                  {
+                     numberRandomerBuffHit = Math.random();
+                     if(numberRandomerBuffHit >= _root["KRINBUFF" + mTarget.BUFFARRAYK[eged].buffId][32])
+                     {
+                        mTarget.BUFFARRAYK[eged].CD = 0;
+                        _root.applyBuffKrin(mTarget,mTarget.BUFFARRAYK[eged].buffId,-1,0,mTarget.BUFFARRAYK[eged].buffValue,eged);
+                     }
+                  }
+               }
+            }
+         }
+      }
+      eged++;
+   }
 }
 function ModifyHP(Damage, element, ignoreDefense, mCaster, mTarget)
 {
@@ -246,6 +278,22 @@ function applyBuffKrin(ukcb2, bn, iftbc, ukcb4, debuffValue, limo)
    ukcb2.SLOWRESIST += iftbc * bffker[80];
    ukcb2.IGNORE += iftbc * bffker[81];
    ukcb2.DEFENSE += iftbc * bffker[82];
+   if(iftbc > 0 && bffker[140] != 0)
+   {
+      ukcb2.AINEXTATTACK = bffker[140];
+   }
+   if(iftbc < 0 && bffker[140] != 0)
+   {
+      ukcb2.AINEXTATTACK = 0;
+   }
+   if(iftbc > 0)
+   {
+      ukcb2.STANCE += iftbc * bffker[142];
+   }
+   if(ukcb2.STANCE > ukcb2.STANCEMAX)
+   {
+      ukcb2.STANCE = ukcb2.STANCEMAX;
+   }
    if(bffker[90] != 0)
    {
       ukcb2.STRENGTHN = ukcb2.STRENGTH * iftbc * bffker[90];
@@ -550,6 +598,10 @@ function applyChangesKrin(ukcb)
    {
       statusOfM = "PRIEST3";
    }
+   if(ukcb.FILTERSBUFFARRAY[22] > 0)
+   {
+      statusOfM = "PRIESTB";
+   }
    if(ukcb.FILTERSBUFFARRAY[17] > 0)
    {
       statusOfM = "FROSTTERROR";
@@ -664,6 +716,10 @@ function changeForm(changeTo, p_id)
    {
       dressChar("PRIEST3",p_id,"PRIEST3","MODEL1","PRIEST3","M","","COUNCILSTAFF","NONE");
    }
+   else if(changeTo == "PRIESTB")
+   {
+      dressChar("PRIESTB",p_id,"PRIESTB","MODEL1","PRIESTB","M","","APOSTLESWORD2","NONE");
+   }
    if(_root["playerKrin" + p_id].STUN)
    {
       _root.BATTLESCREEN["player" + p_id].inner.gotoAndPlay("stun2");
@@ -689,7 +745,44 @@ function checkStatus(mCaster, mTarget, mAry2, mAry1)
             _root.KrinNumberShow(DMGBYFIRE,"player" + mTarget.playerID,"Fire");
             _root.lifeBarUpdate(mTarget.playerID);
          }
+         if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][143] > 0 && mCaster.BUFFARRAYK[x].CD != 0)
+         {
+            ModifyHP(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][143] * mTarget.LIFEU,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][1],0,mTarget,mTarget);
+         }
          x++;
+      }
+   }
+   if((mAry1[14] == "Full Damage" || mAry1[14] == "Focus2") && mTarget.STANCE > 0 && mTarget.STUN == 0)
+   {
+      POISEDAMAGE = _root.DamageOutputKrinFinal / mTarget.LIFEU;
+      if(POISEDAMAGE >= 0.1)
+      {
+         mTarget.STANCE -= 20;
+      }
+      if(POISEDAMAGE >= 0.05 && POISEDAMAGE < 0.1)
+      {
+         mTarget.STANCE -= 10;
+      }
+      if(POISEDAMAGE <= 0.05)
+      {
+         mTarget.STANCE -= 5;
+      }
+      if(mTarget.STANCE <= 0)
+      {
+         x = 0;
+         while(x < _root.maxBuffLimit)
+         {
+            if(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][142] != 0 && mTarget.BUFFARRAYK[x].CD != 0)
+            {
+               mTarget.BUFFARRAYK[x].CD = 0;
+               _root.applyBuffKrin(mTarget,mTarget.BUFFARRAYK[x].buffId,-1,0,mTarget.BUFFARRAYK[x].buffValue,x);
+            }
+            x++;
+         }
+         _root.applyBuffKrin(mTarget,"BROKENSTANCE",1,mCaster);
+         _root.applyChangesKrin(mTarget);
+         mTarget.STANCE = mTarget.STANCEMAX;
+         _root.addSound("Effects","Theme3");
       }
    }
    if(mAry1[10] != "Melee" && mAry1[10] != "Melee2" && mAry1[14] != "Heal")
@@ -934,7 +1027,13 @@ function precheckBuff(mCaster, mTarget, mAry2, mAry1)
    {
       mAry1[7] = mAry2[75] + 1;
    }
-   f = 0;
+   for(abilityhistorytype in mAry2[93])
+   {
+      if(mTarget.abilityhistory[0] == mAry2[93][abilityhistorytype])
+      {
+         mAry2[4] *= mAry2[94];
+      }
+   }
    if(mCaster.LIFEN / mCaster.LIFEU < mAry2[68])
    {
       mAry2[2] += 1.8;
@@ -952,6 +1051,7 @@ function precheckBuff(mCaster, mTarget, mAry2, mAry1)
       mAry2[2] *= 2;
       mAry2[4] *= 2;
    }
+   f = 0;
    while(f < _root.maxBuffLimit)
    {
       if(_root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][70] != 0 && mCaster.BUFFARRAYK[f].CD != 0)
@@ -1027,7 +1127,24 @@ function precheckBuff(mCaster, mTarget, mAry2, mAry1)
    {
       mAry2[13] = "DARKSNAKE1";
    }
-   if(mCaster.SPEEDU >= mTarget.SPEEDU && mAry2[85] > 2)
+   if(mCaster.SPEEDU > mTarget.SPEEDU && mAry2[85] == 7)
+   {
+      fiss = 0;
+      fiss = mTarget.SPEEDU / mCaster.SPEEDU;
+      if(fiss <= 0.5)
+      {
+         mAry2[45] = 8;
+      }
+      if(fiss > 0.5 && fiss <= 0.75)
+      {
+         mAry2[45] = 4;
+      }
+      if(fiss > 0.75 && fiss < 1)
+      {
+         mAry2[45] = 2;
+      }
+   }
+   if(mCaster.SPEEDU >= mTarget.SPEEDU && mAry2[85] > 2 && mAry2[85] < 7)
    {
       SE = mAry2[85] - 2;
       mAry2[13] = "SNAKEHEAL" + SE;
@@ -1075,7 +1192,7 @@ function checkBuffafter(mCaster, mTarget, mAry2, mAry1, JI)
    {
       mAry2[13] = 0;
    }
-   if(mAry2[13] != 0 && mAry2[85] > 2)
+   if(mAry2[13] != 0 && mAry2[85] > 2 && mAry2[85] < 7)
    {
       mAry2[13] = 0;
    }
@@ -1085,7 +1202,7 @@ function checkBuffafter(mCaster, mTarget, mAry2, mAry1, JI)
       _root.applyChangesKrin(mCaster);
    }
 }
-function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIRE5, FIRE6)
+function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE5)
 {
    if(_root.DamageOutputKrinFinal2 == 0 && _root.DamageOutputKrinFinal != 0)
    {
@@ -1118,40 +1235,37 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIRE5, F
       if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][67] != 0 && mAry1[14] == "Heal" && mCaster.BUFFARRAYK[x].CD != 0)
       {
          _root.applyBuffKrin(mCaster,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][67],1,mCaster);
-         _root.applyChangesKrin(mCaster);
+      }
+      if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][141] != 0 && mCaster.BUFFARRAYK[x].CD == 1)
+      {
+         _root.applyBuffKrin(mCaster,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][141],1,mCaster);
       }
       if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][126] != 0 && mAry1[0] == _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][125] && mCaster.BUFFARRAYK[x].CD > 0)
       {
          _root.applyBuffKrin(mTarget,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][126],1,mCaster);
-         _root.applyChangesKrin(mTarget);
       }
       if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][138] != 0 && mAry1[0] == _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][137] && mCaster.BUFFARRAYK[x].CD > 0)
       {
          _root.applyBuffKrin(mTarget,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][138],1,mCaster);
-         _root.applyChangesKrin(mTarget);
       }
       if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][75] > 0 && mCaster.BUFFARRAYK[x].CD < 0)
       {
          mCaster.BUFFARRAYK[x].CD = 0;
          _root.applyBuffKrin(mCaster,mCaster.BUFFARRAYK[x].buffId,-1,0,mCaster.BUFFARRAYK[x].buffValue,x);
-         _root.applyChangesKrin(mCaster);
          mAry1[7] = FIRE5;
       }
       if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][88] != 0 && mCaster.BUFFARRAYK[x].CD != 0 && _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][85] < mCaster.LIFEN / mCaster.LIFEU)
       {
          _root.applyBuffKrin(mCaster,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][88],1,mCaster);
-         _root.applyChangesKrin(mCaster);
       }
       if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][114] != 0 && mCaster.BUFFARRAYK[x].CD != 0 && _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][85] > mCaster.LIFEN / mCaster.LIFEU)
       {
          _root.applyBuffKrin(mCaster,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][114],1,mCaster);
-         _root.applyChangesKrin(mCaster);
       }
       if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][87] > 0 && mCaster.BUFFARRAYK[x].CD > 0)
       {
          mCaster.BUFFARRAYK[x].CD = 0;
          _root.applyBuffKrin(mCaster,mCaster.BUFFARRAYK[x].buffId,-1,0,mCaster.BUFFARRAYK[x].buffValue,x);
-         _root.applyChangesKrin(mCaster);
       }
       if(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][97] != 0 && ((mAry2[2] != 0 || mAry2[4] != 0) && mAry1[14] == "Heal") && mTarget.BUFFARRAYK[x].CD != 0)
       {
@@ -1172,14 +1286,12 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIRE5, F
          if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][111] != 0 && mCaster.BUFFARRAYK[x].CD != 0)
          {
             _root.applyBuffKrin(mCaster,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][111],1,mCaster);
-            _root.applyChangesKrin(mCaster);
          }
          if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][110] != 0 && mCaster.BUFFARRAYK[x].CD != 0)
          {
             if(_root.playerKrin2.active == false && _root.playerKrin4.active == true && _root.playerKrin6.active == false || _root.playerKrin2.active == true && _root.playerKrin4.active == false && _root.playerKrin6.active == false || _root.playerKrin2.active == false && _root.playerKrin4.active == false && _root.playerKrin6.active == true)
             {
                _root.applyBuffKrin(mCaster,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][110],1,mCaster);
-               _root.applyChangesKrin(mCaster);
             }
          }
          if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][57] != 0 && mCaster.BUFFARRAYK[x].CD != 0)
@@ -1195,12 +1307,14 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIRE5, F
          if(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][96] != 0 && mTarget.BUFFARRAYK[x].CD < 0)
          {
             _root.applyBuffKrin(mTarget,_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][96],1,mCaster);
-            _root.applyChangesKrin(mTarget);
+         }
+         if(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][1] == mAry2[15] && mAry2[90] != 0 && mTarget.BUFFARRAYK[x].CD > 0)
+         {
+            _root.applyBuffKrin(mTarget,mAry2[90],1,mCaster);
          }
          if(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][96] != 0 && mTarget.BUFFARRAYK[x].CD > 0 && DER == true)
          {
             _root.applyBuffKrin(mTarget,_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][96],1,mCaster);
-            _root.applyChangesKrin(mTarget);
             DER = false;
          }
          if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][95] != 0 && mCaster.BUFFARRAYK[x].CD != 0 && mTarget.LIFEN <= 0)
@@ -1218,47 +1332,38 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIRE5, F
             if(mAry2[0] == "Physical")
             {
                _root.applyBuffKrin(mTarget,_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][94],1,mTarget);
-               _root.applyChangesKrin(mTarget);
             }
             if(mAry2[0] == "Fire")
             {
                _root.applyBuffKrin(mTarget,_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][101],1,mTarget);
-               _root.applyChangesKrin(mTarget);
             }
             if(mAry2[0] == "Magic")
             {
                _root.applyBuffKrin(mTarget,_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][100],1,mTarget);
-               _root.applyChangesKrin(mTarget);
             }
             if(mAry2[0] == "Ice")
             {
                _root.applyBuffKrin(mTarget,_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][102],1,mTarget);
-               _root.applyChangesKrin(mTarget);
             }
             if(mAry2[0] == "Lightning")
             {
                _root.applyBuffKrin(mTarget,_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][103],1,mTarget);
-               _root.applyChangesKrin(mTarget);
             }
             if(mAry2[0] == "Earth")
             {
                _root.applyBuffKrin(mTarget,_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][104],1,mTarget);
-               _root.applyChangesKrin(mTarget);
             }
             if(mAry2[0] == "Shadow")
             {
                _root.applyBuffKrin(mTarget,_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][105],1,mTarget);
-               _root.applyChangesKrin(mTarget);
             }
             if(mAry2[0] == "Poison")
             {
                _root.applyBuffKrin(mTarget,_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][106],1,mTarget);
-               _root.applyChangesKrin(mTarget);
             }
             if(mAry2[0] == "Blackflame")
             {
                _root.applyBuffKrin(mTarget,_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][107],1,mTarget);
-               _root.applyChangesKrin(mTarget);
             }
             UN = true;
          }
@@ -1300,7 +1405,7 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIRE5, F
          }
          if(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][112] > 0 && mTarget.BUFFARRAYK[x].CD != 0 && mTarget.LIFEN <= 0)
          {
-            ModifyHP(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][112] * _root.DamageOutputKrinFinal,_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][1],0,mTarget,mCaster);
+            ModifyHP(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][112] * mCaster.STRENGTHU,_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][1],0,mTarget,mCaster);
          }
          if(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][81] < -1 && mTarget.BUFFARRAYK[x].CD != 0)
          {
@@ -1325,7 +1430,6 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIRE5, F
          {
             mTarget.BUFFARRAYK[x].CD = 0;
             _root.applyBuffKrin(mTarget,mTarget.BUFFARRAYK[x].buffId,-1,0,mTarget.BUFFARRAYK[x].buffValue,x);
-            _root.applyChangesKrin(mTarget);
          }
          if(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][109] > 0 && mTarget.BUFFARRAYK[x].CD > 0)
          {
@@ -1335,7 +1439,6 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIRE5, F
                _root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][109] = _root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][116];
                mTarget.BUFFARRAYK[x].CD = 0;
                _root.applyBuffKrin(mTarget,mTarget.BUFFARRAYK[x].buffId,-1,0,mTarget.BUFFARRAYK[x].buffValue,x);
-               _root.applyChangesKrin(mTarget);
             }
          }
          if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][69] > 0 && mCaster.BUFFARRAYK[x].CD != 0 && mAry2[0] == "Fire")
@@ -1344,18 +1447,15 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIRE5, F
             if(numberRandomerBuffHit < _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][69])
             {
                _root.applyBuffKrin(mTarget,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][139],1,mTarget);
-               _root.applyChangesKrin(mTarget);
             }
          }
          if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][118] != 0 && mCaster.BUFFARRAYK[x].CD != 0)
          {
             _root.applyBuffKrin(mTarget,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][118],1,mTarget);
-            _root.applyChangesKrin(mTarget);
          }
          if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][74] != 0 && mCaster.BUFFARRAYK[x].CD != 0)
          {
             _root.applyBuffKrin(mCaster,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][74],1,mCaster);
-            _root.applyChangesKrin(mCaster);
          }
          if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][73] > 0 && mCaster.BUFFARRAYK[x].CD != 0)
          {
@@ -1365,20 +1465,16 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIRE5, F
                _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][73] = 2;
                mCaster.BUFFARRAYK[x].CD = 0;
                _root.applyBuffKrin(mCaster,mCaster.BUFFARRAYK[x].buffId,-1,0,mCaster.BUFFARRAYK[x].buffValue,x);
-               _root.applyChangesKrin(mCaster);
             }
          }
          if(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][129] != 0 && mTarget.BUFFARRAYK[x].CD != 0)
          {
             if(mTarget.SHIELD <= 0)
             {
-               mTarget.LIFEN += mTarget.SPEEDU * _root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][129];
-               _root.KrinNumberShow(mTarget.SPEEDU * _root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][129],"player" + mTarget.playerID,"HEAL");
-               _root.lifeBarUpdate(mTarget.playerID);
+               ModifyHP(mTarget.SPEEDU * _root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][129],_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][1],0,mTarget,mTarget);
                _root.applyBuffKrin(mTarget,"FIREPIERCING",1,mTarget);
                mTarget.BUFFARRAYK[x].CD = 0;
                _root.applyBuffKrin(mTarget,mTarget.BUFFARRAYK[x].buffId,-1,0,mTarget.BUFFARRAYK[x].buffValue,x);
-               _root.applyChangesKrin(mTarget);
             }
          }
          if(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][135] != 0 && mTarget.BUFFARRAYK[x].CD != 0)
@@ -1389,14 +1485,12 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIRE5, F
                BUFFCD = mTarget.BUFFARRAYK[x].CD;
                mTarget.BUFFARRAYK[x].CD = 0;
                _root.applyBuffKrin(mTarget,mTarget.BUFFARRAYK[x].buffId,-1,0,mTarget.BUFFARRAYK[x].buffValue,x);
-               _root.applyChangesKrin(mTarget);
                l = 0;
                while(l < _root.maxBuffLimit)
                {
                   if(_root["KRINBUFF" + mTarget.BUFFARRAYK[l].buffId][136] != 0 && mTarget.BUFFARRAYK[l].CD != 0)
                   {
                      mTarget.BUFFARRAYK[l].CD = BUFFCD;
-                     _root.applyChangesKrin(mTarget);
                   }
                   l++;
                }
@@ -1413,6 +1507,11 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIRE5, F
       }
       x++;
    }
+   _root.applyChangesKrin(mCaster);
+   _root.applyChangesKrin(mTarget);
+}
+function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIRE5, FIRE6)
+{
    if(mAry2[69] > 0 || mAry2[68] > 0)
    {
       mAry2[2] = FIRE2;
@@ -1422,6 +1521,10 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIRE5, F
    if(mAry2[2] > FIRE2)
    {
       mAry2[2] = FIRE2;
+   }
+   if(mAry2[4] > FIRE3)
+   {
+      mAry2[4] = FIRE3;
    }
    if(mAry2[6] > FIRE4)
    {
@@ -7804,7 +7907,7 @@ _root.hackMove2[27] = 1;
 _root.hackMove2[32] = 1;
 _root.hackMove2[25] = BUFF_DESC1[701];
 addNewBuffKrin("PHANTOMSREVENGE",BUFF_NAME[701],"Physical");
-_root.hackMove2[112] = 99;
+_root.hackMove2[112] = 9999;
 _root.hackMove2[16] = -1;
 _root.hackMove2[27] = 1;
 _root.hackMove2[32] = 1;
@@ -8142,28 +8245,28 @@ _root.hackMove2[32] = 0.2;
 _root.hackMove2[25] = BUFF_DESC1[729];
 addNewBuffKrin("FIREBARRIER",BUFF_NAME[730],"Fire");
 _root.hackMove2[40] = 6;
-_root.hackMove2[129] = 10;
+_root.hackMove2[129] = -10;
 _root.hackMove2[16] = 7;
 _root.hackMove2[20] = 1;
 _root.hackMove2[32] = 0.2;
 _root.hackMove2[25] = BUFF_DESC1[730] + _root.hackMove2[40] * 100 + BUFF_DESC2[730] + _root.hackMove2[32] * 100 + BUFF_DESC3[730];
 addNewBuffKrin("FIREBARRIER2",BUFF_NAME[730],"Fire");
 _root.hackMove2[40] = 8;
-_root.hackMove2[129] = 10;
+_root.hackMove2[129] = -10;
 _root.hackMove2[16] = 7;
 _root.hackMove2[20] = 1;
 _root.hackMove2[32] = 0.3;
 _root.hackMove2[25] = BUFF_DESC1[730] + _root.hackMove2[40] * 100 + BUFF_DESC2[730] + _root.hackMove2[32] * 100 + BUFF_DESC3[730];
 addNewBuffKrin("FIREBARRIER3",BUFF_NAME[730],"Fire");
 _root.hackMove2[40] = 10;
-_root.hackMove2[129] = 10;
+_root.hackMove2[129] = -10;
 _root.hackMove2[16] = 7;
 _root.hackMove2[20] = 1;
 _root.hackMove2[32] = 0.4;
 _root.hackMove2[25] = BUFF_DESC1[730] + _root.hackMove2[40] * 100 + BUFF_DESC2[730] + _root.hackMove2[32] * 100 + BUFF_DESC3[730];
 addNewBuffKrin("FIREBARRIER4",BUFF_NAME[730],"Fire");
 _root.hackMove2[40] = 15;
-_root.hackMove2[129] = 10;
+_root.hackMove2[129] = -10;
 _root.hackMove2[16] = 7;
 _root.hackMove2[20] = 1;
 _root.hackMove2[32] = 0.5;
@@ -8215,28 +8318,28 @@ _root.hackMove2[25] = BUFF_DESC1[736];
 addNewBuffKrin("PYROBLEND1",BUFF_NAME[737],"Fire");
 _root.hackMove2[16] = 3;
 _root.hackMove2[20] = 1;
-_root.hackMove2[7] = 1;
+_root.hackMove2[7] = 0.5;
 _root.hackMove2[131] = 32.5;
 _root.hackMove2[31] = 5;
 _root.hackMove2[25] = BUFF_DESC1[737] + _root.hackMove2[7] * 100 + BUFF_DESC2[737];
 addNewBuffKrin("PYROBLEND2",BUFF_NAME[737],"Fire");
 _root.hackMove2[16] = 3;
 _root.hackMove2[20] = 1;
-_root.hackMove2[7] = 1.25;
+_root.hackMove2[7] = 0.75;
 _root.hackMove2[131] = 32.5;
 _root.hackMove2[31] = 5;
 _root.hackMove2[25] = BUFF_DESC1[737] + _root.hackMove2[7] * 100 + BUFF_DESC2[737];
 addNewBuffKrin("PYROBLEND3",BUFF_NAME[737],"Fire");
 _root.hackMove2[16] = 3;
 _root.hackMove2[20] = 1;
-_root.hackMove2[7] = 1.5;
+_root.hackMove2[7] = 1;
 _root.hackMove2[31] = 5;
 _root.hackMove2[131] = 32.5;
 _root.hackMove2[25] = BUFF_DESC1[737] + _root.hackMove2[7] * 100 + BUFF_DESC2[737];
 addNewBuffKrin("PYROBLEND4",BUFF_NAME[737],"Fire");
 _root.hackMove2[16] = 4;
 _root.hackMove2[20] = 1;
-_root.hackMove2[7] = 1.75;
+_root.hackMove2[7] = 1.25;
 _root.hackMove2[31] = 5;
 _root.hackMove2[131] = 32.5;
 _root.hackMove2[25] = BUFF_DESC1[737] + _root.hackMove2[7] * 100 + BUFF_DESC2[737];
@@ -8589,3 +8692,207 @@ _root.hackMove2[28] = 2.5;
 _root.hackMove2[16] = 5;
 _root.hackMove2[20] = -1;
 _root.hackMove2[25] = BUFF_DESC1[756];
+addNewBuffKrin("HARDPUNCH",BUFF_NAME[757],"Physical");
+_root.hackMove2[16] = 4;
+_root.hackMove2[15] = 5;
+_root.hackMove2[82] = -0.33;
+_root.hackMove2[27] = 1;
+_root.hackMove2[32] = 0.5;
+_root.hackMove2[20] = -1;
+_root.hackMove2[25] = BUFF_DESC1[757];
+addNewBuffKrin("HARDPUNCH2",BUFF_NAME[758],"Earth");
+_root.hackMove2[86] = 5;
+_root.hackMove2[82] = 0.25;
+_root.hackMove2[16] = 3;
+_root.hackMove2[20] = 1;
+_root.hackMove2[27] = 1;
+_root.hackMove2[25] = BUFF_DESC1[758];
+addNewBuffKrin("STRAIGHTPUNCH",BUFF_NAME[759],"Physical");
+_root.hackMove2[3] = 0.25;
+_root.hackMove2[7] = 1;
+_root.hackMove2[16] = 4;
+_root.hackMove2[20] = 1;
+_root.hackMove2[27] = 1;
+_root.hackMove2[25] = BUFF_DESC1[759];
+addNewBuffKrin("HAMMERBLOW",BUFF_NAME[760],"Physical");
+_root.hackMove2[131] = 16.25;
+_root.hackMove2[11] = 0.15;
+_root.hackMove2[16] = 3;
+_root.hackMove2[20] = 1;
+_root.hackMove2[27] = 1;
+_root.hackMove2[25] = BUFF_DESC1[760];
+addNewBuffKrin("HYDROPUMP",BUFF_NAME[761],"Lightning");
+_root.hackMove2[24] = -0.5;
+_root.hackMove2[77] = -32.5;
+_root.hackMove2[16] = 4;
+_root.hackMove2[20] = 1;
+_root.hackMove2[27] = 1;
+_root.hackMove2[25] = BUFF_DESC1[761];
+addNewBuffKrin("FLAMETHROWER",BUFF_NAME[763],"Fire");
+_root.hackMove2[29] = 1.5;
+_root.hackMove2[16] = 8;
+_root.hackMove2[20] = -1;
+_root.hackMove2[27] = 1;
+_root.hackMove2[25] = BUFF_DESC1[763];
+addNewBuffKrin("ELECTROCUTION",BUFF_NAME[762],"Lightning");
+_root.hackMove2[17] = 1;
+_root.hackMove2[16] = 2;
+_root.hackMove2[20] = -1;
+_root.hackMove2[27] = 1;
+_root.hackMove2[25] = BUFF_DESC1[762];
+addNewBuffKrin("ELECTROCUTION2",BUFF_NAME[764],"Lightning");
+_root.hackMove2[11] = -0.8;
+_root.hackMove2[16] = 4;
+_root.hackMove2[20] = -1;
+_root.hackMove2[27] = 1;
+_root.hackMove2[25] = BUFF_DESC1[764];
+addNewBuffKrin("SYRINGE",BUFF_NAME[765],"Poison");
+_root.hackMove2[16] = 99;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = BUFF_DESC1[765];
+addNewBuffKrin("ROCKET",BUFF_NAME[767],"Fire");
+_root.hackMove2[17] = 1;
+_root.hackMove2[82] = -0.5;
+_root.hackMove2[16] = 2;
+_root.hackMove2[20] = -1;
+_root.hackMove2[27] = 1;
+_root.hackMove2[25] = BUFF_DESC1[767];
+addNewBuffKrin("FLAMESPLITTER3",BUFF_NAME[766],"Fire");
+_root.hackMove2[16] = 99;
+_root.hackMove2[20] = 1;
+_root.hackMove2[27] = 1;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = BUFF_DESC1[766];
+addNewBuffKrin("MUTATIONSEED",BUFF_NAME[768],"Poison");
+_root.hackMove2[16] = 6;
+_root.hackMove2[48] = 1;
+_root.hackMove2[32] = 1;
+_root.hackMove2[66] = 0.5;
+_root.hackMove2[25] = BUFF_DESC1[768];
+addNewBuffKrin("SEEDMUTATION",BUFF_NAME[769],"Poison");
+_root.hackMove2[29] = 4;
+_root.hackMove2[16] = 1;
+_root.hackMove2[20] = -1;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = BUFF_DESC1[769];
+addNewBuffKrin("SEEDMUTATION2",BUFF_NAME[770],"Poison");
+_root.hackMove2[17] = 1;
+_root.hackMove2[16] = 2;
+_root.hackMove2[46] = 0.5;
+_root.hackMove2[20] = -1;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = BUFF_DESC1[770];
+addNewBuffKrin("ROBOTINJECTION",BUFF_NAME[771],"Lightning");
+_root.hackMove2[16] = 4;
+_root.hackMove2[23] = 0.75;
+_root.hackMove2[32] = 0.5;
+_root.hackMove2[25] = BUFF_DESC1[771];
+addNewBuffKrin("ROBOTINJECTION2",BUFF_NAME[772],"Lightning");
+_root.hackMove2[16] = 4;
+_root.hackMove2[86] = 5;
+_root.hackMove2[32] = 0.5;
+_root.hackMove2[11] = 0.5;
+_root.hackMove2[25] = BUFF_DESC1[772];
+addNewBuffKrin("ROBOTELECTROSHOCK",BUFF_NAME[773],"Lightning");
+_root.hackMove2[11] = 0.5;
+_root.hackMove2[48] = -0.5;
+_root.hackMove2[16] = 4;
+_root.hackMove2[20] = -1;
+_root.hackMove2[27] = 1;
+_root.hackMove2[25] = BUFF_DESC1[773];
+addNewBuffKrin("ROBOTELECTROSHOCK2",BUFF_NAME[774],"Lightning");
+_root.hackMove2[13] = -0.25;
+_root.hackMove2[48] = 0.5;
+_root.hackMove2[16] = 4;
+_root.hackMove2[20] = -1;
+_root.hackMove2[27] = 1;
+_root.hackMove2[25] = BUFF_DESC1[774];
+addNewBuffKrin("ROBOTELECTROSHOCK3",BUFF_NAME[775],"Lightning");
+_root.hackMove2[29] = 2;
+_root.hackMove2[16] = 2;
+_root.hackMove2[20] = -1;
+_root.hackMove2[27] = 1;
+_root.hackMove2[25] = BUFF_DESC1[775];
+addNewBuffKrin("KAMIKAZE",BUFF_NAME[776],"Lightning");
+_root.hackMove2[16] = 99;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = BUFF_DESC1[776];
+addNewBuffKrin("KAMIKAZE2",BUFF_NAME[776],"Lightning");
+_root.hackMove2[16] = -1;
+_root.hackMove2[32] = 1;
+_root.hackMove2[112] = 9999;
+_root.hackMove2[25] = BUFF_DESC1[776];
+addNewBuffKrin("STANCENOTE",BUFF_NAME[777],"Physical");
+_root.hackMove2[16] = 99;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = BUFF_DESC1[777] + BUFF_DESC2[777];
+addNewBuffKrin("BROKENSTANCE",BUFF_NAME[778],"Physical");
+_root.hackMove2[17] = 1;
+_root.hackMove2[16] = 2;
+_root.hackMove2[13] = 0.5;
+_root.hackMove2[20] = -1;
+_root.hackMove2[25] = BUFF_DESC1[778];
+addNewBuffKrin("BLACKFLAMEAPOSTLE",BUFF_NAME[779],"Blackflame");
+_root.hackMove2[20] = -1;
+_root.hackMove2[16] = 1;
+_root.hackMove2[27] = 1;
+_root.hackMove2[32] = 1;
+_root.hackMove2[45] = 0.05;
+_root.hackMove2[25] = BUFF_DESC1[779];
+addNewBuffKrin("APOSTLEPULL",BUFF_NAME[780],"Physical");
+_root.hackMove2[126] = "APOSTLEPULL2";
+_root.hackMove2[125] = "Apostle Pull";
+_root.hackMove2[140] = "Apostle Pull";
+_root.hackMove2[124] = 2;
+_root.hackMove2[16] = 2;
+_root.hackMove2[20] = 1;
+_root.hackMove2[27] = 1;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = BUFF_DESC1[780];
+addNewBuffKrin("APOSTLESLASH",BUFF_NAME[781],"Physical");
+_root.hackMove2[126] = "APOSTLESLASH2";
+_root.hackMove2[125] = "Apostle Slash";
+_root.hackMove2[140] = "Apostle Slash";
+_root.hackMove2[124] = 2;
+_root.hackMove2[16] = 2;
+_root.hackMove2[20] = 1;
+_root.hackMove2[27] = 1;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = BUFF_DESC1[781];
+addNewBuffKrin("APOSTLEPULL2",BUFF_NAME[782],"Physical");
+_root.hackMove2[16] = 4;
+_root.hackMove2[15] = 15;
+_root.hackMove2[82] = -0.5;
+_root.hackMove2[20] = -1;
+_root.hackMove2[32] = 0.5;
+_root.hackMove2[25] = BUFF_DESC1[782];
+addNewBuffKrin("APOSTLESLASH2",BUFF_NAME[783],"Physical");
+_root.hackMove2[16] = 4;
+_root.hackMove2[36] = -0.5;
+_root.hackMove2[7] = -0.4;
+_root.hackMove2[20] = -1;
+_root.hackMove2[32] = 0.5;
+_root.hackMove2[25] = BUFF_DESC1[783];
+addNewBuffKrin("BLACKFLAMEWAIT",BUFF_NAME[784],"Blackflame");
+_root.hackMove2[16] = 7;
+_root.hackMove2[141] = "APOSTLEENRAGE";
+_root.hackMove2[142] = 80;
+_root.hackMove2[20] = 1;
+_root.hackMove2[27] = 1;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = BUFF_DESC1[784];
+addNewBuffKrin("BLACKFLAMEENHANCEMENT",BUFF_NAME[786],"Blackflame");
+_root.hackMove2[16] = 99;
+_root.hackMove2[143] = 0.05;
+_root.hackMove2[20] = 1;
+_root.hackMove2[27] = 1;
+_root.hackMove2[31] = 22;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = BUFF_DESC1[786];
+addNewBuffKrin("APOSTLEENRAGE",BUFF_NAME[785],"Blackflame");
+_root.hackMove2[16] = 99;
+_root.hackMove2[10] = 9999;
+_root.hackMove2[27] = 1;
+_root.hackMove2[20] = 1;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = BUFF_DESC1[785];
