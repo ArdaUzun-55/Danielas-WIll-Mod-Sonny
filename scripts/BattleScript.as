@@ -23,7 +23,7 @@ onClipEvent(enterFrame){
                if(mAry2[20] == 1 && _root.strikeSuccess == true || mAry2[45] > 1 && _root.strikeSuccess == false && _root.strikeSuccessmultiple[JI] == true || _root.strikeSuccess == true)
                {
                   _root.addSound("Effects",_root.Krin.soundToMake);
-                  if(mAry2[16] > 0)
+                  if(mAry2[16] > 0 && mAry2[20] == 0)
                   {
                      dispelCounterXYUX = mAry2[16];
                      eged = 0;
@@ -53,6 +53,21 @@ onClipEvent(enterFrame){
                            }
                         }
                         eged++;
+                     }
+                  }
+                  if(mAry2[16] > 0 && mAry2[20] == 1)
+                  {
+                     owegwe = 0;
+                     while(owegwe < 3)
+                     {
+                        if(_root["playerKrin" + (mTarget.teamSide + owegwe * 2)].active && _root["playerKrin" + (mTarget.teamSide + owegwe * 2)].IGNORE == 0)
+                        {
+                           if(_root.strikeSuccessmultiple[owegwe + JI] == true || mAry1[10] == "Shock" || mAry1[10] == "Shock2")
+                           {
+                              _root.checkDispellAoe(mCaster,_root["playerKrin" + (mTarget.teamSide + owegwe * 2)],mAry1,mAry2);
+                           }
+                        }
+                        owegwe++;
                      }
                   }
                   if(mAry2[34] > 0)
@@ -89,17 +104,13 @@ onClipEvent(enterFrame){
                   }
                   if(!mAry2[20])
                   {
-                     _root.executeMove(mAry1,mAry2,mCaster,mTarget);
+                     _root.executeMove(mAry1,mAry2,mCaster,mTarget,JI);
                      if(_root.DamageOutputKrinFinal2 == 0)
                      {
                         mTarget.NODAMAGE = false;
                      }
                      _root.checkStatus(mCaster,mTarget,mAry2,mAry1);
-                     _root.checkBuff(mCaster,mTarget,mAry2,mAry1,FIRE2,FIRE3,FIRE4,FIRE5,FIRE6);
-                     if(JI == 1)
-                     {
-                        _root.KrinNumberShow(_root.DamageOutputKrinFinal,"player" + mTarget.playerID,IDKM2[0]);
-                     }
+                     _root.checkBuff(mCaster,mTarget,mAry2,mAry1,FIRE5);
                      mCaster.NODAMAGE = true;
                   }
                   else
@@ -111,11 +122,11 @@ onClipEvent(enterFrame){
                         {
                            if(_root.strikeSuccessmultiple[owegwe + JI] == true || mAry1[10] == "Shock" || mAry1[10] == "Shock2")
                            {
-                              _root.executeMove(mAry1,mAry2,mCaster,_root["playerKrin" + (mTarget.teamSide + owegwe * 2)]);
+                              _root.executeMove(mAry1,mAry2,mCaster,_root["playerKrin" + (mTarget.teamSide + owegwe * 2)],JI);
                               _root.checkStatus(mCaster,_root["playerKrin" + (mTarget.teamSide + owegwe * 2)],mAry2,mAry1);
-                              _root.checkBuff(mCaster,_root["playerKrin" + (mTarget.teamSide + owegwe * 2)],mAry2,mAry1,FIRE2,FIRE3,FIRE4,FIRE5,FIRE6);
+                              _root.checkBuff(mCaster,_root["playerKrin" + (mTarget.teamSide + owegwe * 2)],mAry2,mAry1,FIRE5);
                               _root.checkBuffAoe(mCaster,_root["playerKrin" + (mTarget.teamSide + owegwe * 2)],mAry2,mAry1);
-                              _root.checkBuffAfter(mCaster,_root["playerKrin" + (mTarget.teamSide + owegwe * 2)],mAry2,mAry1,JI);
+                              _root.checkBuffafter(mCaster,_root["playerKrin" + (mTarget.teamSide + owegwe * 2)],mAry2,mAry1,JI);
                            }
                            else if(_root.strikeSuccessmultiple[owegwe + JI] == false)
                            {
@@ -183,10 +194,13 @@ onClipEvent(enterFrame){
                            G = 0;
                            while(G < 3)
                            {
-                              if(mAry2[21] == 0 && mAry2[20] == 1 && mAry2[67] == 0 || mAry2[29] == "DOTON")
+                              if(_root.strikeSuccessmultiple[G + JI] == true || mAry1[10] == "Shock" || mAry1[10] == "Shock2")
                               {
-                                 buffUniqueCheck == false;
-                                 _root.applyBuffKrin(_root["playerKrin" + (mTarget.teamSide + G * 2)],mAry2[29],1,mCaster);
+                                 if(mAry2[21] == 0 && mAry2[20] == 1 && mAry2[67] == 0 || mAry2[29] == "DOTON")
+                                 {
+                                    buffUniqueCheck == false;
+                                    _root.applyBuffKrin(_root["playerKrin" + (mTarget.teamSide + G * 2)],mAry2[29],1,mCaster);
+                                 }
                               }
                               G++;
                            }
@@ -357,12 +371,15 @@ onClipEvent(enterFrame){
                            G = 0;
                            while(G < 3)
                            {
-                              if(mAry2[21] == 0 && mAry2[20] == 1 && buffUniqueCheck == true)
+                              if(_root.strikeSuccessmultiple[G + JI] == true || mAry1[10] == "Shock" || mAry1[10] == "Shock2")
                               {
-                                 buffUniqueCheck == false;
-                                 if(_root["playerKrin" + (mTarget.teamSide + G * 2)].active)
+                                 if(mAry2[21] == 0 && mAry2[20] == 1 && buffUniqueCheck == true)
                                  {
-                                    _root.applyBuffKrin(_root["playerKrin" + (mTarget.teamSide + G * 2)],mAry2[13],1,mCaster);
+                                    buffUniqueCheck == false;
+                                    if(_root["playerKrin" + (mTarget.teamSide + G * 2)].active)
+                                    {
+                                       _root.applyBuffKrin(_root["playerKrin" + (mTarget.teamSide + G * 2)],mAry2[13],1,mCaster);
+                                    }
                                  }
                               }
                               if(mAry2[27] == 1)
@@ -417,6 +434,7 @@ onClipEvent(enterFrame){
                      }
                   }
                   _root.applyChangesKrin(mTarget);
+                  _root.checkAbilities(mCaster,mTarget,mAry2,mAry1,FIRE2,FIRE3,FIRE4,FIRE5,FIRE6);
                   _root.checkBuffafter(mCaster,mTarget,mAry2,mAry1,JI);
                }
                else
@@ -426,6 +444,7 @@ onClipEvent(enterFrame){
                      _root.addSound("Effects",_root.Krin.missToMake);
                      _root.KrinNumberShow("miss",mTarget2,mAry2[0]);
                   }
+                  _root.checkAbilities(mCaster,mTarget,mAry2,mAry1,FIRE2,FIRE3,FIRE4,FIRE5,FIRE6);
                   if(mAry2[20] == 1)
                   {
                      owegwe = 0;
@@ -852,7 +871,7 @@ onClipEvent(enterFrame){
                         {
                            _root[theGuy].abilityCoolDown[_root.moveCoolDownBreaker] = mAry1[7];
                            _root.krinToMove._visible = false;
-                           if(_root.turnBasedKrin)
+                           if(!_root.turnBasedKrin)
                            {
                            }
                         }
@@ -1107,7 +1126,7 @@ onClipEvent(enterFrame){
                         _root.krinToMove.toolTipTitle = _root.krinToMove.thinger1;
                         _root.krinToMove.toolTip = _root.krinToMove.thinger2;
                         _root.krinToMove._visible = false;
-                        if(_root.turnBasedKrin)
+                        if(!_root.turnBasedKrin)
                         {
                         }
                      }
@@ -1159,7 +1178,7 @@ onClipEvent(enterFrame){
                   _root.krinToMove.toolTipTitle = _root.krinToMove.thinger1;
                   _root.krinToMove.toolTip = _root.krinToMove.thinger2;
                   _root.krinToMove._visible = false;
-                  if(_root.turnBasedKrin)
+                  if(!_root.turnBasedKrin)
                   {
                   }
                }
@@ -1419,7 +1438,7 @@ onClipEvent(enterFrame){
                {
                   _root.hardSkip = true;
                }
-               if(_root["KBR" + _root.Krin.BattlePick].speeches[_root.speechOn].phase == _root.phase)
+               if(_root["KBR" + _root.Krin.BattlePick].speeches[_root.speechOn].phase == _root.phase || _root["KBR" + _root.Krin.BattlePick].speeches[_root.speechOn].phase == -1)
                {
                   if(_root["KBR" + _root.Krin.BattlePick].speeches[_root.speechOn].turnTime == _root.turnTimeKKK2)
                   {
