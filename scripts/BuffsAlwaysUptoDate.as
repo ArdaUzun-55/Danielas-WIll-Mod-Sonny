@@ -1029,7 +1029,7 @@ function precheckBuff(mCaster, mTarget, mAry2, mAry1)
    }
    for(abilityhistorytype in mAry2[93])
    {
-      if(mTarget.abilityhistory[0] == mAry2[93][abilityhistorytype])
+      if(mTarget.abilityhistoryIDKM[14] == mAry2[93][abilityhistorytype])
       {
          mAry2[4] *= mAry2[94];
       }
@@ -8878,6 +8878,7 @@ _root.hackMove2[16] = 7;
 _root.hackMove2[141] = "APOSTLEENRAGE";
 _root.hackMove2[142] = 80;
 _root.hackMove2[20] = 1;
+_root.hackMove2[7] = -0.5;
 _root.hackMove2[27] = 1;
 _root.hackMove2[32] = 1;
 _root.hackMove2[25] = BUFF_DESC1[784];
