@@ -12,7 +12,6 @@ onClipEvent(enterFrame){
       if(_root.BAMBAMBAM)
       {
          _root.BAMBAMBAM = false;
-         NOREPLY = false;
          AttackEndCounter = 0;
          if(moveBammer == false)
          {
@@ -871,7 +870,7 @@ onClipEvent(enterFrame){
                         {
                            _root[theGuy].abilityCoolDown[_root.moveCoolDownBreaker] = mAry1[7];
                            _root.krinToMove._visible = false;
-                           if(!_root.turnBasedKrin)
+                           if(_root.turnBasedKrin)
                            {
                            }
                         }
@@ -982,14 +981,10 @@ onClipEvent(enterFrame){
                      }
                      if(mAry1[10] == "Missile2")
                      {
-                        if(mAry2[83] != "BLOODFLAMEEMPOWER" || mAry2[83] == "BLOODFLAMEEMPOWER" && NOREPLY == false)
-                        {
-                           _root.addSound("Effects","sfx_cast");
-                           _root.addSound("Effects","boss_ultimate");
-                           _root.Krin.missToMake = "sfx_magicmiss";
-                           _root.Krin.soundToMake = mAry1[18];
-                           NOREPLY = true;
-                        }
+                        _root.addSound("Effects","sfx_cast");
+                        _root.addSound("Effects","boss_ultimate");
+                        _root.Krin.missToMake = "sfx_magicmiss";
+                        _root.Krin.soundToMake = mAry1[18];
                         _root.BATTLESCREEN[mCaster2].inner.colortobe = mAry1[11];
                         _root.BATTLESCREEN[mCaster2].inner.gotoAndPlay("cast");
                         if(!mAry2[20])
@@ -1126,7 +1121,7 @@ onClipEvent(enterFrame){
                         _root.krinToMove.toolTipTitle = _root.krinToMove.thinger1;
                         _root.krinToMove.toolTip = _root.krinToMove.thinger2;
                         _root.krinToMove._visible = false;
-                        if(!_root.turnBasedKrin)
+                        if(_root.turnBasedKrin)
                         {
                         }
                      }
@@ -1178,7 +1173,7 @@ onClipEvent(enterFrame){
                   _root.krinToMove.toolTipTitle = _root.krinToMove.thinger1;
                   _root.krinToMove.toolTip = _root.krinToMove.thinger2;
                   _root.krinToMove._visible = false;
-                  if(!_root.turnBasedKrin)
+                  if(_root.turnBasedKrin)
                   {
                   }
                }
