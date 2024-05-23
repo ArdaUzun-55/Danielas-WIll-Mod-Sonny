@@ -205,14 +205,26 @@ while(i < 7)
    shtName.IHOT = 1;
    shtName.ODOT = 1;
    shtName.NODAMAGE = true;
-   shtName.abilityhistory = new Array();
-   shtName.abilityhistory2 = new Array();
    shtName.FOCUSCHANGE = 0;
    shtName.SSWITCH = 0;
    shtName.HEALMOD_PLUS = 1;
    shtName.HEALMOD_MINUS = 1;
    shtName.HEALMOD = 1;
    shtName.STUN = 0;
+   shtName.abilityhistoryIDKM = new Array();
+   f = 0;
+   while(f < 19)
+   {
+      shtName.abilityhistoryIDKM[f] = 0;
+      f++;
+   }
+   f = 0;
+   shtName.abilityhistoryIDKM2 = new Array();
+   while(f < 100)
+   {
+      shtName.abilityhistoryIDKM2[f] = 0;
+      f++;
+   }
    shtName.START = 0;
    shtName.STUNP = 0;
    shtName.REFLECTDMG = 0;
