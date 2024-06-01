@@ -135,15 +135,6 @@ onClipEvent(enterFrame){
                         }
                         owegwe++;
                      }
-                     if(mAry1[0] == "Pulse")
-                     {
-                        mAry2[9] = 0;
-                     }
-                     if(mAry2[60] > 0 || mAry2[63] > 0)
-                     {
-                        mAry2[20] = 0;
-                        mAry2[45] = 1;
-                     }
                      mCaster.NODAMAGE = true;
                   }
                   if(mAry2[29] != 0)
@@ -393,7 +384,11 @@ onClipEvent(enterFrame){
                            }
                            if((!_root["KRINBUFF" + mAry2[13]][27] || buffUniqueCheck == true) && mAry2[20] != 1 && mAry2[27] != 1)
                            {
-                              if(_root["KRINBUFF" + mAry2[13]][17] > 0 && numberRandomerBuffHit > mTarget.STUNRESIST)
+                              if(_root["KRINBUFF" + mAry2[13]][17] > 0 && numberRandomerBuffHit > mToBeBuffed.STUNRESIST)
+                              {
+                                 _root.applyBuffKrin(mToBeBuffed,mAry2[13],1,mCaster);
+                              }
+                              if(_root["KRINBUFF" + mAry2[13]][50] > 0 && numberRandomerBuffHit > mToBeBuffed.SLOWRESIST)
                               {
                                  _root.applyBuffKrin(mToBeBuffed,mAry2[13],1,mCaster);
                               }
