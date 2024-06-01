@@ -156,7 +156,7 @@ while(i < 7)
       e++;
    }
    shtName.FILTERSBUFFARRAY = new Array();
-   shtName.FILTERSBUFFARRAY = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+   shtName.FILTERSBUFFARRAY = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
    shtName.DOTTICKERARRAY = new Array();
    shtName.DOTTICKERARRAY = [0,0,0,0,0,0,0,0,0,0,0];
    shtName.changeArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
@@ -193,6 +193,7 @@ while(i < 7)
    shtName.STANCEMAX = 0;
    shtName.BLEED = 100;
    shtName.BLEED2 = 0;
+   shtName.LIVINGDEAD = 0;
    shtName.BLEEDMAX = 100;
    shtName.FROSTBITTEN = 100;
    shtName.FROSTBITTEN2 = 0;
