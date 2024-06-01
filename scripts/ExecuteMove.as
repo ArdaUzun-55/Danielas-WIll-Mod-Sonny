@@ -12,6 +12,21 @@ function executeMove(IDKM, IDKM2, IDKC, IDKT, JI)
       IDKC.abilityhistoryIDKM2[i] = IDKM2[i];
       i++;
    }
+   if(IDKM2[98] != 0 && IDKT.abilityhistoryIDKM[14] != 0 && IDKT.abilityhistoryIDKM[7] != 0)
+   {
+      i = 0;
+      while(i < 19)
+      {
+         IDKM[i] = IDKT.abilityhistoryIDKM[i];
+         i++;
+      }
+      i = 0;
+      while(i < 100)
+      {
+         IDKM2[i] = IDKT.abilityhistoryIDKM2[i];
+         i++;
+      }
+   }
    AVGNUMC = 100 + 15 * IDKC.plevel;
    SPEEDCRITCALC = IDKC.SPEEDU / getStat(10,IDKC.plevel) - 3;
    PERCALK = IDKC.PERU[IDKM2[0]] / AVGNUMC;
@@ -653,7 +668,7 @@ function executeMove(IDKM, IDKM2, IDKC, IDKT, JI)
             {
                _root.BATTLESCREEN["player" + IDKT.playerID].inner.gotoAndPlay("hit");
             }
-            if(IDKT.LIFEN == 0)
+            if(IDKT.LIFEN == 0 && IDKT.LIVINGDEAD == 0)
             {
                _root.BATTLESCREEN["player" + IDKT.playerID].inner.gotoAndPlay("dead");
                IDKT.active = false;
@@ -676,6 +691,27 @@ function executeMove(IDKM, IDKM2, IDKC, IDKT, JI)
                   wefvergrervw++;
                }
                _root.krinAddMove(IDKT.playerID,IDKT.playerID,0);
+            }
+            else if(IDKT.LIFEN == 0 && IDKT.LIVINGDEAD < 0)
+            {
+               f = 0;
+               while(f < _root.maxBuffLimit)
+               {
+                  if(_root["KRINBUFF" + IDKT.BUFFARRAYK[f].buffId][146] != 0 && IDKT.BUFFARRAYK[f].CD != 0)
+                  {
+                     _root.applyBuffKrin(IDKT,_root["KRINBUFF" + IDKT.BUFFARRAYK[f].buffId][146],1,IDKC);
+                  }
+                  f++;
+               }
+               IDKT.LIFEN = IDKT.LIFEU;
+               IDKT.LIVINGDEAD += 1;
+               if(IDKT.LIVINGDEAD == 0)
+               {
+                  _root.applyBuffKrin(IDKT,"FURYPASSIVE2",1,IDKC);
+                  _root.applyBuffKrin(IDKT,"FURYPASSIVE3",1,IDKC);
+                  _root.addSound("Effects","Fury");
+               }
+               _root.applyChangesKrin(IDKT);
             }
             else
             {
@@ -804,7 +840,7 @@ function executeMove(IDKM, IDKM2, IDKC, IDKT, JI)
             {
                _root.BATTLESCREEN["player" + IDKT.playerID].inner.gotoAndPlay("hit");
             }
-            if(IDKT.LIFEN == 0)
+            if(IDKT.LIFEN == 0 && IDKT.LIVINGDEAD == 0)
             {
                _root.BATTLESCREEN["player" + IDKT.playerID].inner.gotoAndPlay("dead");
                IDKT.active = false;
@@ -825,11 +861,37 @@ function executeMove(IDKM, IDKM2, IDKC, IDKT, JI)
                }
                _root.krinAddMove(IDKT.playerID,IDKT.playerID,0);
             }
+            else if(IDKT.LIFEN == 0 && IDKT.LIVINGDEAD < 0)
+            {
+               f = 0;
+               while(f < _root.maxBuffLimit)
+               {
+                  if(_root["KRINBUFF" + IDKT.BUFFARRAYK[f].buffId][146] != 0 && IDKT.BUFFARRAYK[f].CD != 0)
+                  {
+                     _root.applyBuffKrin(IDKT,_root["KRINBUFF" + IDKT.BUFFARRAYK[f].buffId][146],1,IDKC);
+                  }
+                  f++;
+               }
+               IDKT.LIFEN = IDKT.LIFEU;
+               IDKT.LIVINGDEAD += 1;
+               if(IDKT.LIVINGDEAD == 0)
+               {
+                  _root.applyBuffKrin(IDKT,"FURYPASSIVE2",1,IDKC);
+                  _root.applyBuffKrin(IDKT,"FURYPASSIVE3",1,IDKC);
+                  _root.addSound("Effects","Fury");
+               }
+               _root.applyChangesKrin(IDKT);
+            }
          }
       }
    }
    if(IDKM[14] == "Focus")
    {
+      if(IDKT.SLOWRESIST > 0 && IDKM2[9] < 0)
+      {
+         SLOWMOD = Math.min(1,Math.max(0,1 - IDKT.SLOWRESIST));
+         IDKM2[9] = Math.round(IDKM2[9] * SLOWMOD);
+      }
       IDKT.FOCUSN += IDKM2[9];
       if(IDKT.FOCUSN > IDKT.FOCUSU)
       {
@@ -923,7 +985,7 @@ function executeMove(IDKM, IDKM2, IDKC, IDKT, JI)
             {
                _root.BATTLESCREEN["player" + IDKT.playerID].inner.gotoAndPlay("hit");
             }
-            if(IDKT.LIFEN == 0)
+            if(IDKT.LIFEN == 0 && IDKT.LIVINGDEAD == 0)
             {
                _root.BATTLESCREEN["player" + IDKT.playerID].inner.gotoAndPlay("dead");
                IDKT.active = false;
@@ -944,11 +1006,33 @@ function executeMove(IDKM, IDKM2, IDKC, IDKT, JI)
                }
                _root.krinAddMove(IDKT.playerID,IDKT.playerID,0);
             }
+            else if(IDKT.LIFEN == 0 && IDKT.LIVINGDEAD < 0)
+            {
+               f = 0;
+               while(f < _root.maxBuffLimit)
+               {
+                  if(_root["KRINBUFF" + IDKT.BUFFARRAYK[f].buffId][146] != 0 && IDKT.BUFFARRAYK[f].CD != 0)
+                  {
+                     _root.applyBuffKrin(IDKT,_root["KRINBUFF" + IDKT.BUFFARRAYK[f].buffId][146],1,IDKC);
+                  }
+                  f++;
+               }
+               IDKT.LIFEN = IDKT.LIFEU;
+               IDKT.LIVINGDEAD += 1;
+               if(IDKT.LIVINGDEAD == 0)
+               {
+                  _root.applyBuffKrin(IDKT,"FURYPASSIVE2",1,IDKC);
+                  _root.applyBuffKrin(IDKT,"FURYPASSIVE3",1,IDKC);
+                  _root.addSound("Effects","Fury");
+               }
+               _root.applyChangesKrin(IDKT);
+            }
          }
       }
-      if(IDKM2[9] < 0)
+      if(IDKT.SLOWRESIST > 0 && IDKM2[9] < 0)
       {
-         IDKM2[9] + mTarget.SLOWRESIST;
+         SLOWMOD = Math.min(1,Math.max(0,1 - IDKT.SLOWRESIST));
+         IDKM2[9] = Math.round(IDKM2[9] * SLOWMOD);
       }
       IDKT.FOCUSN += IDKM2[9];
       if(IDKT.FOCUSN > IDKT.FOCUSU)
@@ -1103,7 +1187,7 @@ function executeMove(IDKM, IDKM2, IDKC, IDKT, JI)
             {
                _root.BATTLESCREEN["player" + IDKT.playerID].inner.gotoAndPlay("hit");
             }
-            if(IDKT.LIFEN == 0)
+            if(IDKT.LIFEN == 0 && IDKT.LIVINGDEAD == 0)
             {
                _root.BATTLESCREEN["player" + IDKT.playerID].inner.gotoAndPlay("dead");
                IDKT.active = false;
@@ -1126,6 +1210,27 @@ function executeMove(IDKM, IDKM2, IDKC, IDKT, JI)
                   wefvergrervw++;
                }
                _root.krinAddMove(IDKT.playerID,IDKT.playerID,0);
+            }
+            else if(IDKT.LIFEN == 0 && IDKT.LIVINGDEAD < 0)
+            {
+               f = 0;
+               while(f < _root.maxBuffLimit)
+               {
+                  if(_root["KRINBUFF" + IDKT.BUFFARRAYK[f].buffId][146] != 0 && IDKT.BUFFARRAYK[f].CD != 0)
+                  {
+                     _root.applyBuffKrin(IDKT,_root["KRINBUFF" + IDKT.BUFFARRAYK[f].buffId][146],1,IDKC);
+                  }
+                  f++;
+               }
+               IDKT.LIFEN = IDKT.LIFEU;
+               IDKT.LIVINGDEAD += 1;
+               if(IDKT.LIVINGDEAD == 0)
+               {
+                  _root.applyBuffKrin(IDKT,"FURYPASSIVE2",1,IDKC);
+                  _root.applyBuffKrin(IDKT,"FURYPASSIVE3",1,IDKC);
+                  _root.addSound("Effects","Fury");
+               }
+               _root.applyChangesKrin(IDKT);
             }
             else
             {
@@ -1151,9 +1256,10 @@ function executeMove(IDKM, IDKM2, IDKC, IDKT, JI)
          }
          _root.lifeBarUpdate(IDKT.playerID);
       }
-      if(IDKM2[9] < 0)
+      if(IDKT.SLOWRESIST > 0 && IDKM2[9] < 0)
       {
-         IDKM2[9] + mTarget.SLOWRESIST;
+         SLOWMOD = Math.min(1,Math.max(0,1 - IDKT.SLOWRESIST));
+         IDKM2[9] = Math.round(IDKM2[9] * SLOWMOD);
       }
       IDKT.FOCUSN += IDKM2[9];
       if(IDKT.FOCUSN > IDKT.FOCUSU)
@@ -1213,7 +1319,11 @@ lifeBarUpdate = function(PWLC)
    }
    else if(ghjul.STANCE < ghjul.STANCEMAX)
    {
-      _root["p" + PWLC + "BAR"].inner.focusMax20 = "Stance:" + ghjul.STANCE + "/" + ghjul.BLEED;
+      _root["p" + PWLC + "BAR"].inner.focusMax20 = "Stance:" + ghjul.STANCE;
+      if(ghjul.BLEED < ghjul.BLEEDMAX)
+      {
+         _root["p" + PWLC + "BAR"].inner.focusMax20 = "Stance:" + ghjul.STANCE + "/" + ghjul.BLEED;
+      }
    }
    else if(ghjul.BLEED < ghjul.BLEEDMAX)
    {
