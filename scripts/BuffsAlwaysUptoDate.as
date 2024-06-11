@@ -1536,7 +1536,7 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE5)
          }
          if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][118] != 0 && mCaster.BUFFARRAYK[x].CD != 0)
          {
-            _root.applyBuffKrin(mTarget,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][118],1,mTarget);
+            _root.applyBuffKrin(mTarget,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][118],1,mCaster);
          }
          if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][74] != 0 && mCaster.BUFFARRAYK[x].CD != 0)
          {
@@ -7008,12 +7008,14 @@ addNewBuffKrin("BLACKVOID2",BUFF_NAME[615],"Blackflame");
 _root.hackMove2[35] = -0.05;
 _root.hackMove2[13] = 0.15;
 _root.hackMove2[16] = 6;
+_root.hackMove2[28] = 0.5;
 _root.hackMove2[32] = 0.1;
 _root.hackMove2[25] = BUFF_DESC1[615] + _root.hackMove2[13] * 100 + BUFF_DESC2[615];
 addNewBuffKrin("BLACKVOID3",BUFF_NAME[615],"Blackflame");
 _root.hackMove2[35] = -0.05;
 _root.hackMove2[13] = 0.2;
 _root.hackMove2[16] = 6;
+_root.hackMove2[28] = 0.5;
 _root.hackMove2[32] = 0.1;
 _root.hackMove2[25] = BUFF_DESC1[615] + _root.hackMove2[13] * 100 + BUFF_DESC2[615];
 addNewBuffKrin("SAFEGUARDB2",BUFF_NAME[616],"Blackflame");
@@ -7891,7 +7893,6 @@ addNewBuffKrin("PALLADION",BUFF_NAME[691],"Shadow");
 _root.hackMove2[16] = -1;
 _root.hackMove2[49] = 900;
 _root.hackMove2[20] = -1;
-_root.hackMove2[80] = 1;
 _root.hackMove2[32] = 1;
 _root.hackMove2[25] = BUFF_DESC1[691];
 addNewBuffKrin("PARTHENOS2",BUFF_NAME[696],"Shadow");
