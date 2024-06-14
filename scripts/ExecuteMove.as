@@ -7,7 +7,7 @@ function executeMove(IDKM, IDKM2, IDKC, IDKT, JI)
       i++;
    }
    i = 0;
-   while(100 > i)
+   while(101 > i)
    {
       IDKC.abilityhistoryIDKM2[i] = IDKM2[i];
       i++;
@@ -21,7 +21,7 @@ function executeMove(IDKM, IDKM2, IDKC, IDKT, JI)
          i++;
       }
       i = 0;
-      while(i < 100)
+      while(i < 101)
       {
          IDKM2[i] = IDKT.abilityhistoryIDKM2[i];
          i++;
