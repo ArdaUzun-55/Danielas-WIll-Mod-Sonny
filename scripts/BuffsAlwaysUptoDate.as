@@ -371,6 +371,17 @@ function applyBuffKrin(ukcb2, bn, iftbc, ukcb4, debuffValue, limo)
       }
       s++;
    }
+   if(bffker[150] > 0)
+   {
+      if(ukcb2.STRENGTHU > ukcb2.MAGICU)
+      {
+         ukcb2.changeArray[1] += iftbc * bffker[150];
+      }
+      if(ukcb2.STRENGTHU < ukcb2.MAGICU)
+      {
+         ukcb2.changeArray[3] += iftbc * bffker[150];
+      }
+   }
    if(iftbc == 1)
    {
       numberShieldFind = bffker[19] + ukcb4.STRENGTHU * bffker[38] + ukcb4.MAGICU * bffker[39] + ukcb4.SPEEDU * bffker[40] + ukcb4.LIFEU * bffker[41];
@@ -1093,6 +1104,22 @@ function precheckBuff(mCaster, mTarget, mAry2, mAry1)
    {
       mAry1[7] = mAry2[75] + 1;
    }
+   if(mAry2[100] > 0)
+   {
+      if(mCaster.MAGICU > mCaster.STRENGTHU)
+      {
+         mAry2[4] = mAry2[100];
+      }
+      if(mCaster.MAGICU < mCaster.STRENGTHU)
+      {
+         mAry2[2] = mAry2[100];
+      }
+      if(mCaster.MAGICU == mCaster.STRENGTHU)
+      {
+         mAry2[4] = mAry2[100] / 2;
+         mAry2[2] = mAry2[100] / 2;
+      }
+   }
    for(abilityhistorytype in mAry2[93])
    {
       if(mTarget.abilityhistoryIDKM[14] == mAry2[93][abilityhistorytype] && mAry2[94] != 0)
@@ -1224,6 +1251,10 @@ function precheckBuff(mCaster, mTarget, mAry2, mAry1)
          if(mAry2[2] == 0 && mAry1[0] != "Bloodflame Slash")
          {
             mAry2[6] *= _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][124];
+         }
+         if(mAry2[2] == 0 && mAry2[100] > 0)
+         {
+            mAry2[4] *= _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][124];
          }
       }
       if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][148] > 0 && mAry1[0] == _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][125] && mCaster.BUFFARRAYK[x].CD > 0)
@@ -8425,6 +8456,7 @@ addNewBuffKrin("PYROBLEND1",BUFF_NAME[737],"Fire");
 _root.hackMove2[16] = 3;
 _root.hackMove2[20] = 1;
 _root.hackMove2[7] = 0.5;
+_root.hackMove2[150] = 0.5;
 _root.hackMove2[131] = 32.5;
 _root.hackMove2[31] = 5;
 _root.hackMove2[25] = BUFF_DESC1[737] + _root.hackMove2[7] * 100 + BUFF_DESC2[737];
@@ -8432,6 +8464,7 @@ addNewBuffKrin("PYROBLEND2",BUFF_NAME[737],"Fire");
 _root.hackMove2[16] = 3;
 _root.hackMove2[20] = 1;
 _root.hackMove2[7] = 0.75;
+_root.hackMove2[150] = 0.75;
 _root.hackMove2[131] = 32.5;
 _root.hackMove2[31] = 5;
 _root.hackMove2[25] = BUFF_DESC1[737] + _root.hackMove2[7] * 100 + BUFF_DESC2[737];
@@ -8439,6 +8472,7 @@ addNewBuffKrin("PYROBLEND3",BUFF_NAME[737],"Fire");
 _root.hackMove2[16] = 3;
 _root.hackMove2[20] = 1;
 _root.hackMove2[7] = 1;
+_root.hackMove2[150] = 1;
 _root.hackMove2[31] = 5;
 _root.hackMove2[131] = 32.5;
 _root.hackMove2[25] = BUFF_DESC1[737] + _root.hackMove2[7] * 100 + BUFF_DESC2[737];
@@ -8446,6 +8480,7 @@ addNewBuffKrin("PYROBLEND4",BUFF_NAME[737],"Fire");
 _root.hackMove2[16] = 4;
 _root.hackMove2[20] = 1;
 _root.hackMove2[7] = 1.25;
+_root.hackMove2[150] = 1.25;
 _root.hackMove2[31] = 5;
 _root.hackMove2[131] = 32.5;
 _root.hackMove2[25] = BUFF_DESC1[737] + _root.hackMove2[7] * 100 + BUFF_DESC2[737];
