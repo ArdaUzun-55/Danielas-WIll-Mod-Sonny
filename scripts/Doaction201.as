@@ -223,7 +223,7 @@ while(i < 7)
    }
    f = 0;
    shtName.abilityhistoryIDKM2 = new Array();
-   while(f < 101)
+   while(f < 102)
    {
       shtName.abilityhistoryIDKM2[f] = 0;
       f++;
