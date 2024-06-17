@@ -178,6 +178,8 @@ while(i < 7)
    shtName.IGNORE = 0;
    shtName.STUNRESIST = 0;
    shtName.SLOWRESIST = 0;
+   shtName.FLAMED = 0;
+   shtName.FLAMED2 = 0;
    shtName.HIT = 0;
    shtName.DODGE = 0;
    shtName.AINEXTATTACK = 0;
@@ -221,7 +223,7 @@ while(i < 7)
    }
    f = 0;
    shtName.abilityhistoryIDKM2 = new Array();
-   while(f < 100)
+   while(f < 101)
    {
       shtName.abilityhistoryIDKM2[f] = 0;
       f++;
