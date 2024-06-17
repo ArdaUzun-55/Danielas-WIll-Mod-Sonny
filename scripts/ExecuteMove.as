@@ -1,1414 +1,323 @@
-function executeMove(IDKM, IDKM2, IDKC, IDKT, JI)
+function updateStat_Player(theGuy)
 {
-   i = 0;
-   while(19 > i)
+   _root[theGuy].abilityCoolDown = [0,0,0,0,0,0,0,0];
+   shtName.active = true;
+   for(krinyt in _root[theGuy].buffAdderMatrix)
    {
-      IDKC.abilityhistoryIDKM[i] = IDKM[i];
-      i++;
-   }
-   i = 0;
-   while(101 > i)
-   {
-      IDKC.abilityhistoryIDKM2[i] = IDKM2[i];
-      i++;
-   }
-   if(IDKM2[98] != 0 && IDKT.abilityhistoryIDKM[14] != 0 && IDKT.abilityhistoryIDKM[7] != 0)
-   {
-      i = 0;
-      while(i < 19)
+      if(_root[theGuy].buffAdderMatrix[krinyt] != 0)
       {
-         IDKM[i] = IDKT.abilityhistoryIDKM[i];
-         i++;
-      }
-      i = 0;
-      while(i < 101)
-      {
-         IDKM2[i] = IDKT.abilityhistoryIDKM2[i];
-         i++;
+         shtName.passiveBuffs.push(_root[theGuy].buffAdderMatrix[krinyt]);
       }
    }
-   AVGNUMC = 100 + 15 * IDKC.plevel;
-   SPEEDCRITCALC = IDKC.SPEEDU / getStat(10,IDKC.plevel) - 3;
-   PERCALK = IDKC.PERU[IDKM2[0]] / AVGNUMC;
-   if(IDKM2[81] != 0)
+   shtName.STRENGTHU = shtName.STRENGTH = _root[theGuy].STRENGTH;
+   shtName.SPEEDU = shtName.SPEED = _root[theGuy].SPEED;
+   shtName.LIFEU = Math.round(shtName.LIFE = _root[theGuy].LIFE * vitLifeFactor);
+   shtName.MAGICU = shtName.MAGIC = _root[theGuy].MAGIC;
+   shtName.FOCUSU = shtName.FOCUS = _root[theGuy].FOCUS;
+   shtName.FOCUSN = shtName.FOCUSU;
+   shtName.LIFEN = shtName.LIFEU;
+   shtName.plevel = _root[theGuy].LevelStats[0];
+   shtName.voiceHit = new Array();
+   shtName.voiceHit[0] = "hit_sonny1";
+   shtName.voiceHit[1] = "hit_sonny2";
+   shtName.voiceHit[2] = "hit_sonny3";
+   shtName.voiceDie = "dead_sonny";
+   if(Krin.ClassStats[0] == 277)
    {
-      PERCALK = IDKC.PERU[IDKM2[0]] / AVGNUMC + IDKC.PERU[IDKM2[81]] / AVGNUMC / 2;
+      shtName.BLOODYFURY = 0.5;
    }
-   DEFCALK = IDKT.DEFU[IDKM2[0]] * (IDKT.DEFENSE * IDKM2[58]) / AVGNUMC;
-   DEFCALK2 = IDKT.DEFU[IDKM2[0]] * IDKT.DEFENSE / AVGNUMC;
-   if(DEFCALK <= 0)
+   shtName.model = ["MODEL1",Krin.skinArray[Krin.SkinSet[0]],Krin.hairArray[Krin.HairSet[0]],Krin.gArray[Krin.GSet[0]]];
+   thte = 0;
+   while(thte < 7)
    {
-      DEFCALK = 0.1;
-   }
-   if(PERCALK <= 0)
-   {
-      PERCALK = 0.1;
-   }
-   CRITCALC_X = PERCALK / DEFCALK;
-   if(CRITCALC_X > 10)
-   {
-      CRITCALC_X = 10;
-   }
-   PERCOEF = 1;
-   _root.perKSuccess = false;
-   focusCoEF = IDKM2[25] + IDKC.FOCUSN / 100 * IDKM2[11];
-   if(IDKM[14] == "Full Damage")
-   {
-      numberOutputInner1 = (IDKC.STRENGTHU + IDKM2[1]) * IDKM2[2] + (IDKC.MAGICU + IDKM2[3]) * IDKM2[4] + (IDKC.SPEEDU + IDKM2[5]) * IDKM2[6] + IDKM2[9];
-      coEFKN6723 = IDKM2[10];
-      perScript(PERCALK,DEFCALK,IDKM2,IDKC);
-      if(_root.perKSuccess)
+      if(_root[theGuy].equipArray0[thte] != 0)
       {
-         _root.GridShaker.play();
-         coEFKN6724 = 0.016666667 * Math.pow(CRITCALC_X + 1,4) - 0.25 * Math.pow(CRITCALC_X + 1,3) + 1.233333 * Math.pow(CRITCALC_X + 1,2) - 1.9000000000000001 * (CRITCALC_X + 1) + 1.9000000000000001;
-         if(coEFKN6724 < 0)
-         {
-            coEFKN6724 = 0;
-         }
-         if(IDKC.playerName == "Redfield")
-         {
-            _root.addSound("Effects","VO_Zakk_Crit02");
-         }
-         if(IDKC.playerName == "Dr Klima")
-         {
-            _root.addSound("Effects","Klima01");
-         }
-         if(IDKC.playerName == "Zakk")
-         {
-            if(numberRandomerBuffHit2 == 2)
-            {
-               _root.addSound("Effects","VO_Zakk_Crit02");
-               numberRandomerBuffHit2 = 0;
-            }
-            else if(numberRandomerBuffHit2 == 1)
-            {
-               _root.addSound("Effects","VO_Zakk_Crit01");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 0)
-            {
-               _root.addSound("Effects","VO_Zakk_Crit02");
-               numberRandomerBuffHit2 = 1;
-            }
-            else
-            {
-               _root.addSound("Effects","VO_Zakk_Crit01");
-               numberRandomerBuffHit2 = 0;
-            }
-         }
-         if(IDKC.playerName == "Veradux")
-         {
-            _root.addSound("Effects","Angry_Dux");
-         }
-         if(IDKC.playerName == "Blackflamed Elite")
-         {
-            _root.addSound("Effects","OfficerAttack1");
-         }
-         if(IDKC.playerName == "Flamed ZPCI Medic")
-         {
-            _root.addSound("Effects","MedicAttack3");
-         }
-         if(IDKC.playerName == "Blackflamed Freezer")
-         {
-            _root.addSound("Effects","OfficerAttack02");
-         }
-         if(IDKC.playerName == "Roald")
-         {
-            _root.addSound("Effects","Angry_Roald");
-         }
-         if(IDKC.playerName == "Celestia" || IDKC.playerName == "Felicity")
-         {
-            if(numberRandomerBuffHit2 == 2)
-            {
-               _root.addSound("Effects","crit_felicity3");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 1)
-            {
-               _root.addSound("Effects","crit_felicity2");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 0)
-            {
-               _root.addSound("Effects","crit_felicity");
-               numberRandomerBuffHit2++;
-            }
-            else
-            {
-               _root.addSound("Effects","crit_felicity3");
-               numberRandomerBuffHit2 = 0;
-            }
-         }
-         if(IDKC.playerName == "Carbon")
-         {
-            if(numberRandomerBuffHit2 == 2)
-            {
-               _root.addSound("Effects","Carbon10");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 1)
-            {
-               _root.addSound("Effects","Carbon09");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 0)
-            {
-               _root.addSound("Effects","Carbon08");
-               numberRandomerBuffHit2++;
-            }
-            else
-            {
-               _root.addSound("Effects","Carbon10");
-               numberRandomerBuffHit2 = 0;
-            }
-         }
-         if(IDKC.playerName == "Lt. Farsight" || IDKC.playerName == "Parineeta")
-         {
-            if(numberRandomerBuffHit2 == 2)
-            {
-               _root.addSound("Effects","Farsight01");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 1)
-            {
-               _root.addSound("Effects","FarsightCrit2");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 0)
-            {
-               _root.addSound("Effects","FarsightCrit1");
-               numberRandomerBuffHit2++;
-            }
-            else
-            {
-               _root.addSound("Effects","FarsightCrit2");
-               numberRandomerBuffHit2 = 0;
-            }
-         }
-         if(IDKC.playerName == "Cpt Vendara")
-         {
-            _root.addSound("Effects","VO_Vendara_Crit1");
-         }
-         if(IDKC.playerName == "Blackflamed Heater")
-         {
-            _root.addSound("Effects","ZPCIPyro_Crit01");
-         }
-         if(IDKC.playerName == "ZPCI Praetor")
-         {
-            _root.addSound("Effects","PraetorCrit");
-         }
-         if(IDKC.playerName == "Foreman Grosk")
-         {
-            _root.addSound("Effects","Grosk06");
-         }
+         shtName.equip[thte] = _root["KRINITEM" + _root[theGuy].equipArray0[thte]].looks;
       }
       else
       {
-         if(CRITCALC_X <= 1)
-         {
-            coEFKN6724 = CRITCALC_X;
-         }
-         else
-         {
-            coEFKN6724 = 1 + 0.07 * (PERCALK - DEFCALK);
-         }
-         if(coEFKN6724 <= 0)
-         {
-            coEFKN6724 = 0.01;
-         }
-         if(IDKC.playerName == "Blitz Raptor" || IDKC.playerName == "Tempest Raven" || IDKC.playerName == "War Lizard" || IDKC.playerName == "Shredder" || IDKC.playerName == "Boom Bot")
-         {
-            if(numberRandomerBuffHit2 == 6)
-            {
-               _root.addSound("Effects","Mech07");
-               numberRandomerBuffHit2 = 0;
-            }
-            else if(numberRandomerBuffHit2 == 5)
-            {
-               _root.addSound("Effects","Mech06");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 4)
-            {
-               _root.addSound("Effects","Mech05");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 3)
-            {
-               _root.addSound("Effects","Mech03");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 2)
-            {
-               _root.addSound("Effects","Mech02");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 2)
-            {
-               _root.addSound("Effects","Mech02");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 1)
-            {
-               _root.addSound("Effects","Mech01");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 0)
-            {
-               numberRandomerBuffHit2 = 1;
-            }
-            else
-            {
-               numberRandomerBuffHit2 = 0;
-            }
-         }
-         if(IDKC.playerName == "ZPCI Praetor")
-         {
-            if(numberRandomerBuffHit2 == 2)
-            {
-               _root.addSound("Effects","Carbon14");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 1)
-            {
-               _root.addSound("Effects","Carbon15");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 0)
-            {
-               _root.addSound("Effects","Carbon16");
-               numberRandomerBuffHit2 = 1;
-            }
-            else
-            {
-               numberRandomerBuffHit2 = 0;
-            }
-         }
-         if(IDKC.playerName == "Carbon")
-         {
-            if(numberRandomerBuffHit2 == 3)
-            {
-               _root.addSound("Effects","Carbon07");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 2)
-            {
-               _root.addSound("Effects","Carbon06");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 1)
-            {
-               _root.addSound("Effects","Carbon05");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 0)
-            {
-               _root.addSound("Effects","Carbon04");
-               numberRandomerBuffHit2 = 1;
-            }
-            else
-            {
-               numberRandomerBuffHit2 = 0;
-            }
-         }
-         if(IDKC.playerName == "Lt. Farsight")
-         {
-            if(numberRandomerBuffHit2 == 1)
-            {
-               _root.addSound("Effects","Farsight02");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 0)
-            {
-               _root.addSound("Effects","Farsight04");
-               numberRandomerBuffHit2 = 1;
-            }
-            else
-            {
-               numberRandomerBuffHit2 = 0;
-            }
-         }
-         if(IDKC.playerName == "Cpt Vendara")
-         {
-            if(numberRandomerBuffHit2 == 2)
-            {
-               _root.addSound("Effects","Vendara03");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 1)
-            {
-               _root.addSound("Effects","Vendara02");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 0)
-            {
-               _root.addSound("Effects","Vendara01");
-               numberRandomerBuffHit2 = 1;
-            }
-            else
-            {
-               numberRandomerBuffHit2 = 0;
-            }
-         }
-         if(IDKC.playerName == "ZPCI Sniper" || IDKC.playerName == "ZPCI Elite")
-         {
-            if(numberRandomerBuffHit2 == 2)
-            {
-               _root.addSound("Effects","Elite07");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 1)
-            {
-               _root.addSound("Effects","Elite06");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 0)
-            {
-               _root.addSound("Effects","Elite05");
-               numberRandomerBuffHit2 = 1;
-            }
-            else
-            {
-               numberRandomerBuffHit2 = 0;
-            }
-         }
-         if(IDKC.playerName == "ZPCI Trident" || IDKC.playerName == "ZPCI Striker")
-         {
-            if(numberRandomerBuffHit2 == 3)
-            {
-               _root.addSound("Effects","Elite08");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 2)
-            {
-               _root.addSound("Effects","Carbon12");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 1)
-            {
-               _root.addSound("Effects","OfficerAttack02");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 0)
-            {
-               _root.addSound("Effects","OfficerAttack1");
-               numberRandomerBuffHit2 = 1;
-            }
-            else
-            {
-               numberRandomerBuffHit2 = 0;
-            }
-         }
-         if(IDKC.playerName == "ZPCI Medic")
-         {
-            if(numberRandomerBuffHit2 == 2)
-            {
-               _root.addSound("Effects","MedicAttack3");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 1)
-            {
-               _root.addSound("Effects","Klima05");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 0)
-            {
-               _root.addSound("Effects","Klima04");
-               numberRandomerBuffHit2 = 1;
-            }
-            else
-            {
-               numberRandomerBuffHit2 = 0;
-            }
-         }
-         if(IDKC.playerName == "ZPCI Pyrotech")
-         {
-            if(numberRandomerBuffHit2 == 1)
-            {
-               _root.addSound("Effects","Farsight03");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 0)
-            {
-               _root.addSound("Effects","Carbon13");
-               numberRandomerBuffHit2 = 1;
-            }
-            else
-            {
-               numberRandomerBuffHit2 = 0;
-            }
-         }
-         if(IDKC.playerName == "Dr Klima")
-         {
-            if(numberRandomerBuffHit2 == 1)
-            {
-               _root.addSound("Effects","Klima02");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 0)
-            {
-               _root.addSound("Effects","Klima03");
-               numberRandomerBuffHit2 = 1;
-            }
-            else
-            {
-               numberRandomerBuffHit2 = 0;
-            }
-         }
-         if(IDKC.playerName == "Celestia")
-         {
-            if(numberRandomerBuffHit2 == 2)
-            {
-               _root.addSound("Effects","Celestia05");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 1)
-            {
-               _root.addSound("Effects","Celestia06");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 0)
-            {
-               _root.addSound("Effects","Celestia04");
-               numberRandomerBuffHit2++;
-            }
-            else
-            {
-               numberRandomerBuffHit2 = 0;
-            }
-         }
-         if(IDKC.playerName == "Artemis" || IDKC.playerName == "Dream Keeper" || IDKC.playerName == "Baroness Marie")
-         {
-            if(numberRandomerBuffHit2 == 2)
-            {
-               _root.addSound("Effects","GhostG5");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 1)
-            {
-               _root.addSound("Effects","GhostG6");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 0)
-            {
-               _root.addSound("Effects","GhostG7");
-               numberRandomerBuffHit2++;
-            }
-            else
-            {
-               numberRandomerBuffHit2 = 0;
-            }
-         }
-         if(IDKC.playerName == "Warlock" || IDKC.playerName == "Avatar of Freedom" || IDKC.playerName == "Oracle" || IDKC.playerName == "Shade Zombie")
-         {
-            if(numberRandomerBuffHit2 == 1)
-            {
-               _root.addSound("Effects","Ghost05");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 0)
-            {
-               _root.addSound("Effects","Ghost04");
-               numberRandomerBuffHit2++;
-            }
-            else
-            {
-               numberRandomerBuffHit2 = 0;
-            }
-         }
-         if(IDKC.playerName == "Avatar of Justice" || IDKC.playerName == "Count Augustin" || IDKC.playerName == "Plague Assasin" || IDKC.playerName == "Baron Brixius")
-         {
-            if(numberRandomerBuffHit2 == 2)
-            {
-               _root.addSound("Effects","Ghost026");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 1)
-            {
-               _root.addSound("Effects","Ghost025");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 0)
-            {
-               _root.addSound("Effects","Ghost024");
-               numberRandomerBuffHit2++;
-            }
-            else
-            {
-               numberRandomerBuffHit2 = 0;
-            }
-         }
-         if(IDKC.playerName == "Apollo" || IDKC.playerName == "Spartan" || IDKC.playerName == "Zealot" || IDKC.playerName == "Templar Arcanis")
-         {
-            if(numberRandomerBuffHit2 == 2)
-            {
-               _root.addSound("Effects","Knight05");
-               numberRandomerBuffHit2 = 0;
-            }
-            else if(numberRandomerBuffHit2 == 1)
-            {
-               _root.addSound("Effects","Knight06");
-               numberRandomerBuffHit2++;
-            }
-            else if(numberRandomerBuffHit2 == 0)
-            {
-               _root.addSound("Effects","Knight07");
-               numberRandomerBuffHit2 = 1;
-            }
-            else
-            {
-               numberRandomerBuffHit2 = 0;
-            }
-         }
+         shtName.equip[thte] = 0;
       }
-      _root.DamageOutputKrinFinal = Math.ceil(IDKC.DMG + IDKT.IDMG + IDKC.DEFU[IDKM2[0]] * IDKM2[77] * IDKT.DEFENSE + numberOutputInner1 * focusCoEF * coEFKN6723 * (coEFKN6724 * IDKM2[72]) * (1 + IDKC.DMG2) * (1 + IDKT.IDMG2) * IDKT.IDMGP2);
-      _root.DamageOutputKrinFinal2 = 0;
-      if(_root.perKSuccess)
+      thte++;
+   }
+   if(_root.arenaMode)
+   {
+      u_i_o = 0;
+      while(u_i_o < 9)
       {
-         if(IDKM[10] != "Melee" && IDKM[10] != "Melee2")
-         {
-            _root.DamageOutputKrinFinal *= IDKC.CRITMODIFIER;
-         }
-         _root.DamageOutputKrinFinal *= IDKM2[89];
-      }
-      if(JI == IDKM2[45] - 1 && IDKM2[91] != 0)
-      {
-         _root.DamageOutputKrinFinal *= IDKM2[91];
-      }
-      if(IDKT.playerName == "Iron Guard")
-      {
-         IDKT.FOCUSPLUS += 0.25;
-      }
-      if(_root.DamageOutputKrinFinal <= 0 || _root.DamageOutputKrinFinal == eval("NaN"))
-      {
-         _root.DamageOutputKrinFinal = 1;
-      }
-      if(IDKC.playerName == "Sonny")
-      {
-         if(IDKM[0] == "Destroy2" || IDKM[0] == "High Voltage" && IDKM2[2] > 3)
-         {
-            if(_root.playerKrin2.active == true && _root.playerKrin4.active == true && _root.playerKrin6.active == true)
-            {
-               _root.DamageOutputKrinFinal *= 0.25;
-            }
-            if(_root.playerKrin2.active == false && _root.playerKrin4.active == true && _root.playerKrin6.active == true || _root.playerKrin2.active == true && _root.playerKrin4.active == false && _root.playerKrin6.active == true || _root.playerKrin2.active == true && _root.playerKrin4.active == true && _root.playerKrin6.active == false)
-            {
-               _root.DamageOutputKrinFinal *= 0.5;
-            }
-         }
-      }
-      else if(IDKC.playerName != "Sonny")
-      {
-         if(IDKM[0] == "Destroy2" || IDKM[0] == "High Voltage" && IDKM2[2] > 3)
-         {
-            if(_root.playerKrin1.active == true && _root.playerKrin3.active == true && _root.playerKrin5.active == true)
-            {
-               _root.DamageOutputKrinFinal *= 0.25;
-            }
-            if(_root.playerKrin1.active == false && _root.playerKrin3.active == true && _root.playerKrin5.active == true || _root.playerKrin1.active == true && _root.playerKrin3.active == false && _root.playerKrin5.active == true || _root.playerKrin1.active == true && _root.playerKrin3.active == true && _root.playerKrin5.active == false)
-            {
-               _root.DamageOutputKrinFinal *= 0.5;
-            }
-         }
-      }
-      if(IDKM2[57] > IDKT.LIFEN / IDKT.LIFEU)
-      {
-         _root.DamageOutputKrinFinal *= 1.5;
-      }
-      if(IDKM2[59] > 0)
-      {
-         _root.DamageOutputKrinFinal += IDKM2[59] * IDKT.LIFEN;
-      }
-      differenceForSH = 0;
-      if(IDKT.SHIELD > 0)
-      {
-         differenceForSH = IDKT.SHIELD - _root.DamageOutputKrinFinal;
-      }
-      if(differenceForSH > 0)
-      {
-         IDKT.SHIELD -= _root.DamageOutputKrinFinal;
-         _root.BATTLESCREEN["player" + IDKT.playerID].shield.play();
-         _root.addSound("Effects","sfx_shield");
-         _root.KrinNumberShow("shield","player" + IDKT.playerID,IDKM2[0]);
-      }
-      else
-      {
-         _root.DamageOutputKrinFinal -= IDKT.SHIELD;
-         _root.KrinNumberShow(_root.DamageOutputKrinFinal,"player" + IDKT.playerID,IDKM2[0]);
-         IDKT.SHIELD = 0;
-         if(IDKT.SSWITCH == 0)
-         {
-            _root.KrinNumberShow(_root.DamageOutputKrinFinal,"player" + IDKT.playerID,IDKM2[0]);
-            IDKT.LIFEN -= _root.DamageOutputKrinFinal;
-            if(IDKT.LIFEN <= 0 && IDKT.START != 0)
-            {
-               G = 0;
-               while(G < 3)
-               {
-                  _root.applyBuffKrin(_root["playerKrin" + (IDKC.teamSide + G * 2)],IDKT.START,1,_root["playerKrin" + (IDKC.teamSide + G * 2)]);
-                  _root.applyChangesKrin(_root["playerKrin" + (IDKC.teamSide + G * 2)]);
-                  G++;
-               }
-            }
-            if(IDKT.LIFEN <= 0)
-            {
-               IDKT.LIFEN = 0;
-               IDKT.FOCUSN = 0;
-            }
-            if(IDKC.playerName == "Sonny")
-            {
-               AchVal1 += _root.DamageOutputKrinFinal;
-            }
-            _root.BATTLEFLASH.hitTarget = _root.BATTLESCREEN["player" + IDKT.playerID];
-            _root.BATTLEFLASH.DFTC = IDKT.characterColorState;
-            _root.BATTLEFLASH.DFTF = IDKT.characterFilterState;
-            _root.BATTLEFLASH.DFTP = IDKT;
-            _root.BATTLEFLASH.gotoAndPlay("hit");
-            if(IDKT.STUN == 0)
-            {
-               _root.BATTLESCREEN["player" + IDKT.playerID].inner.gotoAndPlay("hit");
-            }
-            if(IDKT.LIFEN == 0 && IDKT.LIVINGDEAD == 0)
-            {
-               _root.BATTLESCREEN["player" + IDKT.playerID].inner.gotoAndPlay("dead");
-               IDKT.active = false;
-               wefvergrervw = 1;
-               while(wefvergrervw < 7)
-               {
-                  if(!_root.arenaMode)
-                  {
-                     if(IDKT.playerID == _root.Krin.playerNumber)
-                     {
-                        _root["KrinSelector" + wefvergrervw]._x = -300;
-                        _root["KrinSelector" + wefvergrervw]._y = -300;
-                     }
-                     if(_root["KrinSelector" + wefvergrervw].TargetEr == IDKT.playerID)
-                     {
-                        _root["KrinSelector" + wefvergrervw]._x = -300;
-                        _root["KrinSelector" + wefvergrervw]._y = -300;
-                     }
-                  }
-                  wefvergrervw++;
-               }
-               _root.krinAddMove(IDKT.playerID,IDKT.playerID,0);
-            }
-            else if(IDKT.LIFEN == 0 && IDKT.LIVINGDEAD < 0)
-            {
-               f = 0;
-               while(f < _root.maxBuffLimit)
-               {
-                  if(_root["KRINBUFF" + IDKT.BUFFARRAYK[f].buffId][146] != 0 && IDKT.BUFFARRAYK[f].CD != 0)
-                  {
-                     _root.applyBuffKrin(IDKT,_root["KRINBUFF" + IDKT.BUFFARRAYK[f].buffId][146],1,IDKC);
-                  }
-                  f++;
-               }
-               IDKT.LIFEN = IDKT.LIFEU;
-               IDKT.LIVINGDEAD += 1;
-               if(IDKT.LIVINGDEAD == 0)
-               {
-                  _root.applyBuffKrin(IDKT,"FURYPASSIVE2",1,IDKC);
-                  _root.applyBuffKrin(IDKT,"FURYPASSIVE3",1,IDKC);
-                  _root.addSound("Effects","Fury");
-               }
-               _root.applyChangesKrin(IDKT);
-            }
-            else
-            {
-               addSound("Effects",IDKT.voiceHit[random(3)]);
-            }
-         }
-         else
-         {
-            if(_root.DamageOutputKrinFinal != eval("NaN"))
-            {
-               _root.KrinNumberShow(_root.DamageOutputKrinFinal,"player" + IDKT.playerID,"HEAL");
-               IDKT.LIFEN += _root.DamageOutputKrinFinal;
-            }
-            if(IDKT.LIFEN > IDKT.LIFEU)
-            {
-               IDKT.LIFEN = IDKT.LIFEU;
-            }
-            _root.BATTLEFLASH.hitTarget = _root.BATTLESCREEN["player" + IDKT.playerID];
-            _root.BATTLEFLASH.DFTC = IDKT.characterColorState;
-            _root.BATTLEFLASH.DFTF = IDKT.characterFilterState;
-            _root.BATTLEFLASH.DFTP = IDKT;
-            _root.BATTLEFLASH.gotoAndPlay("heal");
-         }
-         _root.lifeBarUpdate(IDKT.playerID);
+         _root[theGuy].PER[_root.elementMainArray[u_i_o]] = 100 + 15 * shtName.plevel + _root[theGuy].PerSets0[u_i_o];
+         _root[theGuy].DEF[_root.elementMainArray[u_i_o]] = 100 + 15 * shtName.plevel + _root[theGuy].DefSets0[u_i_o];
+         u_i_o++;
       }
    }
-   if(IDKM[14] == "Heal")
+   wefjnew = 0;
+   while(wefjnew < 9)
    {
-      numberOutputInner1 = (IDKC.STRENGTHU + IDKM2[1]) * IDKM2[2] + (IDKC.MAGICU + IDKM2[3]) * IDKM2[4] + (IDKC.SPEEDU + IDKM2[5]) * IDKM2[6] + IDKC.LIFEU * IDKM2[12] + IDKM2[9];
-      coEFKN6723 = IDKM2[10];
-      perScript(PERCALK,1,IDKM2,IDKC);
-      if(_root.perKSuccess)
-      {
-         _root.GridShaker.play();
-         coEFKN6724 = 1.5;
-         if(IDKC.playerName == "Redfield")
-         {
-            _root.addSound("Effects","VO_Zakk_Crit01");
-         }
-         if(IDKC.playerName == "Felicity")
-         {
-            _root.addSound("Effects","crit_felicity3");
-         }
-         if(IDKC.playerName == "Vendara")
-         {
-            _root.addSound("Effects","VO_Vendara_Crit02");
-         }
-         if(IDKC.playerName == "Parineeta")
-         {
-            _root.addSound("Effects","FarsightCrit2");
-         }
-         if(IDKC.playerName == "Flamed ZPCI Medic")
-         {
-            _root.addSound("Effects","MedicHeal1");
-         }
-      }
-      else
-      {
-         coEFKN6724 = 1;
-      }
-      if(IDKM2[71] != 0)
-      {
-         IDKC.LIFEN -= IDKC.MAGICU * IDKM2[4] * IDKM2[71];
-         if(IDKC.LIFEN > IDKC.LIFEU)
-         {
-            IDKC.LIFEN = IDKC.LIFEU;
-         }
-         _root.KrinNumberShow(IDKC.MAGICU * IDKM2[4] * IDKM2[71],"player" + IDKC.playerID,IDKM2[0]);
-         _root.lifeBarUpdate(IDKC.playerID);
-      }
-      _root.DamageOutputKrinFinal = Math.ceil(numberOutputInner1 * focusCoEF * coEFKN6723 * coEFKN6724 * IDKC.HEALMOD * IDKT.HEALMOD_PLUS * IDKT.HEALMOD_MINUS);
-      _root.DamageOutputKrinFinal2 = Math.ceil(numberOutputInner1 * focusCoEF * coEFKN6723 * coEFKN6724 * IDKC.HEALMOD * IDKT.HEALMOD_PLUS * IDKT.HEALMOD_MINUS);
-      if(_root.perKSuccess)
-      {
-         if(IDKM[10] != "Melee" && IDKM[10] != "Melee2")
-         {
-            _root.DamageOutputKrinFinal *= IDKC.CRITMODIFIER;
-         }
-         _root.DamageOutputKrinFinal *= IDKM2[89];
-      }
-      if(IDKM2[59] < 0)
-      {
-         _root.DamageOutputKrinFinal -= IDKM2[59] * IDKT.LIFEN;
-      }
-      if(IDKM2[84] < 0)
-      {
-         _root.DamageOutputKrinFinal += -1 * IDKM2[84] * IDKT.LIFEU;
-      }
-      if(_root.DamageOutputKrinFinal <= 0)
-      {
-         _root.DamageOutputKrinFinal = 0;
-      }
-      if(_root.DamageOutputKrinFinal > 0)
-      {
-         if(IDKT.SSWITCH == 0)
-         {
-            _root.KrinNumberShow(_root.DamageOutputKrinFinal,"player" + IDKT.playerID,"HEAL");
-            IDKT.LIFEN += _root.DamageOutputKrinFinal;
-            if(IDKT.LIFEN > IDKT.LIFEU)
-            {
-               IDKT.LIFEN = IDKT.LIFEU;
-            }
-            _root.BATTLEFLASH.hitTarget = _root.BATTLESCREEN["player" + IDKT.playerID];
-            _root.BATTLEFLASH.DFTC = IDKT.characterColorState;
-            _root.BATTLEFLASH.DFTF = IDKT.characterFilterState;
-            _root.BATTLEFLASH.DFTP = IDKT;
-            _root.BATTLEFLASH.gotoAndPlay("heal");
-            _root.lifeBarUpdate(IDKT.playerID);
-         }
-         else
-         {
-            _root.KrinNumberShow(_root.DamageOutputKrinFinal,"player" + IDKT.playerID,"Shadow");
-            IDKT.LIFEN -= _root.DamageOutputKrinFinal;
-            if(IDKT.LIFEN <= 0)
-            {
-               IDKT.LIFEN = 0;
-               IDKT.FOCUSN = 0;
-            }
-            _root.lifeBarUpdate(IDKT.playerID);
-            _root.BATTLEFLASH.hitTarget = _root.BATTLESCREEN["player" + IDKT.playerID];
-            _root.BATTLEFLASH.DFTC = IDKT.characterColorState;
-            _root.BATTLEFLASH.DFTF = IDKT.characterFilterState;
-            _root.BATTLEFLASH.DFTP = IDKT;
-            _root.BATTLEFLASH.gotoAndPlay("hit");
-            if(IDKT.STUN == 0)
-            {
-               _root.BATTLESCREEN["player" + IDKT.playerID].inner.gotoAndPlay("hit");
-            }
-            if(IDKT.LIFEN == 0 && IDKT.LIVINGDEAD == 0)
-            {
-               _root.BATTLESCREEN["player" + IDKT.playerID].inner.gotoAndPlay("dead");
-               IDKT.active = false;
-               wefvergrervw = 1;
-               while(wefvergrervw < 7)
-               {
-                  if(IDKT.playerID == _root.Krin.playerNumber)
-                  {
-                     _root["KrinSelector" + wefvergrervw]._x = -300;
-                     _root["KrinSelector" + wefvergrervw]._y = -300;
-                  }
-                  if(_root["KrinSelector" + wefvergrervw].TargetEr == IDKT.playerID)
-                  {
-                     _root["KrinSelector" + wefvergrervw]._x = -300;
-                     _root["KrinSelector" + wefvergrervw]._y = -300;
-                  }
-                  wefvergrervw++;
-               }
-               _root.krinAddMove(IDKT.playerID,IDKT.playerID,0);
-            }
-            else if(IDKT.LIFEN == 0 && IDKT.LIVINGDEAD < 0)
-            {
-               f = 0;
-               while(f < _root.maxBuffLimit)
-               {
-                  if(_root["KRINBUFF" + IDKT.BUFFARRAYK[f].buffId][146] != 0 && IDKT.BUFFARRAYK[f].CD != 0)
-                  {
-                     _root.applyBuffKrin(IDKT,_root["KRINBUFF" + IDKT.BUFFARRAYK[f].buffId][146],1,IDKC);
-                  }
-                  f++;
-               }
-               IDKT.LIFEN = IDKT.LIFEU;
-               IDKT.LIVINGDEAD += 1;
-               if(IDKT.LIVINGDEAD == 0)
-               {
-                  _root.applyBuffKrin(IDKT,"FURYPASSIVE2",1,IDKC);
-                  _root.applyBuffKrin(IDKT,"FURYPASSIVE3",1,IDKC);
-                  _root.addSound("Effects","Fury");
-               }
-               _root.applyChangesKrin(IDKT);
-            }
-         }
-      }
-   }
-   if(IDKM[14] == "Focus")
-   {
-      if(IDKT.SLOWRESIST > 0 && IDKM2[9] < 0)
-      {
-         SLOWMOD = Math.min(1,Math.max(0,1 - IDKT.SLOWRESIST));
-         IDKM2[9] = Math.round(IDKM2[9] * SLOWMOD);
-      }
-      IDKT.FOCUSN += IDKM2[9];
-      if(IDKT.FOCUSN > IDKT.FOCUSU)
-      {
-         IDKT.FOCUSN = IDKT.FOCUSU;
-      }
-      if(IDKT.FOCUSN < 0)
-      {
-         IDKT.FOCUSN = 0;
-      }
-      _root.BATTLEFLASH.hitTarget = _root.BATTLESCREEN["player" + IDKT.playerID];
-      _root.BATTLEFLASH.DFTC = IDKT.characterColorState;
-      _root.BATTLEFLASH.DFTF = IDKT.characterFilterState;
-      _root.BATTLEFLASH.DFTP = IDKT;
-      _root.BATTLEFLASH.gotoAndPlay("focus");
-      _root.lifeBarUpdate(IDKT.playerID);
-   }
-   if(IDKM[14] == "Focus3")
-   {
-      numberOutputInner1 = (IDKC.STRENGTHU + IDKM2[1]) * IDKM2[2] + (IDKC.MAGICU + IDKM2[3]) * IDKM2[4] + (IDKC.SPEEDU + IDKM2[5]) * IDKM2[6] + IDKC.LIFEU * IDKM2[12] + IDKM2[9];
-      coEFKN6723 = IDKM2[10];
-      perScript(PERCALK,1,IDKM2,IDKC);
-      if(_root.perKSuccess)
-      {
-         _root.GridShaker.play();
-         coEFKN6724 = 1.5;
-         if(IDKM[10] != "Melee" && IDKM[10] != "Melee2")
-         {
-            coEFN6724 *= IDKC.CRITMODIFIER;
-         }
-         coEFN6724 *= IDKM2[89];
-         if(IDKC.playerName == "Felicity")
-         {
-            _root.addSound("Effects","crit_felicity3");
-         }
-         if(IDKC.playerName == "Vendara")
-         {
-            _root.addSound("Effects","VO_Vendara_Crit02");
-         }
-      }
-      else
-      {
-         coEFKN6724 = 1;
-      }
-      _root.DamageOutputKrinFinal = Math.ceil(numberOutputInner1 * focusCoEF * coEFKN6723 * coEFKN6724 * IDKC.HEALMOD * IDKT.HEALMOD_PLUS * IDKT.HEALMOD_MINUS);
-      _root.DamageOutputKrinFinal2 = Math.ceil(numberOutputInner1 * focusCoEF * coEFKN6723 * coEFKN6724 * IDKC.HEALMOD * IDKT.HEALMOD_PLUS * IDKT.HEALMOD_MINUS);
-      if(_root.perKSuccess)
-      {
-         if(IDKM[10] != "Melee" && IDKM[10] != "Melee2")
-         {
-            _root.DamageOutputKrinFinal *= IDKC.CRITMODIFIER;
-         }
-         _root.DamageOutputKrinFinal *= IDKM2[89];
-      }
-      if(_root.DamageOutputKrinFinal <= 0)
-      {
-         _root.DamageOutputKrinFinal = 0;
-      }
-      if(_root.DamageOutputKrinFinal > 0)
-      {
-         if(IDKT.SSWITCH == 0)
-         {
-            _root.KrinNumberShow(_root.DamageOutputKrinFinal,"player" + IDKT.playerID,"HEAL");
-            IDKT.LIFEN += _root.DamageOutputKrinFinal;
-            if(IDKT.LIFEN > IDKT.LIFEU)
-            {
-               IDKT.LIFEN = IDKT.LIFEU;
-            }
-            _root.BATTLEFLASH.hitTarget = _root.BATTLESCREEN["player" + IDKT.playerID];
-            _root.BATTLEFLASH.DFTC = IDKT.characterColorState;
-            _root.BATTLEFLASH.DFTF = IDKT.characterFilterState;
-            _root.BATTLEFLASH.DFTP = IDKT;
-            _root.BATTLEFLASH.gotoAndPlay("heal");
-            _root.lifeBarUpdate(IDKT.playerID);
-         }
-         else
-         {
-            _root.KrinNumberShow(_root.DamageOutputKrinFinal,"player" + IDKT.playerID,"Shadow");
-            IDKT.LIFEN -= _root.DamageOutputKrinFinal;
-            if(IDKT.LIFEN <= 0)
-            {
-               IDKT.LIFEN = 0;
-               IDKT.FOCUSN = 0;
-            }
-            _root.lifeBarUpdate(IDKT.playerID);
-            _root.BATTLEFLASH.hitTarget = _root.BATTLESCREEN["player" + IDKT.playerID];
-            _root.BATTLEFLASH.DFTC = IDKT.characterColorState;
-            _root.BATTLEFLASH.DFTF = IDKT.characterFilterState;
-            _root.BATTLEFLASH.DFTP = IDKT;
-            _root.BATTLEFLASH.gotoAndPlay("hit");
-            if(IDKT.STUN == 0)
-            {
-               _root.BATTLESCREEN["player" + IDKT.playerID].inner.gotoAndPlay("hit");
-            }
-            if(IDKT.LIFEN == 0 && IDKT.LIVINGDEAD == 0)
-            {
-               _root.BATTLESCREEN["player" + IDKT.playerID].inner.gotoAndPlay("dead");
-               IDKT.active = false;
-               wefvergrervw = 1;
-               while(wefvergrervw < 7)
-               {
-                  if(IDKT.playerID == _root.Krin.playerNumber)
-                  {
-                     _root["KrinSelector" + wefvergrervw]._x = -300;
-                     _root["KrinSelector" + wefvergrervw]._y = -300;
-                  }
-                  if(_root["KrinSelector" + wefvergrervw].TargetEr == IDKT.playerID)
-                  {
-                     _root["KrinSelector" + wefvergrervw]._x = -300;
-                     _root["KrinSelector" + wefvergrervw]._y = -300;
-                  }
-                  wefvergrervw++;
-               }
-               _root.krinAddMove(IDKT.playerID,IDKT.playerID,0);
-            }
-            else if(IDKT.LIFEN == 0 && IDKT.LIVINGDEAD < 0)
-            {
-               f = 0;
-               while(f < _root.maxBuffLimit)
-               {
-                  if(_root["KRINBUFF" + IDKT.BUFFARRAYK[f].buffId][146] != 0 && IDKT.BUFFARRAYK[f].CD != 0)
-                  {
-                     _root.applyBuffKrin(IDKT,_root["KRINBUFF" + IDKT.BUFFARRAYK[f].buffId][146],1,IDKC);
-                  }
-                  f++;
-               }
-               IDKT.LIFEN = IDKT.LIFEU;
-               IDKT.LIVINGDEAD += 1;
-               if(IDKT.LIVINGDEAD == 0)
-               {
-                  _root.applyBuffKrin(IDKT,"FURYPASSIVE2",1,IDKC);
-                  _root.applyBuffKrin(IDKT,"FURYPASSIVE3",1,IDKC);
-                  _root.addSound("Effects","Fury");
-               }
-               _root.applyChangesKrin(IDKT);
-            }
-         }
-      }
-      if(IDKT.SLOWRESIST > 0 && IDKM2[9] < 0)
-      {
-         SLOWMOD = Math.min(1,Math.max(0,1 - IDKT.SLOWRESIST));
-         IDKM2[9] = Math.round(IDKM2[9] * SLOWMOD);
-      }
-      IDKT.FOCUSN += IDKM2[9];
-      if(IDKT.FOCUSN > IDKT.FOCUSU)
-      {
-         IDKT.FOCUSN = IDKT.FOCUSU;
-      }
-      if(IDKT.FOCUSN < 0)
-      {
-         IDKT.FOCUSN = 0;
-      }
-      _root.BATTLEFLASH.hitTarget = _root.BATTLESCREEN["player" + IDKT.playerID];
-      _root.BATTLEFLASH.DFTC = IDKT.characterColorState;
-      _root.BATTLEFLASH.DFTF = IDKT.characterFilterState;
-      _root.BATTLEFLASH.DFTP = IDKT;
-      _root.BATTLEFLASH.gotoAndPlay("focus");
-      _root.lifeBarUpdate(IDKT.playerID);
-   }
-   if(IDKM[14] == "Focus2")
-   {
-      numberOutputInner1 = (IDKC.STRENGTHU + IDKM2[1]) * IDKM2[2] + (IDKC.MAGICU + IDKM2[3]) * IDKM2[4] + (IDKC.SPEEDU + IDKM2[5]) * IDKM2[6];
-      coEFKN6723 = IDKM2[10];
-      perScript(PERCALK,DEFCALK,IDKM2,IDKC);
-      if(_root.perKSuccess)
-      {
-         _root.GridShaker.play();
-         coEFKN6724 = 0.016666667 * Math.pow(CRITCALC_X + 1,4) - 0.25 * Math.pow(CRITCALC_X + 1,3) + 1.233333 * Math.pow(CRITCALC_X + 1,2) - 1.9000000000000001 * (CRITCALC_X + 1) + 1.9000000000000001;
-         if(IDKM[10] != "Melee" && IDKM[10] != "Melee2")
-         {
-            coEFN6724 *= IDKC.CRITMODIFIER;
-         }
-         coEFN6724 *= IDKM2[89];
-         if(coEFKN6724 < 0)
-         {
-            coEFKN6724 = 0;
-         }
-         if(IDKC.playerName == "Sonny")
-         {
-            _root.addSound("Effects","VO_Sonny_Crit03");
-         }
-         if(IDKC.playerName == "Veradux")
-         {
-            _root.addSound("Effects","Angry_Dux");
-         }
-         if(IDKC.playerName == "Blackflamed Elite")
-         {
-            _root.addSound("Effects","OfficerAttack1");
-         }
-         if(IDKC.playerName == "Flamed ZPCI Medic")
-         {
-            _root.addSound("Effects","MedicAttack3");
-         }
-         if(IDKC.playerName == "Blackflamed Freezer")
-         {
-            _root.addSound("Effects","OfficerAttack02");
-         }
-         if(IDKC.playerName == "Roald")
-         {
-            _root.addSound("Effects","Angry_Roald");
-         }
-         if(IDKC.playerName == "Felicity")
-         {
-            _root.addSound("Effects","crit_felicity2");
-         }
-         if(IDKC.playerName == "Vendara")
-         {
-            _root.addSound("Effects","VO_Vendara_Crit1");
-         }
-         if(IDKC.playerName == "Parineeta")
-         {
-            _root.addSound("Effects","FarsightCrit2");
-         }
-      }
-      else
-      {
-         if(CRITCALC_X <= 1)
-         {
-            coEFKN6724 = CRITCALC_X;
-         }
-         else
-         {
-            coEFKN6724 = 1 + 0.07 * (PERCALK - DEFCALK);
-         }
-         if(coEFKN6724 <= 0)
-         {
-            coEFKN6724 = 0.01;
-         }
-      }
-      _root.DamageOutputKrinFinal = Math.ceil(IDKC.DMG + IDKT.IDMG + IDKC.DEFU[IDKM2[0]] * IDKM2[77] * IDKT.DEFENSE + numberOutputInner1 * focusCoEF * coEFKN6723 * (coEFKN6724 * IDKM2[72]) * (1 + IDKC.DMG2) * (1 + IDKT.IDMG2) * IDKT.IDMGP2);
-      if(_root.perKSuccess)
-      {
-         if(IDKM[10] != "Melee" && IDKM[10] != "Melee2")
-         {
-            _root.DamageOutputKrinFinal *= IDKC.CRITMODIFIER;
-         }
-         _root.DamageOutputKrinFinal *= IDKM2[89];
-      }
-      _root.DamageOutputKrinFinal2 = 0;
-      if(IDKT.playerName == "Iron Guard")
-      {
-         IDKT.FOCUSPLUS += 0.25;
-      }
-      if(_root.DamageOutputKrinFinal <= 0 || _root.DamageOutputKrinFinal == eval("NaN"))
-      {
-         _root.DamageOutputKrinFinal = 1;
-      }
-      differenceForSH = 0;
-      if(IDKT.SHIELD > 0)
-      {
-         differenceForSH = IDKT.SHIELD - _root.DamageOutputKrinFinal;
-      }
-      if(differenceForSH > 0)
-      {
-         IDKT.SHIELD -= _root.DamageOutputKrinFinal;
-         _root.BATTLESCREEN["player" + IDKT.playerID].shield.play();
-         _root.addSound("Effects","sfx_shield");
-         _root.KrinNumberShow("shield","player" + IDKT.playerID,IDKM2[0]);
-      }
-      else
-      {
-         _root.DamageOutputKrinFinal -= IDKT.SHIELD;
-         _root.KrinNumberShow(_root.DamageOutputKrinFinal,"player" + IDKT.playerID,IDKM2[0]);
-         IDKT.SHIELD = 0;
-         if(IDKT.SSWITCH == 0)
-         {
-            _root.KrinNumberShow(_root.DamageOutputKrinFinal,"player" + IDKT.playerID,IDKM2[0]);
-            IDKT.LIFEN -= _root.DamageOutputKrinFinal;
-            if(IDKT.LIFEN <= 0 && IDKT.START != 0)
-            {
-               G = 0;
-               while(G < 3)
-               {
-                  _root.applyBuffKrin(_root["playerKrin" + (IDKC.teamSide + G * 2)],IDKT.START,1,_root["playerKrin" + (IDKC.teamSide + G * 2)]);
-                  _root.applyChangesKrin(_root["playerKrin" + (IDKC.teamSide + G * 2)]);
-                  G++;
-               }
-            }
-            if(IDKT.LIFEN <= 0)
-            {
-               IDKT.LIFEN = 0;
-               IDKT.FOCUSN = 0;
-            }
-            if(IDKC.playerName == "Sonny")
-            {
-               AchVal1 += _root.DamageOutputKrinFinal;
-            }
-            _root.BATTLEFLASH.hitTarget = _root.BATTLESCREEN["player" + IDKT.playerID];
-            _root.BATTLEFLASH.DFTC = IDKT.characterColorState;
-            _root.BATTLEFLASH.DFTF = IDKT.characterFilterState;
-            _root.BATTLEFLASH.DFTP = IDKT;
-            _root.BATTLEFLASH.gotoAndPlay("hit");
-            if(IDKT.STUN == 0)
-            {
-               _root.BATTLESCREEN["player" + IDKT.playerID].inner.gotoAndPlay("hit");
-            }
-            if(IDKT.LIFEN == 0 && IDKT.LIVINGDEAD == 0)
-            {
-               _root.BATTLESCREEN["player" + IDKT.playerID].inner.gotoAndPlay("dead");
-               IDKT.active = false;
-               wefvergrervw = 1;
-               while(wefvergrervw < 7)
-               {
-                  if(!_root.arenaMode)
-                  {
-                     if(IDKT.playerID == _root.Krin.playerNumber)
-                     {
-                        _root["KrinSelector" + wefvergrervw]._x = -300;
-                        _root["KrinSelector" + wefvergrervw]._y = -300;
-                     }
-                     if(_root["KrinSelector" + wefvergrervw].TargetEr == IDKT.playerID)
-                     {
-                        _root["KrinSelector" + wefvergrervw]._x = -300;
-                        _root["KrinSelector" + wefvergrervw]._y = -300;
-                     }
-                  }
-                  wefvergrervw++;
-               }
-               _root.krinAddMove(IDKT.playerID,IDKT.playerID,0);
-            }
-            else if(IDKT.LIFEN == 0 && IDKT.LIVINGDEAD < 0)
-            {
-               f = 0;
-               while(f < _root.maxBuffLimit)
-               {
-                  if(_root["KRINBUFF" + IDKT.BUFFARRAYK[f].buffId][146] != 0 && IDKT.BUFFARRAYK[f].CD != 0)
-                  {
-                     _root.applyBuffKrin(IDKT,_root["KRINBUFF" + IDKT.BUFFARRAYK[f].buffId][146],1,IDKC);
-                  }
-                  f++;
-               }
-               IDKT.LIFEN = IDKT.LIFEU;
-               IDKT.LIVINGDEAD += 1;
-               if(IDKT.LIVINGDEAD == 0)
-               {
-                  _root.applyBuffKrin(IDKT,"FURYPASSIVE2",1,IDKC);
-                  _root.applyBuffKrin(IDKT,"FURYPASSIVE3",1,IDKC);
-                  _root.addSound("Effects","Fury");
-               }
-               _root.applyChangesKrin(IDKT);
-            }
-            else
-            {
-               addSound("Effects",IDKT.voiceHit[random(3)]);
-            }
-         }
-         else
-         {
-            if(_root.DamageOutputKrinFinal != eval("NaN"))
-            {
-               _root.KrinNumberShow(_root.DamageOutputKrinFinal,"player" + IDKT.playerID,"HEAL");
-               IDKT.LIFEN += _root.DamageOutputKrinFinal;
-            }
-            if(IDKT.LIFEN > IDKT.LIFEU)
-            {
-               IDKT.LIFEN = IDKT.LIFEU;
-            }
-            _root.BATTLEFLASH.hitTarget = _root.BATTLESCREEN["player" + IDKT.playerID];
-            _root.BATTLEFLASH.DFTC = IDKT.characterColorState;
-            _root.BATTLEFLASH.DFTF = IDKT.characterFilterState;
-            _root.BATTLEFLASH.DFTP = IDKT;
-            _root.BATTLEFLASH.gotoAndPlay("heal");
-         }
-         _root.lifeBarUpdate(IDKT.playerID);
-      }
-      if(IDKT.SLOWRESIST > 0 && IDKM2[9] < 0)
-      {
-         SLOWMOD = Math.min(1,Math.max(0,1 - IDKT.SLOWRESIST));
-         IDKM2[9] = Math.round(IDKM2[9] * SLOWMOD);
-      }
-      IDKT.FOCUSN += IDKM2[9];
-      if(IDKT.FOCUSN > IDKT.FOCUSU)
-      {
-         IDKT.FOCUSN = IDKT.FOCUSU;
-      }
-      if(IDKT.FOCUSN < 0)
-      {
-         IDKT.FOCUSN = 0;
-      }
-      _root.BATTLEFLASH.hitTarget = _root.BATTLESCREEN["player" + IDKT.playerID];
-      _root.BATTLEFLASH.DFTC = IDKT.characterColorState;
-      _root.BATTLEFLASH.DFTF = IDKT.characterFilterState;
-      _root.BATTLEFLASH.DFTP = IDKT;
-      _root.BATTLEFLASH.gotoAndPlay("focus");
-      _root.lifeBarUpdate(IDKT.playerID);
+      shtName.PER[_root.elementMainArray[wefjnew]] = shtName.PERU[_root.elementMainArray[wefjnew]] = _root[theGuy].PER[_root.elementMainArray[wefjnew]];
+      shtName.DEF[_root.elementMainArray[wefjnew]] = shtName.DEFU[_root.elementMainArray[wefjnew]] = _root[theGuy].DEF[_root.elementMainArray[wefjnew]];
+      wefjnew++;
    }
 }
-function perScript(PERCALKK, DEFCALKK, GGG, GGC)
+KRS = new Array();
+r = 0;
+while(r < 100)
 {
-   _root.KRRR();
-   if(SPEEDCRITCALC < 0)
+   KRS[r] = random(100);
+   r++;
+}
+KRSC = 0;
+if(!arenaMode)
+{
+   if(Krin.difficulty == 0)
    {
-      SPEEDCRITCALC = 0;
+      turnBasedKrin = true;
    }
-   if(_root.KRSO < GGG[58] * (PERCALKK + GGG[7] + GGC.CRIT + SPEEDCRITCALC) * GGG[8] / DEFCALKK * 15)
+   else if(Krin.difficulty == 1)
    {
-      _root.perKSuccess = true;
+      turnBasedKrin = true;
    }
-   else if(GGG[58] == 0 && _root.KRSO < (PERCALKK + GGG[7] + GGC.CRIT + SPEEDCRITCALC) * GGG[8] / DEFCALKK2 * 15)
+   else if(Krin.difficulty == 3)
    {
-      _root.perKSuccess = true;
+      turnBasedKrin = true;
    }
    else
    {
-      _root.perKSuccess = false;
+      turnBasedKrin = false;
    }
 }
-BarHolder = new Array();
-BarHolder2 = new Array();
-BarHolder3 = new Array();
-BarHolder4 = new Array();
-lifeBarUpdate = function(PWLC)
+var AchVal1 = 0;
+var AchVal2 = false;
+var AchVal3 = 0;
+var AchVal4 = 0;
+_root.moneyConstGain = 0;
+_root.totalEnemyGain = 0;
+addSound("Music",2);
+if(Krin.graphics)
 {
-   ghjul = _root["playerKrin" + PWLC];
-   _root["p" + PWLC + "BAR"].inner.lifeNow = ghjul.LIFEN;
-   _root["p" + PWLC + "BAR"].inner.lifeMax = ghjul.LIFEU;
-   _root["p" + PWLC + "BAR"].inner.focusNow = ghjul.FOCUSN;
-   _root["p" + PWLC + "BAR"].inner.focusMax = ghjul.FOCUSU;
-   if(_root.Krin.BattlePick > 4999 && _root.Krin.BattlePick < 5999)
+   KrinSettings.SFX = true;
+   KrinSettings.SFX2 = false;
+   KrinSettings.SFX3 = true;
+   KrinSettings.QUALITY = "HIGH";
+}
+else
+{
+   KrinSettings.SFX = false;
+   KrinSettings.SFX2 = false;
+   KrinSettings.SFX3 = true;
+   KrinSettings.QUALITY = "HIGH";
+}
+i = 1;
+while(i < 7)
+{
+   _root["playerKrin" + i] = new Object();
+   _root["playerKrin" + i].active = false;
+   _root["playerKrin" + i].AION = false;
+   _root["playerKrin" + i].playerID = i;
+   _root["playerKrin" + i].playerName = "John Dead";
+   _root["playerKrin" + i].SPEEDU = 0;
+   i++;
+}
+phase = 1;
+playerKrin0 = new Object();
+playerKrin0.active = true;
+playerKrin0.playerName = "Information";
+Krin.friendlySlotsFFTT = new Array();
+_root.Krin.MenuPlayerSelect = 0;
+updateStatus();
+Krin.LIFE = _root.Krin["StatSets" + _root.Krin.MenuPlayerSelect][0] + Math.ceil(_root.getStat(_root["KNU" + _root.Krin.ClassStats[_root.Krin.MenuPlayerSelect]][1],_root.Krin.LevelStats[_root.Krin.MenuPlayerSelect],true));
+Krin.STRENGTH = _root.Krin["StatSets" + _root.Krin.MenuPlayerSelect][1] + Math.ceil(_root.getStat(_root["KNU" + _root.Krin.ClassStats[_root.Krin.MenuPlayerSelect]][2],_root.Krin.LevelStats[_root.Krin.MenuPlayerSelect],true));
+Krin.MAGIC = _root.Krin["StatSets" + _root.Krin.MenuPlayerSelect][2] + Math.ceil(_root.getStat(_root["KNU" + _root.Krin.ClassStats[_root.Krin.MenuPlayerSelect]][3],_root.Krin.LevelStats[_root.Krin.MenuPlayerSelect],true));
+Krin.SPEED = _root.Krin["StatSets" + _root.Krin.MenuPlayerSelect][3] + Math.ceil(_root.getStat(_root["KNU" + _root.Krin.ClassStats[_root.Krin.MenuPlayerSelect]][4],_root.Krin.LevelStats[_root.Krin.MenuPlayerSelect],true));
+Krin.FOCUS = _root.Krin["StatSets" + _root.Krin.MenuPlayerSelect][4] + Math.ceil(_root["KNU" + _root.Krin.ClassStats[_root.Krin.MenuPlayerSelect]][5],true);
+i = 1;
+while(i < 7)
+{
+   _root["playerKrin" + i] = new Object();
+   shtName = _root["playerKrin" + i];
+   shtName.active = false;
+   shtName.playerID = i;
+   shtName.plevel = 1;
+   shtName.model = new Array();
+   shtName.equip = new Array();
+   shtName.model = ["MODEL1","ONE","ONE","M"];
+   shtName.equip = ["NINJA","NINJA","NINJA","NINJA","NINJA","SWORD1","SWORD1"];
+   shtName.characterColorState = "Normal";
+   shtName.characterFilterState = KrinFilterNone;
+   shtName.changeArray = new Array();
+   shtName.changeArrayEP = new Array();
+   shtName.changeArrayEP2 = new Array();
+   shtName.changeArrayED = new Array();
+   shtName.changeArrayED2 = new Array();
+   shtName.BUFFARRAYK = new Array();
+   e = 0;
+   while(e < _root.maxBuffLimit)
    {
-      _root["p" + PWLC + "BAR"].inner.focusMax20 = ghjul.FOCUSPLUS * 100;
+      shtName.BUFFARRAYK.push({buffId:"None",CD:0,buffValue:0,shieldBuffValue:0});
+      e++;
    }
-   else if(_root.Krin.BattlePick == 7001)
+   shtName.FILTERSBUFFARRAY = new Array();
+   shtName.FILTERSBUFFARRAY = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+   shtName.DOTTICKERARRAY = new Array();
+   shtName.DOTTICKERARRAY = [0,0,0,0,0,0,0,0,0,0,0];
+   shtName.changeArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+   shtName.changeArrayEP = [0,0,0,0,0,0,0,0,0];
+   shtName.changeArrayEP2 = [0,0,0,0,0,0,0,0,0];
+   shtName.changeArrayED = [0,0,0,0,0,0,0,0,0];
+   shtName.changeArrayED2 = [0,0,0,0,0,0,0,0,0];
+   shtName.playerName = "John Doe";
+   shtName.changeArray = new Array();
+   shtName.changeArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+   shtName.passiveBuffs = new Array();
+   shtName.SPEEDU = 0;
+   shtName.SPEEDN = 0;
+   shtName.MAGICN = 0;
+   shtName.STRENGTHN = 0;
+   shtName.SILENCED = 0;
+   shtName.FURY = 0;
+   shtName.BLOODYFURY = 0;
+   shtName.IGNORE = 0;
+   shtName.STUNRESIST = 0;
+   shtName.SLOWRESIST = 0;
+   shtName.FLAMED = 0;
+   shtName.FLAMED2 = 0;
+   shtName.HIT = 0;
+   shtName.DODGE = 0;
+   shtName.AINEXTATTACK = 0;
+   shtName.DMG = 0;
+   shtName.TURN = 0;
+   shtName.PHASE = 0;
+   shtName.FOCUSPLUS = 0;
+   shtName.CRIT = 0;
+   shtName.DMG2 = 0;
+   shtName.DEFENSE = 1;
+   shtName.IDMG = 0;
+   shtName.STANCE = 0;
+   shtName.STANCEMAX = 0;
+   shtName.BLEED = 100;
+   shtName.BLEED2 = 0;
+   shtName.LIVINGDEAD = 0;
+   shtName.BLEEDMAX = 100;
+   shtName.FROSTBITTEN = 100;
+   shtName.FROSTBITTEN2 = 0;
+   shtName.FROSTBITTENMAX = 100;
+   shtName.IDMG2 = 0;
+   shtName.IDMGP = 0;
+   shtName.IDMGP2 = 1;
+   shtName.CRITMODIFIER = 1;
+   shtName.IDOT = 1;
+   shtName.IHOT = 1;
+   shtName.ODOT = 1;
+   shtName.NODAMAGE = true;
+   shtName.FOCUSCHANGE = 0;
+   shtName.SSWITCH = 0;
+   shtName.HEALMOD_PLUS = 1;
+   shtName.HEALMOD_MINUS = 1;
+   shtName.HEALMOD = 1;
+   shtName.STUN = 0;
+   shtName.abilityhistoryIDKM = new Array();
+   f = 0;
+   while(f < 19)
    {
-      _root["p" + PWLC + "BAR"].inner.focusMax20 = ghjul.STRENGTH;
+      shtName.abilityhistoryIDKM[f] = 0;
+      f++;
    }
-   else if(ghjul.STANCE < ghjul.STANCEMAX)
+   f = 0;
+   shtName.abilityhistoryIDKM2 = new Array();
+   while(f < 102)
    {
-      _root["p" + PWLC + "BAR"].inner.focusMax20 = "Stance:" + ghjul.STANCE;
-      if(ghjul.BLEED < ghjul.BLEEDMAX)
-      {
-         _root["p" + PWLC + "BAR"].inner.focusMax20 = "Stance:" + ghjul.STANCE + "/" + ghjul.BLEED;
-      }
+      shtName.abilityhistoryIDKM2[f] = 0;
+      f++;
    }
-   else if(ghjul.BLEED < ghjul.BLEEDMAX)
+   shtName.START = 0;
+   shtName.STUNP = 0;
+   shtName.REFLECTDMG = 0;
+   shtName.SHIELD = 0;
+   shtName.SHIELDCOUNTER = 0;
+   if(Math.pow(-1,i) < 0)
    {
-      _root["p" + PWLC + "BAR"].inner.focusMax20 = "Bleed:" + ghjul.BLEED;
+      shtName.teamSide = 1;
    }
    else
    {
-      _root["p" + PWLC + "BAR"].inner.focusMax20 = "                ";
+      shtName.teamSide = 2;
    }
-   _root["p" + PWLC + "BAR"].inner.playerName = ghjul.playerName;
-   if(firstUpdate)
+   shtName.PER = new Object();
+   shtName.DEF = new Object();
+   shtName.PERU = new Object();
+   shtName.DEFU = new Object();
+   randomGo = 1;
+   if(Krin.singlePlayer == true)
    {
-      BarHolder[PWLC - 1] = ghjul.LIFEN;
-      BarHolder2[PWLC - 1] = ghjul.FOCUSN;
-      BarHolder3[PWLC - 1] = Math.round(ghjul.LIFEN / ghjul.LIFEU * 100);
-      BarHolder4[PWLC - 1] = ghjul.LIFEU;
-      LNUS = 0;
-      FNUS = 0;
-      wPerCentKrin = _root["p" + PWLC + "BAR"].inner.lifeNow / _root["p" + PWLC + "BAR"].inner.lifeMax;
-      _root["p" + PWLC + "BAR"].inner2.lB.LBS.LCC.gotoAndStop(Math.round(wPerCentKrin * 100));
-      _root["p" + PWLC + "BAR"].inner2.lB.LCC.gotoAndStop(Math.round(wPerCentKrin * 100));
-      _root["p" + PWLC + "BAR"].inner2.lB2.LCC.gotoAndStop(Math.round(wPerCentKrin * 100));
+      if(Krin.playerNumber == i)
+      {
+         shtName.playerName = "Sonny";
+         updateStat_Player("Krin");
+      }
+      else
+      {
+         krinAddNewUnit(i,"Krin");
+      }
+   }
+   else if(i == 1)
+   {
+      shtName.playerName = arenaPlayer1.krinNameUser;
+      updateStat_Player("arenaPlayer1");
+   }
+   else if(i == 2)
+   {
+      shtName.playerName = arenaPlayer2.krinNameUser;
+      updateStat_Player("arenaPlayer2");
+   }
+   else if(i == 3 || i == 5)
+   {
+      krinAddNewUnit(i,"arenaPlayer1");
    }
    else
    {
-      LNUS = ghjul.LIFEN - BarHolder[PWLC - 1];
-      if(Math.round(ghjul.LIFEN / ghjul.LIFEU * 100) == BarHolder3[PWLC - 1])
-      {
-         LNUS = 0;
-      }
-      FNUS = ghjul.FOCUSN - BarHolder2[PWLC - 1];
-      LNUSC = Math.sqrt(Math.pow(LNUS,2)) / ghjul.LIFEU;
-      FNUSC = Math.sqrt(Math.pow(FNUS,2)) / ghjul.FOCUSU;
-      if(_root.Krin.IronSkinner)
-      {
-         _root.Krin.IronSkinner = false;
-         LNUSC = Math.abs(ghjul.LIFEN / ghjul.LIFEU - BarHolder[PWLC - 1] / BarHolder4[PWLC - 1]);
-      }
-      BarHolder[PWLC - 1] = ghjul.LIFEN;
-      BarHolder2[PWLC - 1] = ghjul.FOCUSN;
-      BarHolder4[PWLC - 1] = ghjul.LIFEU;
-      BarHolder3[PWLC - 1] = Math.round(ghjul.LIFEN / ghjul.LIFEU * 100);
+      krinAddNewUnit(i,"arenaPlayer2");
    }
-   if(FNUS != 0)
+   i++;
+}
+winCondition = -1;
+winDate = _root["KBR" + Krin.BattlePick].winDate;
+winDateCondition = _root["KBR" + Krin.BattlePick].winDateCondition;
+GOTIPPER = Krin.BattlePick;
+Krin.dropArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+pewPewItemDrop = 0;
+Krin.ZoneBG = _root["KBR" + Krin.BattlePick].ZoneBG;
+Krin.SkyBG = _root["KBR" + Krin.BattlePick].SkyBG;
+absoluteStart = _root["KBR" + Krin.BattlePick].absoluteStart;
+for(krinj in _root["KBR" + Krin.BattlePick].itemDrops)
+{
+   Krin.randomerItemDrop = random(100);
+   if(_root["KBR" + Krin.BattlePick].itemDrops[krinj].CHANCE > Krin.randomerItemDrop)
    {
-      wPerCentKrin2 = _root["p" + PWLC + "BAR"].inner.focusNow / _root["p" + PWLC + "BAR"].inner.focusMax;
-      if(FNUS < 1)
-      {
-         _root["p" + PWLC + "BAR"].inner2.fB._width = _root["p" + PWLC + "BAR"].inner2.fB.wsaver * wPerCentKrin2;
-      }
-      _root["p" + PWLC + "BAR"].inner2.fB3.attachMovie("LifeBarSmoother2","LBS",1);
-      _root["p" + PWLC + "BAR"].inner2.fB3.LBS._x = _root["p" + PWLC + "BAR"].inner2.fB._width * 1.2710000000000006 - 1;
-      _root["p" + PWLC + "BAR"].inner2.fB3.LBS._width = _root["p" + PWLC + "BAR"].inner2.fB.wsaver * 1.2710000000000006 * FNUSC;
-      if(FNUS > 0)
-      {
-         _root["p" + PWLC + "BAR"].inner2.fB3.LBS.gotoAndPlay("healSmooth");
-         _root["p" + PWLC + "BAR"].inner2.fB3.LBS.wsaver = _root["p" + PWLC + "BAR"].inner2.lB.wsaver * wPerCentKrin2;
-      }
+      Krin.dropArray[pewPewItemDrop] = _root["KBR" + Krin.BattlePick].itemDrops[krinj].ID;
+      pewPewItemDrop++;
    }
-   if(LNUS != 0 || firstUpdate == true)
-   {
-      wPerCentKrin = _root["p" + PWLC + "BAR"].inner.lifeNow / _root["p" + PWLC + "BAR"].inner.lifeMax;
-      if(LNUS < 1 || firstUpdate == true)
-      {
-         _root["p" + PWLC + "BAR"].inner2.lB._width = _root["p" + PWLC + "BAR"].inner2.lB.wsaver * wPerCentKrin;
-      }
-      if(firstUpdate != true)
-      {
-         _root["p" + PWLC + "BAR"].inner2.lB3.attachMovie("LifeBarSmoother","LBS",1);
-         _root["p" + PWLC + "BAR"].inner2.lB3.LBS._x = _root["p" + PWLC + "BAR"].inner2.lB._width * 1.2710000000000006 - 1;
-         _root["p" + PWLC + "BAR"].inner2.lB3.LBS._width = _root["p" + PWLC + "BAR"].inner2.lB.wsaver * 1.2710000000000006 * LNUSC;
-         _root["p" + PWLC + "BAR"].inner2.lB3.LBS.LCC.gotoAndStop(Math.round(wPerCentKrin * 100) + 1);
-      }
-      _root["p" + PWLC + "BAR"].inner2.lB.LCC.gotoAndStop(Math.round(wPerCentKrin * 100) + 1);
-      _root["p" + PWLC + "BAR"].inner2.lB2.LCC.gotoAndStop(Math.round(wPerCentKrin * 100) + 1);
-      if(ghjul.LIFEN == 0)
-      {
-         _root["p" + PWLC + "BAR"].inner2.lB3.LBS.deadNow = true;
-         addSound("Effects",ghjul.voiceDie);
-      }
-      if(LNUS > 0)
-      {
-         _root["p" + PWLC + "BAR"].inner2.lB3.LBS.gotoAndPlay("healSmooth");
-         _root["p" + PWLC + "BAR"].inner2.lB3.LBS.stopper = Math.round(wPerCentKrin * 100) + 1;
-         _root["p" + PWLC + "BAR"].inner2.lB3.LBS.wsaver = _root["p" + PWLC + "BAR"].inner2.lB.wsaver * wPerCentKrin;
-      }
-   }
-};
+}
+Krin.itemRareDropCheck = _root["KBR" + Krin.BattlePick].itemRareDropper;
+while(Krin.itemRareDropCheck > 0)
+{
+   doppelGangerRandom = Math.floor(random(_root["KBR" + Krin.BattlePick].itemRare.length * 100) / 100);
+   Krin.dropArray[pewPewItemDrop] = _root["KBR" + Krin.BattlePick].itemRare[doppelGangerRandom];
+   Krin.itemRareDropCheck--;
+   pewPewItemDrop++;
+}
+Krin.itemRareDropCheck = _root["KBR" + Krin.BattlePick].itemRareDropper2;
+while(Krin.itemRareDropCheck > 0)
+{
+   doppelGangerRandom = Math.floor(random(_root["KBR" + Krin.BattlePick].itemRare2.length * 100) / 100);
+   Krin.dropArray[pewPewItemDrop] = _root["KBR" + Krin.BattlePick].itemRare2[doppelGangerRandom];
+   Krin.itemRareDropCheck--;
+   pewPewItemDrop++;
+}
+Krin.itemRareDropCheck = _root["KBR" + Krin.BattlePick].itemRareDropper3;
+while(Krin.itemRareDropCheck > 0)
+{
+   doppelGangerRandom = Math.floor(random(_root["KBR" + Krin.BattlePick].itemRare3.length * 100) / 100);
+   Krin.dropArray[pewPewItemDrop] = _root["KBR" + Krin.BattlePick].itemRare3[doppelGangerRandom];
+   Krin.itemRareDropCheck--;
+   pewPewItemDrop++;
+}
+Krin.timeLock = _root["KBR" + Krin.BattlePick].timeLock;
