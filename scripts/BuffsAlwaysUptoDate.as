@@ -4,7 +4,7 @@ function addNewBuffKrin(a, b, c)
    _root["KRINBUFF" + a][0] = b;
    _root["KRINBUFF" + a][1] = c;
    i = 2;
-   while(i < 151)
+   while(i < 153)
    {
       _root["KRINBUFF" + a][i] = 0;
       i++;
@@ -299,6 +299,8 @@ function applyBuffKrin(ukcb2, bn, iftbc, ukcb4, debuffValue, limo)
    ukcb2.IGNORE += iftbc * bffker[81];
    ukcb2.DEFENSE += iftbc * bffker[82];
    ukcb2.LIVINGDEAD += iftbc * bffker[145];
+   ukcb2.FLAMED += iftbc * bffker[151];
+   ukcb2.FLAMED2 += iftbc * bffker[152];
    if(iftbc < 0 && bffker[140] != 0)
    {
       ukcb2.AINEXTATTACK = 0;
@@ -1150,7 +1152,6 @@ function precheckBuff(mCaster, mTarget, mAry2, mAry1)
       if(_root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][70] != 0 && mCaster.BUFFARRAYK[f].CD != 0)
       {
          _root.applyBuffKrin(mCaster,_root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][70],1,mCaster);
-         _root.applyChangesKrin(mCaster);
       }
       if(_root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][75] > 0 && mCaster.BUFFARRAYK[f].CD != 0)
       {
@@ -1195,7 +1196,6 @@ function precheckBuff(mCaster, mTarget, mAry2, mAry1)
          {
             mCaster.BUFFARRAYK[f].CD = 0;
             _root.applyBuffKrin(mCaster,mCaster.BUFFARRAYK[f].buffId,-1,0,mCaster.BUFFARRAYK[f].buffValue);
-            _root.applyChangesKrin(mCaster);
          }
       }
       if(_root["KRINBUFF" + mTarget.BUFFARRAYK[f].buffId][1] == "Physical" && mAry2[69] > 0 && mTarget.BUFFARRAYK[f].CD != 0)
@@ -1275,6 +1275,7 @@ function precheckBuff(mCaster, mTarget, mAry2, mAry1)
       }
       x++;
    }
+   _root.applyChangesKrin(mCaster);
 }
 function checkBuffafter(mCaster, mTarget, mAry2, mAry1, JI)
 {
@@ -1333,6 +1334,19 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE5)
    x = 0;
    while(x < _root.maxBuffLimit)
    {
+      if(mCaster.FLAMED2 == 0)
+      {
+         if(mAry2[0] == "Blackflame" && _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][151] != 0 && mCaster.BUFFARRAYK[x].CD != 0)
+         {
+            _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][151] -= 1;
+            if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][151] == 0)
+            {
+               _root.addSound("Effects","Fury");
+               _root.applyBuffKrin(mCaster,"FLAMEDFRIEND",1,mCaster);
+               _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][151] = mCaster.FLAMED;
+            }
+         }
+      }
       if(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][1] == mAry2[99] && mAry2[90] != 0 && mTarget.BUFFARRAYK[x].CD > 0 && DER == true)
       {
          _root.applyBuffKrin(mTarget,mAry2[90],1,mCaster);
@@ -2960,24 +2974,28 @@ _root.hackMove2[47] = -0.25;
 _root.hackMove2[9] = 0.1;
 _root.hackMove2[23] = 0.2;
 _root.hackMove2[48] = 0.25;
+_root.hackMove2[151] = 5;
 addNewBuffKrin("ZPCIENDURANCE2","","Fire");
 _root.hackMove2[16] = -1;
 _root.hackMove2[47] = -0.25;
 _root.hackMove2[9] = 0.15;
 _root.hackMove2[23] = 0.3;
 _root.hackMove2[48] = 0.25;
+_root.hackMove2[151] = 4;
 addNewBuffKrin("ZPCIENDURANCE3","","Fire");
 _root.hackMove2[16] = -1;
 _root.hackMove2[47] = -0.25;
 _root.hackMove2[9] = 0.2;
 _root.hackMove2[23] = 0.4;
 _root.hackMove2[48] = 0.25;
+_root.hackMove2[151] = 4;
 addNewBuffKrin("ZPCIENDURANCE4","","Fire");
 _root.hackMove2[16] = -1;
 _root.hackMove2[47] = -0.25;
 _root.hackMove2[9] = 0.25;
 _root.hackMove2[23] = 0.5;
 _root.hackMove2[48] = 0.25;
+_root.hackMove2[151] = 3;
 addNewBuffKrin("ZPCISHELLL1","","Blackflame");
 _root.hackMove2[16] = -1;
 _root.hackMove2[39] = 10;
@@ -8089,7 +8107,7 @@ _root.hackMove2[17] = 1;
 _root.hackMove2[20] = 1;
 _root.hackMove2[25] = BUFF_DESC1[707];
 addNewBuffKrin("BLACKFLAMESHOCK",BUFF_NAME[711],"Blackflame");
-_root.hackMove2[24] = -0.7;
+_root.hackMove2[24] = -0.6;
 _root.hackMove2[16] = 3;
 _root.hackMove2[25] = BUFF_DESC1[711];
 addNewBuffKrin("SUPERSTUNPRAETOR",BUFF_NAME[712],"Blackflame");
@@ -9376,3 +9394,12 @@ _root.hackMove2[27] = 1;
 _root.hackMove2[20] = 1;
 _root.hackMove2[32] = 1;
 _root.hackMove2[25] = BUFF_DESC1[825];
+addNewBuffKrin("FLAMEDFRIEND",BUFF_NAME[826],"Fire");
+_root.hackMove2[16] = 4;
+_root.hackMove2[86] = 2.5;
+_root.hackMove2[11] = 0.5;
+_root.hackMove2[27] = 1;
+_root.hackMove2[20] = 1;
+_root.hackMove2[32] = 1;
+_root.hackMove2[152] = 1;
+_root.hackMove2[25] = BUFF_DESC1[826];
