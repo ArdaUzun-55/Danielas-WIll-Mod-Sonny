@@ -392,7 +392,7 @@ onClipEvent(enterFrame){
                               {
                                  _root.applyBuffKrin(mToBeBuffed,mAry2[13],1,mCaster);
                               }
-                              if(_root["KRINBUFF" + mAry2[13]][17] == 0)
+                              if(_root["KRINBUFF" + mAry2[13]][17] == 0 && _root["KRINBUFF" + mAry2[13]][50] == 0)
                               {
                                  _root.applyBuffKrin(mToBeBuffed,mAry2[13],1,mCaster);
                               }
@@ -428,7 +428,14 @@ onClipEvent(enterFrame){
                      }
                   }
                   _root.applyChangesKrin(mTarget);
-                  _root.checkAbilities(mCaster,mTarget,mAry2,mAry1,FIRE2,FIRE3,FIRE4,FIRE5,FIRE6);
+                  if(mAry2[45] == JI && mAry1[0] == "Fire Snake")
+                  {
+                     _root.checkAbilities(mCaster,mTarget,mAry2,mAry1,FIRE2,FIRE3,FIRE4,FIRE5,FIRE6);
+                  }
+                  else
+                  {
+                     _root.checkAbilities(mCaster,mTarget,mAry2,mAry1,FIRE2,FIRE3,FIRE4,FIRE5,FIRE6);
+                  }
                   _root.checkBuffafter(mCaster,mTarget,mAry2,mAry1,JI);
                }
                else
@@ -438,7 +445,14 @@ onClipEvent(enterFrame){
                      _root.addSound("Effects",_root.Krin.missToMake);
                      _root.KrinNumberShow("miss",mTarget2,mAry2[0]);
                   }
-                  _root.checkAbilities(mCaster,mTarget,mAry2,mAry1,FIRE2,FIRE3,FIRE4,FIRE5,FIRE6);
+                  if(mAry2[45] == JI && mAry1[0] == "Fire Snake")
+                  {
+                     _root.checkAbilities(mCaster,mTarget,mAry2,mAry1,FIRE2,FIRE3,FIRE4,FIRE5,FIRE6);
+                  }
+                  else
+                  {
+                     _root.checkAbilities(mCaster,mTarget,mAry2,mAry1,FIRE2,FIRE3,FIRE4,FIRE5,FIRE6);
+                  }
                   if(mAry2[20] == 1)
                   {
                      owegwe = 0;
@@ -865,7 +879,7 @@ onClipEvent(enterFrame){
                         {
                            _root[theGuy].abilityCoolDown[_root.moveCoolDownBreaker] = mAry1[7];
                            _root.krinToMove._visible = false;
-                           if(_root.turnBasedKrin)
+                           if(!_root.turnBasedKrin)
                            {
                            }
                         }
@@ -1116,7 +1130,7 @@ onClipEvent(enterFrame){
                         _root.krinToMove.toolTipTitle = _root.krinToMove.thinger1;
                         _root.krinToMove.toolTip = _root.krinToMove.thinger2;
                         _root.krinToMove._visible = false;
-                        if(_root.turnBasedKrin)
+                        if(!_root.turnBasedKrin)
                         {
                         }
                      }
@@ -1168,7 +1182,7 @@ onClipEvent(enterFrame){
                   _root.krinToMove.toolTipTitle = _root.krinToMove.thinger1;
                   _root.krinToMove.toolTip = _root.krinToMove.thinger2;
                   _root.krinToMove._visible = false;
-                  if(_root.turnBasedKrin)
+                  if(!_root.turnBasedKrin)
                   {
                   }
                }
