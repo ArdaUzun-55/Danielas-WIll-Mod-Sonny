@@ -316,7 +316,7 @@ function KRRR()
       _root.KRSC = 0;
    }
 }
-function executeMove(IDKM, IDKM2, IDKC, IDKT)
+function executeMove(IDKM, IDKM2, IDKC, IDKT, JI, owegwe)
 {
    i = 0;
    while(19 > i)
@@ -325,7 +325,7 @@ function executeMove(IDKM, IDKM2, IDKC, IDKT)
       i++;
    }
    i = 0;
-   while(102 > i)
+   while(140 > i)
    {
       IDKC.abilityhistoryIDKM2[i] = IDKM2[i];
       i++;
@@ -339,7 +339,7 @@ function executeMove(IDKM, IDKM2, IDKC, IDKT)
          i++;
       }
       i = 0;
-      while(i < 102)
+      while(i < 140)
       {
          IDKM2[i] = IDKT.abilityhistoryIDKM2[i];
          i++;
@@ -483,16 +483,16 @@ function executeMove(IDKM, IDKM2, IDKC, IDKT)
             {
                if(IDKT.IDMG < 500)
                {
-                  var _loc6_ = IDKM2[0];
-                  var _loc7_ = _root.DamageOutputKrinFinal;
-                  var _loc8_ = _loc6_ == elementMainArray[0];
-                  if(_loc8_)
+                  var _loc8_ = IDKM2[0];
+                  var _loc9_ = _root.DamageOutputKrinFinal;
+                  var _loc10_ = _loc8_ == elementMainArray[0];
+                  if(_loc10_)
                   {
-                     _root.updateTopPhysicalDamage(_loc7_);
+                     _root.updateTopPhysicalDamage(_loc9_);
                   }
                   else
                   {
-                     _root.updateTopElementalDamage(_loc7_);
+                     _root.updateTopElementalDamage(_loc9_);
                   }
                }
             }
@@ -506,7 +506,7 @@ function executeMove(IDKM, IDKM2, IDKC, IDKT)
                MULTI++;
             }
             IDKT.LIFEN -= _root.DamageOutputKrinFinal;
-            if(IDKT.LIFEN <= 0 && IDKT.FOCUSU != 101)
+            if(IDKT.LIFEN <= 0 && IDKT.FOCUSU != 101 && IDKT.LIVINGDEAD10 != 1)
             {
                IDKT.LIFEN = 0;
                IDKT.FOCUSN = 0;
@@ -962,7 +962,7 @@ function addNewBuffKrin(a, b, c)
    _root["KRINBUFF" + a][0] = b;
    _root["KRINBUFF" + a][1] = c;
    i = 2;
-   while(i < 164)
+   while(i < 172)
    {
       _root["KRINBUFF" + a][i] = 0;
       i++;
@@ -1008,7 +1008,7 @@ function ModifyHP(Damage, element, ignoreDefense, mCaster, mTarget)
    num3 = 0;
    if(Damage > 0)
    {
-      num = ignoreDefense * (100 + mTarget.plevel * 15) / (mTarget.DEFU[element] * mTarget.DEFENSE);
+      num = ignoreDefense * (100 + mTarget.plevel * 5) / (mTarget.DEFU[element] * mTarget.DEFENSE);
       if(num == 0)
       {
          num = 1;
@@ -1049,7 +1049,7 @@ function ModifyHP(Damage, element, ignoreDefense, mCaster, mTarget)
             mTarget.LIFEN = 0;
             mTarget.FOCUSN = 0;
          }
-         if(mTarget.LIFEN < 0 && mTarget.FOCUSU == 101)
+         if(mTarget.LIFEN < 0 && (mTarget.FOCUSU == 101 || mTarget.LIVINGDEAD10 == 1))
          {
             mTarget.LIFEN = 0;
             mTarget.FOCUSN = 0;
@@ -1057,13 +1057,13 @@ function ModifyHP(Damage, element, ignoreDefense, mCaster, mTarget)
             _root.krinAddMove(mTarget.playerID,mTarget.playerID,0);
             Stun = 1;
          }
-         if(mTarget.LIFEN > 0 && mTarget.FOCUSU == 101 && Stun == 1)
+         if(mTarget.LIFEN > 0 && (mTarget.FOCUSU == 101 || mTarget.LIVINGDEAD10 == 1) && Stun == 1)
          {
             _root.BATTLESCREEN["player" + mTarget.playerID].inner.gotoAndPlay("outofstun");
             _root.krinAddMove(mTarget.playerID,mTarget.playerID,0);
             Stun = 0;
          }
-         if(mTarget.LIFEN == 0 && mTarget.FOCUSU != 101)
+         if(mTarget.LIFEN == 0 && mTarget.FOCUSU != 101 && mTarget.LIVINGDEAD10 != 1)
          {
             _root.BATTLESCREEN["player" + mTarget.playerID].inner.gotoAndPlay("dead");
             mTarget.active = false;
@@ -1128,6 +1128,7 @@ function applyBuffKrin(ukcb2, bn, iftbc, ukcb4, debuffValue, limo)
    ukcb2.IGNORE += iftbc * bffker[81];
    ukcb2.DEFENSE += iftbc * bffker[82];
    ukcb2.LIVINGDEAD += iftbc * bffker[145];
+   ukcb2.LIVINGDEAD10 += iftbc * bffker[164];
    ukcb2.FLAMED += iftbc * bffker[151];
    ukcb2.FLAMED2 += iftbc * bffker[152];
    if(iftbc < 0 && bffker[140] != 0)
@@ -1137,6 +1138,22 @@ function applyBuffKrin(ukcb2, bn, iftbc, ukcb4, debuffValue, limo)
    if(iftbc > 0 && bffker[140] != 0)
    {
       ukcb2.AINEXTATTACK = bffker[140];
+   }
+   if(iftbc < 0 && bffker[165] != 0)
+   {
+      ukcb2.CONDITION = 0;
+   }
+   if(iftbc > 0 && bffker[165] != 0)
+   {
+      ukcb2.CONDITION = bffker[165];
+   }
+   if(iftbc < 0 && bffker[166] != 0)
+   {
+      ukcb2.CONDITION2 = 0;
+   }
+   if(iftbc > 0 && bffker[166] != 0)
+   {
+      ukcb2.CONDITION2 = bffker[166];
    }
    if(iftbc > 0)
    {
@@ -1519,7 +1536,132 @@ function checkStatus(mCaster, mTarget, mAry2, mAry1, owegwe)
          differenceForSH = 0;
          mTarget.BLEED -= _root["KRINBUFF" + mCaster.BUFFARRAYK[q].buffId][132];
       }
+      if(_root["KRINBUFF" + mTarget.BUFFARRAYK[q].buffId][167] > 0 && mAry1[14] == "Full Damage" && mTarget.BUFFARRAYK[q].CD != 0)
+      {
+         mCaster.SEDUCED += 1;
+      }
+      if(_root["KRINBUFF" + mCaster.BUFFARRAYK[q].buffId][167] > 0 && mCaster.BUFFARRAYK[q].CD == 1)
+      {
+         _root.applyBuffKrin(mTarget,"VULNERABLITY",1,mCaster);
+         _root.applyChangesKrin(mTarget);
+         mTarget.SEDUCED += 1;
+      }
+      if(_root["KRINBUFF" + mCaster.BUFFARRAYK[q].buffId][171] > 0 && mCaster.BUFFARRAYK[q].CD == 1)
+      {
+         G = 0;
+         while(G < 3)
+         {
+            if(_root["playerKrin" + (mCaster.teamSide + G * 2)].active)
+            {
+               ModifyHP(_root["KRINBUFF" + mCaster.BUFFARRAYK[q].buffId][171] * mCaster.STRENGTHU,_root["KRINBUFF" + mCaster.BUFFARRAYK[q].buffId][1],0,mCaster,_root["playerKrin" + (mCaster.teamSide + G * 2)]);
+               _root.addSound("Effects","FF30");
+            }
+            G++;
+         }
+      }
       q++;
+   }
+   if(mAry2[135] != 0)
+   {
+      mTarget.SEDUCED += mAry2[135];
+      if(mTarget.SEDUCED < 0)
+      {
+         mTarget.SEDUCED = 0;
+      }
+   }
+   if(mCaster.SEDUCED > 0)
+   {
+      o = 0;
+      while(o < _root.maxBuffLimit)
+      {
+         if(mCaster.SEDUCED >= 1)
+         {
+            if(mCaster.BUFFARRAYK[o].buffId == "LOVE0")
+            {
+               mCaster.BUFFARRAYK[o].CD = 0;
+               _root.applyBuffKrin(mCaster,mCaster.BUFFARRAYK[o].buffId,-1,0,mCaster.BUFFARRAYK[o].buffValue,o);
+               _root.applyBuffKrin(mCaster,"LOVE1",1,mCaster);
+            }
+         }
+         if(mCaster.SEDUCED >= 2)
+         {
+            if(mCaster.BUFFARRAYK[o].buffId == "LOVE1")
+            {
+               mCaster.BUFFARRAYK[o].CD = 0;
+               _root.applyBuffKrin(mCaster,mCaster.BUFFARRAYK[o].buffId,-1,0,mCaster.BUFFARRAYK[o].buffValue,o);
+               _root.applyBuffKrin(mCaster,"LOVE2",1,mCaster);
+            }
+         }
+         if(mCaster.SEDUCED >= 3)
+         {
+            if(mCaster.BUFFARRAYK[o].buffId == "LOVE2")
+            {
+               mCaster.BUFFARRAYK[o].CD = 0;
+               _root.applyBuffKrin(mCaster,mCaster.BUFFARRAYK[o].buffId,-1,0,mCaster.BUFFARRAYK[o].buffValue,o);
+               _root.applyBuffKrin(mCaster,"LOVE3",1,mCaster);
+            }
+         }
+         if(mCaster.SEDUCED >= 4)
+         {
+            if(mCaster.BUFFARRAYK[o].buffId == "LOVE3")
+            {
+               mCaster.BUFFARRAYK[o].CD = 0;
+               _root.applyBuffKrin(mCaster,mCaster.BUFFARRAYK[o].buffId,-1,0,mCaster.BUFFARRAYK[o].buffValue,o);
+               _root.applyBuffKrin(mCaster,"LOVE4",1,mCaster);
+               mCaster.SEDUCED = 0;
+               _root.applyBuffKrin(_root["playerKrin" + 2],"HONEYBEEPOWER",1,mCaster);
+               ModifyHP(_root["playerKrin" + 2].LIFEU * -0.1,"HEAL",0,_root["playerKrin" + 2],_root["playerKrin" + 2]);
+            }
+         }
+         o++;
+      }
+   }
+   if(mTarget.SEDUCED > 0)
+   {
+      o = 0;
+      while(o < _root.maxBuffLimit)
+      {
+         if(mTarget.SEDUCED >= 1)
+         {
+            if(mTarget.BUFFARRAYK[o].buffId == "LOVE0")
+            {
+               mTarget.BUFFARRAYK[o].CD = 0;
+               _root.applyBuffKrin(mTarget,mTarget.BUFFARRAYK[o].buffId,-1,0,mTarget.BUFFARRAYK[o].buffValue,o);
+               _root.applyBuffKrin(mTarget,"LOVE1",1,mTarget);
+            }
+         }
+         if(mTarget.SEDUCED >= 2)
+         {
+            if(mTarget.BUFFARRAYK[o].buffId == "LOVE1")
+            {
+               mTarget.BUFFARRAYK[o].CD = 0;
+               _root.applyBuffKrin(mTarget,mTarget.BUFFARRAYK[o].buffId,-1,0,mTarget.BUFFARRAYK[o].buffValue,o);
+               _root.applyBuffKrin(mTarget,"LOVE2",1,mTarget);
+            }
+         }
+         if(mTarget.SEDUCED >= 3)
+         {
+            if(mTarget.BUFFARRAYK[o].buffId == "LOVE2")
+            {
+               mTarget.BUFFARRAYK[o].CD = 0;
+               _root.applyBuffKrin(mTarget,mTarget.BUFFARRAYK[o].buffId,-1,0,mTarget.BUFFARRAYK[o].buffValue,o);
+               _root.applyBuffKrin(mTarget,"LOVE3",1,mTarget);
+            }
+         }
+         if(mTarget.SEDUCED >= 4)
+         {
+            if(mTarget.BUFFARRAYK[o].buffId == "LOVE3")
+            {
+               mTarget.BUFFARRAYK[o].CD = 0;
+               _root.applyBuffKrin(mTarget,mTarget.BUFFARRAYK[o].buffId,-1,0,mTarget.BUFFARRAYK[o].buffValue,o);
+               _root.applyBuffKrin(mTarget,"LOVE4",1,mTarget);
+               mTarget.SEDUCED = 0;
+               _root.applyBuffKrin(mCaster,"HONEYBEEPOWER",1,mCaster);
+               ModifyHP(mCaster.LIFEU * -0.1,"HEAL",0,mCaster,mCaster);
+            }
+         }
+         o++;
+      }
    }
    if(mTarget.BLEED <= 0)
    {
@@ -1621,13 +1763,6 @@ function precheckBuff(mCaster, mTarget, mAry2, mAry1)
    if(mCaster.LIFEN / mCaster.LIFEU < mAry2[60])
    {
       mAry2[20] = 1;
-   }
-   if(mAry2[102] != 0)
-   {
-      if(mAry2[102] == mTarget.abilityhistoryIDKM[10])
-      {
-         mAry1[9] *= 0;
-      }
    }
    if(mAry2[76] > 0 && mCaster.NODAMAGE == true)
    {
@@ -1937,6 +2072,63 @@ function checkBuffafter(mCaster, mTarget, mAry2, mAry1, JI)
       x++;
    }
 }
+function checkPoison(mCaster, mTarget, mAry2, mAry1, FAUL)
+{
+   if(mAry2[133] != 0)
+   {
+      x = 0;
+      while(x < _root.maxBuffLimit)
+      {
+         if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][170] == 1 && _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][168] != 0 && mCaster.BUFFARRAYK[x].CD > 0)
+         {
+            if(FAUL == 0)
+            {
+               if(_root.playerKrin1.active == false && _root.playerKrin3.active == true && _root.playerKrin5.active == true || _root.playerKrin1.active == true && _root.playerKrin3.active == false && _root.playerKrin5.active == true || _root.playerKrin1.active == true && _root.playerKrin3.active == true && _root.playerKrin5.active == false)
+               {
+                  ModifyHP(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][168] * mCaster.MAGICU,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][1],1,mCaster,mTarget);
+                  _root.applyBuffKrin(mTarget,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][169],1,mCaster);
+               }
+               if(_root.playerKrin1.active == false && _root.playerKrin3.active == false && _root.playerKrin5.active == true || _root.playerKrin1.active == true && _root.playerKrin3.active == false && _root.playerKrin5.active == false || _root.playerKrin1.active == false && _root.playerKrin3.active == true && _root.playerKrin5.active == false)
+               {
+                  ModifyHP(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][168] * mCaster.MAGICU,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][1],1,mCaster,mTarget);
+                  _root.applyBuffKrin(mTarget,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][169],1,mCaster);
+               }
+               ModifyHP(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][168] * mCaster.MAGICU,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][1],1,mCaster,mTarget);
+               _root.applyBuffKrin(mTarget,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][169],1,mCaster);
+            }
+            else
+            {
+               ModifyHP(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][168] * mCaster.MAGICU,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][1],1,mCaster,mTarget);
+               _root.applyBuffKrin(mTarget,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][169],1,mCaster);
+            }
+         }
+         if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][170] == 2 && _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][168] != 0 && mCaster.BUFFARRAYK[x].CD > 0)
+         {
+            if(FAUL == 0)
+            {
+               if(_root.playerKrin1.active == true && _root.playerKrin3.active == true && _root.playerKrin5.active == true)
+               {
+                  _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][168] *= 0.25;
+               }
+               if(_root.playerKrin1.active == false && _root.playerKrin3.active == true && _root.playerKrin5.active == true || _root.playerKrin1.active == true && _root.playerKrin3.active == false && _root.playerKrin5.active == true || _root.playerKrin1.active == true && _root.playerKrin3.active == true && _root.playerKrin5.active == false)
+               {
+                  _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][168] *= 0.5;
+               }
+            }
+            ModifyHP(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][168] * mCaster.MAGICU,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][1],1,mCaster,mTarget);
+            _root.applyBuffKrin(mTarget,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][169],1,mCaster);
+         }
+         if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][167] > 0 && mCaster.BUFFARRAYK[x].CD == 1)
+         {
+            _root.applyBuffKrin(mTarget,"VULNERABLITY",1,mCaster);
+            _root.applyChangesKrin(mTarget);
+            mTarget.SEDUCED += 1;
+         }
+         x++;
+      }
+      _root.applyChangesKrin(mTarget);
+   }
+}
 function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE5, owegwe)
 {
    if(_root.DamageOutputKrinFinal2 == 0 && _root.DamageOutputKrinFinal != 0)
@@ -1958,18 +2150,6 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE5, owegwe)
          }
       }
    }
-   if(IDKT.SHIE == 0.31)
-   {
-      IDKT.FOCUSN += 30;
-   }
-   if(IDKT.SHIE == 0.07)
-   {
-      IDKT.FOCUSN -= 900;
-   }
-   if(IDKT.SHIE == 0.05)
-   {
-      IDKT.FOCUSN += 900;
-   }
    if(mAry2[73] != 0 && _root.DamageOutputKrinFinal2 == 0)
    {
       ModifyHP(-1 * _root.DamageOutputKrinFinal * mAry2[73],mAry2[0],0,mTarget,mCaster);
@@ -1977,6 +2157,15 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE5, owegwe)
    if(mAry2[110] != 0 && owegwe == 0)
    {
       _root.applyBuffKrin(mCaster,mAry2[110],1,mCaster);
+   }
+   if(mAry2[137] != 0)
+   {
+      if(_root["KRINBUFF" + mAry2[137]][16] != 1 && owegwe == 0)
+      {
+         _root["KRINBUFF" + mAry2[137]][16] = 1;
+      }
+      _root.applyBuffKrin(mTarget,mAry2[137],1,mCaster);
+      _root["KRINBUFF" + mAry2[137]][16] += 2;
    }
    if(mAry2[111] != 0 && owegwe == 0)
    {
@@ -2373,10 +2562,6 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
       mAry2[4] = FIRE3;
       mAry2[7] = 0;
    }
-   if(mAry1[9] == 0)
-   {
-      mAry1[9] = 2;
-   }
    if(mAry1[5] != FIRE)
    {
       mAry1[5] = FIRE;
@@ -2447,6 +2632,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
          mAry2[0] = "Earth";
          mAry2[4] += 0.4;
          mAry2[103] = "Thunderinmagenta";
+         mAry2[17] = krinABC1[302] + mAry2[4] * 100 + krinABC2[302];
          CHANGEISCONDITION = true;
       }
       if(mAry2[103] == "Thunderinmagenta" && CHANGEISCONDITION == false)
@@ -2458,6 +2644,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
          mAry2[4] += 0.4;
          mAry2[13] = "WHITEPAINT";
          mAry2[103] = "Blizzardincyan";
+         mAry2[17] = krinABC1[303] + mAry2[4] * 100 + krinABC2[303];
          CHANGEISCONDITION = true;
       }
       if(mAry2[103] == "Blizzardincyan" && CHANGEISCONDITION == false)
@@ -2469,6 +2656,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
          mAry2[4] -= 0.8;
          mAry2[13] = 0;
          mAry2[103] = "Stoneinyellow";
+         mAry2[17] = krinABC1[153] + mAry2[4] * 100 + krinABC2[153];
          CHANGEISCONDITION = true;
       }
       if(mAry2[103] == "Stoneinyellow2" && CHANGEISCONDITION == false)
@@ -2479,6 +2667,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
          mAry2[0] = "Earth";
          mAry2[4] += 0.2;
          mAry2[103] = "Thunderinmagenta2";
+         mAry2[17] = krinABC1[304] + mAry2[4] * 100 + krinABC2[304];
          CHANGEISCONDITION = true;
       }
       if(mAry2[103] == "Thunderinmagenta2" && CHANGEISCONDITION == false)
@@ -2490,6 +2679,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
          mAry2[4] += 0.2;
          mAry2[13] = "WHITEPAINT";
          mAry2[103] = "Blizzardincyan2";
+         mAry2[17] = krinABC1[305] + mAry2[4] * 100 + krinABC2[305];
          CHANGEISCONDITION = true;
       }
       if(mAry2[103] == "Blizzardincyan2" && CHANGEISCONDITION == false)
@@ -2501,6 +2691,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
          mAry2[4] -= 0.4;
          mAry2[13] = 0;
          mAry2[103] = "Stoneinyellow2";
+         mAry2[17] = krinABC1[154] + mAry2[4] * 100 + krinABC2[154];
          CHANGEISCONDITION = true;
       }
       if(mAry2[103] == "Fireinred" && CHANGEISCONDITION == false)
@@ -2514,6 +2705,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
          mAry2[4] -= 0.8;
          mAry2[104] = 0;
          mAry2[103] = "Aeroingreen";
+         mAry2[17] = krinABC1[146] + mAry2[4] * 100 + krinABC2[146];
          CHANGEISCONDITION = true;
       }
       if(mAry2[103] == "Waterinblue" && CHANGEISCONDITION == false)
@@ -2527,6 +2719,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
          mAry2[104] = 25;
          mAry2[4] += 0.4;
          mAry2[103] = "Fireinred";
+         mAry2[17] = krinABC1[148] + mAry2[4] * 100 + krinABC2[148];
          CHANGEISCONDITION = true;
       }
       if(mAry2[103] == "Rage of a Guardian" && CHANGEISCONDITION == false)
@@ -2577,6 +2770,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
          mAry2[0] = "Poison";
          mAry2[4] += 0.4;
          mAry2[103] = "Waterinblue";
+         mAry2[17] = krinABC1[147] + mAry2[4] * 100 + krinABC2[147];
          CHANGEISCONDITION = true;
       }
       if(mAry2[103] == "Gust Slash" && CHANGEISCONDITION == false)
@@ -2586,6 +2780,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
          mAry1[18] = "Gustslash";
          mAry2[6] += 1;
          mAry2[103] = "Aeolian Edge";
+         mAry2[17] = krinABC1[312] + mAry2[6] * 100 + krinABC2[312];
          CHANGEISCONDITION = true;
       }
       if(mAry2[103] == "Aeolian Edge" && CHANGEISCONDITION == false)
@@ -2596,6 +2791,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
          mAry2[6] += 1;
          mAry1[5] = -20;
          mAry2[103] = "Spinning Edge";
+         mAry2[17] = krinABC1[313] + mAry2[6] * 100 + krinABC2[313];
          CHANGEISCONDITION = true;
       }
       if(mAry2[103] == "Spinning Edge" && CHANGEISCONDITION == false)
@@ -2606,6 +2802,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
          mAry2[6] -= 2;
          mAry1[5] = -5;
          mAry2[103] = "Gust Slash";
+         mAry2[17] = krinABC1[130] + mAry2[6] * 100 + krinABC2[130];
          CHANGEISCONDITION = true;
       }
       if(mAry2[103] == "Fireinred2" && CHANGEISCONDITION == false)
@@ -2620,6 +2817,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
          mAry2[104] = 0;
          mAry2[29] = 0;
          mAry2[103] = "Aeroingreen";
+         mAry2[17] = krinABC1[149] + mAry2[4] * 100 + krinABC2[149];
          CHANGEISCONDITION = true;
       }
       if(mAry2[103] == "Waterinblue2" && CHANGEISCONDITION == false)
@@ -2633,6 +2831,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
          mAry2[104] = 25;
          mAry2[4] += 0.2;
          mAry2[103] = "Fireinred2";
+         mAry2[17] = krinABC1[301] + mAry2[4] * 100 + krinABC2[301];
          CHANGEISCONDITION = true;
       }
       if(mAry2[103] == "Aeroingreen2" && CHANGEISCONDITION == false)
@@ -2644,6 +2843,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
          mAry2[0] = "Poison";
          mAry2[4] += 0.2;
          mAry2[103] = "Waterinblue2";
+         mAry2[17] = krinABC1[300] + mAry2[4] * 100 + krinABC2[300];
          CHANGEISCONDITION = true;
       }
       if(mAry2[103] == "Emergency Destruct" && CHANGEISCONDITION == false)
@@ -2877,6 +3077,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
          mAry2[20] = 0;
          mAry2[4] = 3;
          mAry2[103] = "Zwerchhau";
+         mAry2[17] = krinABC1[174] + mAry2[4] * 100 + krinABC2[174];
          CHANGEISCONDITION = true;
       }
       if(mAry2[103] == "Zwerchhau" && CHANGEISCONDITION == false)
@@ -2888,6 +3089,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
          mAry2[18] = " Black and White Mana Cost: 15 (50 for the full combo)";
          mAry2[114] = -15;
          mAry2[4] = 3.6;
+         mAry2[17] = krinABC1[306] + mAry2[4] * 100 + krinABC2[306];
          mAry2[103] = "Redoublement";
          CHANGEISCONDITION = true;
       }
@@ -2897,6 +3099,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
          mAry1[18] = "Redoublement";
          mAry2[0] = "Fire";
          mAry2[4] = 5.3;
+         mAry2[17] = krinABC1[307] + mAry2[4] * 100 + krinABC2[307];
          if(mCaster.BMANA > mCaster.WMANA)
          {
             mAry2[103] = "Verholy";
@@ -2934,6 +3137,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
          mAry2[114] = 11;
          mAry2[113] = 0;
          mAry2[103] = "Scorch";
+         mAry2[17] = krinABC1[309] + mAry2[4] * 100 + krinABC2[309];
          CHANGEISCONDITION = true;
       }
       if(mAry2[103] == "Verflare" && CHANGEISCONDITION == false)
@@ -2951,6 +3155,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
          mAry2[113] = 11;
          mAry2[114] = 0;
          mAry2[103] = "Scorch";
+         mAry2[17] = krinABC1[308] + mAry2[4] * 100 + krinABC2[308];
          CHANGEISCONDITION = true;
       }
       if(mAry2[103] == "Scorch" && CHANGEISCONDITION == false)
@@ -2960,6 +3165,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
          mAry2[0] = "Shadow";
          mAry2[4] = 7;
          mAry1[13] = "BOOM_DARK";
+         mAry2[17] = krinABC1[310] + mAry2[4] * 100 + krinABC2[310];
          mAry2[20] = 1;
          mAry2[13] = 0;
          mAry2[105] = 0.4;
@@ -2974,6 +3180,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
          mAry1[18] = "Resolution";
          mAry2[0] = "Shadow";
          mAry2[4] = 8;
+         mAry2[17] = krinABC1[311] + mAry2[4] * 100 + krinABC2[311];
          mAry1[13] = "BOOM_DARK";
          mAry2[20] = 1;
          mAry2[105] = 0.4;
@@ -3099,7 +3306,7 @@ function buffTicker(ukcb3)
    {
       ukcb3.FOCUSN = 0;
    }
-   if(ukcb3.LIFEN < 0 && ukcb3.FOCUSU == 101)
+   if(ukcb3.LIFEN < 0 && (ukcb3.FOCUSU == 101 || ukcb3.LIVINGDEAD10 == 1))
    {
       ukcb3.LIFEN = 0;
       ukcb3.FOCUSN = 0;
@@ -3107,13 +3314,13 @@ function buffTicker(ukcb3)
       _root.krinAddMove(ukcb3.playerID,ukcb3.playerID,0);
       Stun = 1;
    }
-   if(ukcb3.LIFEN > 0 && ukcb3.FOCUSU == 101 && Stun == 1)
+   if(ukcb3.LIFEN > 0 && (ukcb3.FOCUSU == 101 || ukcb3.LIVINGDEAD10 == 1) && Stun == 1)
    {
       _root.BATTLESCREEN["player" + ukcb3.playerID].inner.gotoAndPlay("outofstun");
       _root.krinAddMove(ukcb3.playerID,ukcb3.playerID,0);
       Stun = 0;
    }
-   if(ukcb3.LIFEN <= 0 && ukcb3.FOCUSU != 101)
+   if(ukcb3.LIFEN <= 0 && ukcb3.FOCUSU != 101 && ukcb3.LIVINGDEAD10 != 1)
    {
       ukcb3.LIFEN = 0;
       ukcb3.FOCUSN = 0;
@@ -3589,6 +3796,10 @@ addSound = function(a, b)
                   {
                      _root["music" + musicCounter].attachSound("PCT5");
                   }
+                  if(_root.Krin.BattlePick == 44)
+                  {
+                     _root["music" + musicCounter].attachSound("FF3");
+                  }
                }
                else if(dbossMusicYesNo)
                {
@@ -3854,6 +4065,25 @@ addNewMove = function(a, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s)
    short2[116] = 0;
    short2[117] = 0;
    short2[118] = 0;
+   short2[119] = 0;
+   short2[120] = 0;
+   short2[121] = 0;
+   short2[122] = 0;
+   short2[123] = 0;
+   short2[124] = 0;
+   short2[125] = 0;
+   short2[126] = 0;
+   short2[127] = 0;
+   short2[128] = 0;
+   short2[129] = 0;
+   short2[130] = 0;
+   short2[131] = 0;
+   short2[132] = 0;
+   short2[133] = 0;
+   short2[134] = 0;
+   short2[135] = 0;
+   short2[136] = 0;
+   short2[137] = 0;
    if(f > 0)
    {
       short2[18] += f + " Focus";
@@ -6050,7 +6280,7 @@ _root.hackMove[17] = krinABC1[67] + "20" + krinABC2[67] + "10" + krinABC3[67];
 _root.hackMove[13] = "BLOODWEAPON";
 _root.hackMove[0] = "Shadow";
 addNewMove("Blood Weapon",1,0,0,0,0,6,1,0,"Shock","0xFF0000","Attack","BOOM_POWERUP","Heal",1,0,67,"PowerupOffense");
-_root.hackMove[17] = krinABC1[67] + "25%" + krinABC2[67] + "15" + krinABC3[67];
+_root.hackMove[17] = krinABC1[67] + "25" + krinABC2[67] + "15" + krinABC3[67];
 _root.hackMove[13] = "BLOODWEAPON1";
 _root.hackMove[0] = "Shadow";
 addNewMove("Edge of Darkness",0,1,0,30,0,2,1,2,"Melee","0xFF66FF","Attack","BOOM_STAR_PURPLE","Full Damage",1,0,68,"Edge of Shadow");
@@ -6164,21 +6394,33 @@ _root.hackMove[17] = krinABC3[80] + _root.hackMove[6] * 100 + krinABC2[80];
 addNewMove("Aeolian Edge",0,1,0,-5,0,0,1,2,"Melee","0xFF66FF","Attack","BOOM_RED","Full Damage",1,0,130,"Spinningedge");
 _root.hackMove[0] = "Physical";
 _root.hackMove[6] = 1.8;
+_root.hackMove[120] = krinABC1[312] + (_root.hackMove[6] + 1) * 100 + krinABC2[312];
+_root.hackMove[121] = krinABC1[313] + (_root.hackMove[6] + 2) * 100 + krinABC2[313];
 _root.hackMove[103] = "Gust Slash";
+_root.hackMove[130] = "Gust Slash";
+_root.hackMove[131] = "Aeolian Edge";
 _root.hackMove[17] = krinABC1[130] + _root.hackMove[6] * 100 + krinABC2[130];
 addNewMove("Aeolian Edge",0,1,0,-5,0,0,1,2,"Melee","0xFF66FF","Attack","BOOM_RED","Full Damage",1,0,130,"Spinningedge");
 _root.hackMove[0] = "Physical";
 _root.hackMove[6] = 2.2;
+_root.hackMove[120] = krinABC1[312] + (_root.hackMove[6] + 1) * 100 + krinABC2[312];
+_root.hackMove[121] = krinABC1[313] + (_root.hackMove[6] + 2) * 100 + krinABC2[313];
+_root.hackMove[103] = "Gust Slash";
+_root.hackMove[130] = "Gust Slash";
+_root.hackMove[131] = "Aeolian Edge";
+_root.hackMove[17] = krinABC1[130] + _root.hackMove[6] * 100 + krinABC2[130];
+addNewMove("Aeolian Edge",0,1,0,-5,0,0,1,2,"Melee","0xFF66FF","Attack","BOOM_RED","Full Damage",1,0,130,"Spinningedge");
+_root.hackMove[0] = "Physical";
+_root.hackMove[6] = 3;
+_root.hackMove[120] = krinABC1[312] + (_root.hackMove[6] + 1) * 100 + krinABC2[312];
+_root.hackMove[121] = krinABC1[313] + (_root.hackMove[6] + 2) * 100 + krinABC2[313];
 _root.hackMove[103] = "Gust Slash";
 _root.hackMove[17] = krinABC1[130] + _root.hackMove[6] * 100 + krinABC2[130];
 addNewMove("Aeolian Edge",0,1,0,-5,0,0,1,2,"Melee","0xFF66FF","Attack","BOOM_RED","Full Damage",1,0,130,"Spinningedge");
 _root.hackMove[0] = "Physical";
 _root.hackMove[6] = 3;
-_root.hackMove[103] = "Gust Slash";
-_root.hackMove[17] = krinABC1[130] + _root.hackMove[6] * 100 + krinABC2[130];
-addNewMove("Aeolian Edge",0,1,0,-15,0,0,1,2,"Melee","0xFF66FF","Attack","BOOM_RED","Full Damage",1,0,130,"Spinningedge");
-_root.hackMove[0] = "Physical";
-_root.hackMove[6] = 3.4;
+_root.hackMove[120] = krinABC1[312] + (_root.hackMove[6] + 1) * 100 + krinABC2[312];
+_root.hackMove[121] = krinABC1[313] + (_root.hackMove[6] + 2) * 100 + krinABC2[313];
 _root.hackMove[103] = "Gust Slash";
 _root.hackMove[17] = krinABC1[130] + _root.hackMove[6] * 100 + krinABC2[130];
 addNewMove("Armor Crush",0,1,0,-15,0,2,1,2,"Melee","0xFF66FF","Attack","BOOM_RED","Full Damage",1,0,131,"Armor Crush");
@@ -6638,6 +6880,7 @@ addNewMove("Bunshin",1,0,0,50,0,0,1,3,"Ninjutsu2","0xFFCC00","Krin.Electrobolt2"
 _root.hackMove[0] = "Shadow";
 _root.hackMove[4] = 0;
 _root.hackMove[21] = 1;
+_root.hackMove[18] += " CD:11";
 _root.hackMove[29] = "BUNSHIN";
 _root.hackMove[103] = "Phantomkamaitachi";
 _root.hackMove[17] = krinABC1[145];
@@ -6647,51 +6890,83 @@ _root.hackMove[0] = "Fire";
 _root.hackMove[4] = 2.2;
 _root.hackMove[21] = 1;
 _root.hackMove[103] = "Aeroingreen";
+_root.hackMove[130] = "Aero in Green";
+_root.hackMove[131] = "Water in Blue";
+_root.hackMove[120] = krinABC1[147] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[147];
+_root.hackMove[121] = krinABC1[148] + (_root.hackMove[4] + 0.8) * 100 + krinABC2[148];
 _root.hackMove[17] = krinABC1[146] + _root.hackMove[4] * 100 + krinABC2[146];
 addNewMove("Fireinred",0,1,0,3,0,0,1,2,"Missile","0xFF9900","Krin.Firebolt","BOOM1","Full Damage",1,0,146,"Fireinred");
 _root.hackMove[0] = "Fire";
 _root.hackMove[4] = 2.8;
 _root.hackMove[21] = 1;
 _root.hackMove[103] = "Aeroingreen";
+_root.hackMove[130] = "Aero in Green";
+_root.hackMove[131] = "Water in Blue";
+_root.hackMove[120] = krinABC1[147] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[147];
+_root.hackMove[121] = krinABC1[148] + (_root.hackMove[4] + 0.8) * 100 + krinABC2[148];
 _root.hackMove[17] = krinABC1[146] + _root.hackMove[4] * 100 + krinABC2[146];
 addNewMove("Fireinred",0,1,0,3,0,0,1,2,"Missile","0xFF9900","Krin.Firebolt","BOOM1","Full Damage",1,0,146,"Fireinred");
 _root.hackMove[0] = "Fire";
 _root.hackMove[4] = 3.4;
 _root.hackMove[21] = 1;
+_root.hackMove[120] = krinABC1[147] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[147];
+_root.hackMove[121] = krinABC1[148] + (_root.hackMove[4] + 0.8) * 100 + krinABC2[148];
 _root.hackMove[103] = "Aeroingreen";
+_root.hackMove[130] = "Aero in Green";
+_root.hackMove[131] = "Water in Blue";
 _root.hackMove[17] = krinABC1[146] + _root.hackMove[4] * 100 + krinABC2[146];
 addNewMove("Fireinred",0,1,0,3,0,0,1,2,"Missile","0xFF9900","Krin.Firebolt","BOOM1","Full Damage",1,0,146,"Fireinred");
 _root.hackMove[0] = "Fire";
 _root.hackMove[4] = 3.8;
 _root.hackMove[21] = 1;
+_root.hackMove[120] = krinABC1[147] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[147];
+_root.hackMove[121] = krinABC1[148] + (_root.hackMove[4] + 0.8) * 100 + krinABC2[148];
 _root.hackMove[103] = "Aeroingreen";
+_root.hackMove[130] = "Aero in Green";
+_root.hackMove[131] = "Water in Blue";
 _root.hackMove[17] = krinABC1[146] + _root.hackMove[4] * 100 + krinABC2[146];
 addNewMove("Fireinred",0,1,0,3,0,0,1,2,"Missile","0xFF9900","Krin.Firebolt","BOOM1","Full Damage",1,0,146,"Fireinred");
 _root.hackMove[0] = "Fire";
 _root.hackMove[4] = 4.4;
 _root.hackMove[21] = 1;
+_root.hackMove[120] = krinABC1[147] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[147];
+_root.hackMove[121] = krinABC1[148] + (_root.hackMove[4] + 0.8) * 100 + krinABC2[148];
 _root.hackMove[103] = "Aeroingreen";
+_root.hackMove[130] = "Aero in Green";
+_root.hackMove[131] = "Water in Blue";
 _root.hackMove[17] = krinABC1[146] + _root.hackMove[4] * 100 + krinABC2[146];
 addNewMove("Fireinred2",0,1,0,3,0,0,1,2,"Missile","0xFF9900","Krin.Firebolt","BOOM1","Full Damage",1,0,149,"Fireinred2");
 _root.hackMove[0] = "Fire";
 _root.hackMove[4] = 1.2;
 _root.hackMove[21] = 1;
 _root.hackMove[20] = 1;
+_root.hackMove[120] = krinABC1[300] + (_root.hackMove[4] + 0.2) * 100 + krinABC2[300];
+_root.hackMove[121] = krinABC1[301] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[301];
 _root.hackMove[103] = "Aeroingreen2";
+_root.hackMove[130] = "Aero II in Green";
+_root.hackMove[131] = "Water II in Blue";
 _root.hackMove[17] = krinABC1[149] + _root.hackMove[4] * 100 + krinABC2[149];
 addNewMove("Fireinred2",0,1,0,3,0,0,1,2,"Missile","0xFF9900","Krin.Firebolt","BOOM1","Full Damage",1,0,149,"Fireinred2");
 _root.hackMove[0] = "Fire";
 _root.hackMove[4] = 1.4;
 _root.hackMove[21] = 1;
 _root.hackMove[20] = 1;
+_root.hackMove[120] = krinABC1[300] + (_root.hackMove[4] + 0.2) * 100 + krinABC2[300];
+_root.hackMove[121] = krinABC1[301] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[301];
 _root.hackMove[103] = "Aeroingreen2";
+_root.hackMove[130] = "Aero II in Green";
+_root.hackMove[131] = "Water II in Blue";
 _root.hackMove[17] = krinABC1[149] + _root.hackMove[4] * 100 + krinABC2[149];
 addNewMove("Fireinred2",0,1,0,3,0,0,1,2,"Missile","0xFF9900","Krin.Firebolt","BOOM1","Full Damage",1,0,149,"Fireinred2");
 _root.hackMove[0] = "Fire";
 _root.hackMove[4] = 1.6;
 _root.hackMove[21] = 1;
+_root.hackMove[120] = krinABC1[300] + (_root.hackMove[4] + 0.2) * 100 + krinABC2[300];
+_root.hackMove[121] = krinABC1[301] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[301];
 _root.hackMove[20] = 1;
 _root.hackMove[103] = "Aeroingreen2";
+_root.hackMove[130] = "Aero II in Green";
+_root.hackMove[131] = "Water II in Blue";
 _root.hackMove[17] = krinABC1[149] + _root.hackMove[4] * 100 + krinABC2[149];
 addNewMove("Holyinwhite",0,1,0,3,0,0,1,1,"Shock","0xFF9900","Krin.Firebolt","BOOM_SPARK","Full Damage",1,0,150,"Holyinwhite");
 _root.hackMove[0] = "Magic";
@@ -6726,19 +7001,27 @@ _root.hackMove[29] = "SUBTRACTIVEPALETTE";
 _root.hackMove[107] = "BLACKPAINT";
 _root.hackMove[108] = "WHITEPAINT";
 _root.hackMove[17] = krinABC1[152];
-_root.hackMove[18] += " Palette Gauge Cost: 50";
+_root.hackMove[18] = " Palette Gauge Cost: 50";
 addNewMove("Blizzardincyan",0,1,0,4,0,0,1,1,"Shock","0xFF9900","Krin.Firebolt","BOOM2","Full Damage",1,0,153,"Blizzardincyan");
 _root.hackMove[0] = "Ice";
 _root.hackMove[4] = 5.2;
 _root.hackMove[21] = 1;
 _root.hackMove[103] = "Stoneinyellow";
 _root.hackMove[106] = 3;
+_root.hackMove[130] = "Stone in Yellow";
+_root.hackMove[131] = "Thunder in Magenta";
+_root.hackMove[120] = krinABC1[302] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[302];
+_root.hackMove[121] = krinABC1[303] + (_root.hackMove[4] + 0.8) * 100 + krinABC2[303];
 _root.hackMove[18] += " Requires Subtractive Palette";
 _root.hackMove[17] = krinABC1[153] + _root.hackMove[4] * 100 + krinABC2[153];
 addNewMove("Blizzardincyan",0,1,0,4,0,0,1,1,"Shock","0xFF9900","Krin.Firebolt","BOOM2","Full Damage",1,0,153,"Blizzardincyan");
 _root.hackMove[0] = "Ice";
 _root.hackMove[4] = 6.3;
 _root.hackMove[21] = 1;
+_root.hackMove[130] = "Stone in Yellow";
+_root.hackMove[131] = "Thunder in Magenta";
+_root.hackMove[120] = krinABC1[302] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[302];
+_root.hackMove[121] = krinABC1[303] + (_root.hackMove[4] + 0.8) * 100 + krinABC2[303];
 _root.hackMove[103] = "Stoneinyellow";
 _root.hackMove[106] = 3;
 _root.hackMove[18] += " Requires Subtractive Palette";
@@ -6747,6 +7030,10 @@ addNewMove("Blizzardincyan",0,1,0,4,0,0,1,1,"Shock","0xFF9900","Krin.Firebolt","
 _root.hackMove[0] = "Ice";
 _root.hackMove[4] = 7;
 _root.hackMove[21] = 1;
+_root.hackMove[130] = "Stone in Yellow";
+_root.hackMove[131] = "Thunder in Magenta";
+_root.hackMove[120] = krinABC1[302] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[302];
+_root.hackMove[121] = krinABC1[303] + (_root.hackMove[4] + 0.8) * 100 + krinABC2[303];
 _root.hackMove[103] = "Stoneinyellow";
 _root.hackMove[106] = 3;
 _root.hackMove[18] += " Requires Subtractive Palette";
@@ -6755,6 +7042,10 @@ addNewMove("Blizzardincyan",0,1,0,4,0,0,1,1,"Shock","0xFF9900","Krin.Firebolt","
 _root.hackMove[0] = "Ice";
 _root.hackMove[4] = 8;
 _root.hackMove[21] = 1;
+_root.hackMove[130] = "Stone in Yellow";
+_root.hackMove[131] = "Thunder in Magenta";
+_root.hackMove[120] = krinABC1[302] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[302];
+_root.hackMove[121] = krinABC1[303] + (_root.hackMove[4] + 0.8) * 100 + krinABC2[303];
 _root.hackMove[103] = "Stoneinyellow";
 _root.hackMove[106] = 3;
 _root.hackMove[18] += " Requires Subtractive Palette";
@@ -6763,7 +7054,11 @@ addNewMove("Blizzardincyan2",0,1,0,4,0,0,1,1,"Shock","0xFF9900","Krin.Firebolt",
 _root.hackMove[0] = "Ice";
 _root.hackMove[4] = 2;
 _root.hackMove[21] = 1;
+_root.hackMove[120] = krinABC1[304] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[304];
+_root.hackMove[121] = krinABC1[305] + (_root.hackMove[4] + 0.8) * 100 + krinABC2[305];
 _root.hackMove[20] = 1;
+_root.hackMove[130] = "Stone II in Yellow";
+_root.hackMove[131] = "Thunder II in Magenta";
 _root.hackMove[103] = "Stoneinyellow2";
 _root.hackMove[106] = 3;
 _root.hackMove[18] += " Requires Subtractive Palette";
@@ -6772,7 +7067,11 @@ addNewMove("Blizzardincyan2",0,1,0,4,0,0,1,1,"Shock","0xFF9900","Krin.Firebolt",
 _root.hackMove[0] = "Ice";
 _root.hackMove[4] = 2.4;
 _root.hackMove[21] = 1;
+_root.hackMove[120] = krinABC1[304] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[304];
+_root.hackMove[121] = krinABC1[305] + (_root.hackMove[4] + 0.8) * 100 + krinABC2[305];
 _root.hackMove[20] = 1;
+_root.hackMove[130] = "Stone II in Yellow";
+_root.hackMove[131] = "Thunder II in Magenta";
 _root.hackMove[103] = "Stoneinyellow2";
 _root.hackMove[106] = 3;
 _root.hackMove[18] += " Requires Subtractive Palette";
@@ -6781,7 +7080,11 @@ addNewMove("Blizzardincyan2",0,1,0,4,0,0,1,1,"Shock","0xFF9900","Krin.Firebolt",
 _root.hackMove[0] = "Ice";
 _root.hackMove[4] = 2.6;
 _root.hackMove[21] = 1;
+_root.hackMove[120] = krinABC1[304] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[304];
+_root.hackMove[121] = krinABC1[305] + (_root.hackMove[4] + 0.8) * 100 + krinABC2[305];
 _root.hackMove[20] = 1;
+_root.hackMove[130] = "Stone II in Yellow";
+_root.hackMove[131] = "Thunder II in Magenta";
 _root.hackMove[103] = "Stoneinyellow2";
 _root.hackMove[106] = 3;
 _root.hackMove[18] += " Requires Subtractive Palette";
@@ -6816,6 +7119,7 @@ _root.hackMove[17] = krinABC1[156];
 addNewMove("Pommotif",1,0,0,0,0,0,1,1,"Shock","0xFFCC00","Krin.Electrobolt2","BOOM_POWERUP","Heal",1,0,157,"Pommotif");
 _root.hackMove[0] = "Magic";
 _root.hackMove[4] = 0;
+_root.hackMove[18] += " CD:6";
 _root.hackMove[21] = 1;
 _root.hackMove[103] = "Pommuse";
 _root.hackMove[17] = krinABC1[157];
@@ -6824,6 +7128,7 @@ _root.hackMove[0] = "Physical";
 _root.hackMove[4] = 0;
 _root.hackMove[103] = "Hammer Stamp";
 _root.hackMove[20] = 1;
+_root.hackMove[18] += " CD:6";
 _root.hackMove[7] = 10;
 _root.hackMove[14] = 0.5;
 _root.hackMove[17] = krinABC1[158];
@@ -6831,6 +7136,7 @@ addNewMove("Starryskymotif",1,0,0,0,0,0,1,1,"Shock","0xFFCC00","Krin.Electrobolt
 _root.hackMove[0] = "Magic";
 _root.hackMove[4] = 0;
 _root.hackMove[103] = "Starrymuse";
+_root.hackMove[18] += " CD:12";
 _root.hackMove[20] = 1;
 _root.hackMove[17] = krinABC1[159];
 addNewMove("Starprism",0,1,0,0,0,0,1,1,"Shock","0xFF9900","Krin.Firebolt","BOOM_SPARK","Full Damage",1,0,160,"Starprism");
@@ -6992,9 +7298,21 @@ addNewMove("Riposte",0,1,0,0,0,0,1,1,"Melee","0xFF9900","Attack","BOOM_SLASHRED"
 _root.hackMove[0] = "Fire";
 _root.hackMove[4] = 3;
 _root.hackMove[113] = -20;
+_root.hackMove[120] = krinABC1[306] + (_root.hackMove[4] + 0.6) * 100 + krinABC2[306];
+_root.hackMove[121] = krinABC1[307] + (_root.hackMove[4] + 2.3) * 100 + krinABC2[307];
+_root.hackMove[122] = krinABC1[308] + (_root.hackMove[4] + 3.2) * 100 + krinABC2[308];
+_root.hackMove[123] = krinABC1[309] + (_root.hackMove[4] + 3.2) * 100 + krinABC2[309];
+_root.hackMove[124] = krinABC1[310] + (_root.hackMove[4] + 4) * 100 + krinABC2[310];
+_root.hackMove[126] = krinABC1[311] + (_root.hackMove[4] + 5) * 100 + krinABC2[311];
 _root.hackMove[21] = 1;
 _root.hackMove[114] = -20;
 _root.hackMove[106] = 6;
+_root.hackMove[125] = "Scorch";
+_root.hackMove[127] = "Verflare";
+_root.hackMove[128] = "Verholy";
+_root.hackMove[129] = "Resolution";
+_root.hackMove[130] = "Zwerchhau";
+_root.hackMove[131] = "Redoublement";
 _root.hackMove[18] = "Black and White Mana Cost: 20 (50 for the full combo)";
 _root.hackMove[103] = "Zwerchhau";
 _root.hackMove[17] = krinABC1[174] + _root.hackMove[4] * 100 + krinABC2[174];
@@ -7008,6 +7326,7 @@ addNewMove("Embolden",1,0,0,0,0,0,1,1,"Shock","0x9966CC","Attack","BOOM_POWERUP"
 _root.hackMove[0] = "Shadow";
 _root.hackMove[13] = "EMBOLDEN";
 _root.hackMove[20] = 1;
+_root.hackMove[18] += " CD:12";
 _root.hackMove[103] = "Veilofthorns";
 _root.hackMove[17] = krinABC1[176];
 addNewMove("Prefulgence",0,1,0,0,0,0,1,1,"Shock","0xFF9900","Attack","BOOM_DARK","Full Damage",1,0,178,"Prefulgence");
@@ -7019,7 +7338,7 @@ _root.hackMove[105] = 0.65;
 _root.hackMove[17] = krinABC1[178];
 addNewMove("Vercure",1,0,1,5,0,0,1,1,"Shock","0x99FF00","Heal","BOOM_HEAL","Heal",1,0,177,"Vercure");
 _root.hackMove[0] = "Magic";
-_root.hackMove[2] = 3.5;
+_root.hackMove[4] = 3.5;
 _root.hackMove[15] = ["Physical","Magic","Ice","Fire","Lightning","Earth","Shadow","Poison"];
 _root.hackMove[16] = 1;
 _root.hackMove[19] = -1;
@@ -7237,6 +7556,210 @@ _root.hackMove[105] = 0.5;
 _root.hackMove[20] = 1;
 _root.hackMove[13] = "TRICKATTACK";
 _root.hackMove[17] = krinABC3[184] + _root.hackMove[6] * 100 + krinABC4[184];
+addNewMove("Fireinred",0,1,0,3,0,0,1,2,"Missile","0xFF9900","Krin.Firebolt","BOOM1","Full Damage",1,0,146,"Fireinred");
+_root.hackMove[0] = "Fire";
+_root.hackMove[4] = 3.8;
+_root.hackMove[21] = 1;
+_root.hackMove[120] = "SUBTRACTIVEPALETTE";
+_root.hackMove[103] = "Aeroingreen";
+_root.hackMove[17] = krinABC1[146] + _root.hackMove[4] * 100 + krinABC2[146];
+addNewMove("Blizzardincyan",0,1,0,4,0,0,1,1,"Shock","0xFF9900","Krin.Firebolt","BOOM2","Full Damage",1,0,153,"Blizzardincyan");
+_root.hackMove[0] = "Ice";
+_root.hackMove[4] = 6.5;
+_root.hackMove[21] = 1;
+_root.hackMove[119] = "SUBTRACTIVEPALETTE";
+_root.hackMove[103] = "Stoneinyellow";
+_root.hackMove[106] = 3;
+_root.hackMove[18] += " Requires Subtractive Palette";
+_root.hackMove[17] = krinABC1[153] + _root.hackMove[4] * 100 + krinABC2[153];
+addNewMove("Riot Blade",0,1,0,0,0,0,1,1,"Melee","0xFF9900","Attack","BOOM_SLASH","Full Damage",1,0,57,"Riot Blade");
+_root.hackMove[0] = "Physical";
+_root.hackMove[2] = 2.5;
+_root.hackMove[13] = "RIOTBLADE";
+_root.hackMove[103] = "Royal Authority";
+_root.hackMove[21] = 1;
+_root.hackMove[17] = krinABC1[57] + _root.hackMove[2] * 100 + krinABC2[57];
+MoveCount = 1800;
+addNewMove("Call Me Honey",0,1,0,0,0,31,1,1,"Shock","0xFF66FF","Attack","BOOM_SPARKBLUE","Full Damage",1,0,81,"FF5");
+_root.hackMove[0] = "Magic";
+_root.hackMove[4] = 3;
+_root.hackMove[21] = 1;
+_root.hackMove[20] = 1;
+addNewMove("Tempting Twist",1,0,0,0,0,31,1,1,"Shock","0xFF66FF","Attack","BOOM_POWERUP","Heal",1,0,81,"FF4");
+_root.hackMove[0] = "Physical";
+_root.hackMove[4] = 0;
+_root.hackMove[116] = -1;
+_root.hackMove[13] = "TEMPTINGTWIST";
+addNewMove("Tempting Twist2",0,1,0,0,0,31,1,99,"Shock","0xFF66FF","Attack","BOOM_SLASHRED","Full Damage",1,0,81,"FF7");
+_root.hackMove[0] = "Physical";
+_root.hackMove[2] = 4;
+_root.hackMove[116] = -2;
+_root.hackMove[13] = "BLEED6";
+_root.hackMove[102] = "Melee";
+_root.hackMove[133] = 99;
+_root.hackMove[20] = 1;
+addNewMove("Honey Beeline",1,0,0,0,0,31,1,1,"Shock","0xFF66FF","Attack","BOOM_POWERUP","Heal",1,0,81,"FF4");
+_root.hackMove[0] = "Physical";
+_root.hackMove[4] = 0;
+_root.hackMove[116] = -3;
+_root.hackMove[13] = "HONEYBEELINE";
+addNewMove("Honey Beeline2",0,1,0,0,0,31,1,99,"Shock","0xFF66FF","Attack","BOOM_SLASH2","Full Damage",1,0,81,"FF6");
+_root.hackMove[0] = "Physical";
+_root.hackMove[2] = 4;
+_root.hackMove[116] = -4;
+_root.hackMove[13] = "BLEED6";
+_root.hackMove[134] = "Melee";
+_root.hackMove[133] = 99;
+_root.hackMove[20] = 1;
+addNewMove("Honey B. Live",0,1,0,0,0,31,1,1,"Shock","0xFF66FF","Attack","BOOM_SPARKBLUE","Full Damage",1,0,81,"FF9");
+_root.hackMove[0] = "Magic";
+_root.hackMove[4] = 5;
+_root.hackMove[116] = -5;
+_root.hackMove[13] = "LOVE0";
+_root.hackMove[29] = "HONEYBEELIVE";
+_root.hackMove[20] = 1;
+_root.hackMove[67] = 1;
+addNewMove("Love Me Tender",0,1,0,0,0,31,1,1,"Shock","0xFF66FF","Attack","BOOM_SPARKBLUE","Full Damage",1,0,81,"FF11");
+_root.hackMove[0] = "Magic";
+_root.hackMove[4] = 1;
+_root.hackMove[21] = 1;
+_root.hackMove[135] = 1;
+_root.hackMove[116] = -6;
+_root.hackMove[13] = "HONEYBEELIVE1";
+_root.hackMove[20] = 1;
+addNewMove("Blowkiss",1,0,0,0,0,31,1,1,"Shock","0xFF66FF","Attack","BOOM_POWERUP","Heal",1,0,81,"FF14");
+_root.hackMove[0] = "Magic";
+_root.hackMove[4] = 0;
+_root.hackMove[116] = -7;
+_root.hackMove[13] = "BLOWKISS";
+addNewMove("Blowkiss",0,1,0,0,0,31,1,99,"Missile","0xFF66FF","Krin.Magicbolt","BOOM1","Full Damage",1,0,81,"FF13");
+_root.hackMove[0] = "Magic";
+_root.hackMove[4] = 1.5;
+_root.hackMove[21] = 1;
+_root.hackMove[135] = 1;
+_root.hackMove[116] = -8;
+_root.hackMove[20] = 1;
+addNewMove("Honey B. Final",0,1,0,0,0,31,1,1,"Shock","0xFF66FF","Attack","BOOM_SPARKBLUE","Full Damage",1,0,81,"FF12");
+_root.hackMove[0] = "Magic";
+_root.hackMove[4] = 4;
+_root.hackMove[116] = -9;
+_root.hackMove[20] = 1;
+_root.hackMove[135] = -4;
+_root.hackMove[15] = ["Magic"];
+_root.hackMove[16] = 99;
+_root.hackMove[19] = 1;
+addNewMove("Splash of Venom",1,0,0,0,0,31,1,1,"Shock","0x99FF00","Attack","BOOM_POWERUP","Heal",1,0,81,"FF17");
+_root.hackMove[0] = "Poison";
+_root.hackMove[4] = 0;
+_root.hackMove[116] = -10;
+_root.hackMove[13] = "SPLASHOFVENOM";
+addNewMove("Tempting Twist3",1,0,0,0,0,31,1,1,"Shock","0xFF66FF","Attack","BOOM_POWERUP","Heal",1,0,81,"FF4");
+_root.hackMove[0] = "Physical";
+_root.hackMove[4] = 0;
+_root.hackMove[116] = -11;
+_root.hackMove[13] = "TEMPTINGTWIST";
+addNewMove("Tempting Twist2",0,1,0,0,0,31,1,99,"Shock","0x99FF00","Attack","BOOM_SLASHRED","Full Damage",1,0,81,"FF18");
+_root.hackMove[0] = "Physical";
+_root.hackMove[2] = 4;
+_root.hackMove[116] = -12;
+_root.hackMove[13] = "BLEED6";
+_root.hackMove[102] = "Melee";
+_root.hackMove[133] = 99;
+_root.hackMove[20] = 1;
+addNewMove("Drop of Venom",1,0,0,0,0,31,1,1,"Shock","0x99FF00","Attack","BOOM_POWERUP","Heal",1,0,81,"FF17");
+_root.hackMove[0] = "Poison";
+_root.hackMove[4] = 0;
+_root.hackMove[116] = -13;
+_root.hackMove[13] = "DROPOFVENOM";
+addNewMove("Honey Beeline",1,0,0,0,0,31,1,1,"Shock","0xFF66FF","Attack","BOOM_POWERUP","Heal",1,0,81,"FF4");
+_root.hackMove[0] = "Physical";
+_root.hackMove[4] = 0;
+_root.hackMove[116] = -14;
+_root.hackMove[13] = "HONEYBEELINE";
+addNewMove("Honey Beeline2",0,1,0,0,0,31,1,99,"Shock","0xFF66FF","Attack","BOOM_SLASH2","Full Damage",1,0,81,"FF21");
+_root.hackMove[0] = "Physical";
+_root.hackMove[2] = 4;
+_root.hackMove[116] = -15;
+_root.hackMove[13] = "BLEED6";
+_root.hackMove[134] = "Melee";
+_root.hackMove[133] = 99;
+_root.hackMove[20] = 1;
+addNewMove("Honey B. Live2",0,1,0,0,0,31,1,1,"Shock","0xFF66FF","Attack","BOOM_SPARKBLUE","Full Damage",1,0,81,"FF9");
+_root.hackMove[0] = "Magic";
+_root.hackMove[4] = 5;
+_root.hackMove[116] = -16;
+_root.hackMove[13] = "LOVE0";
+_root.hackMove[29] = "HONEYBEELIVE3";
+_root.hackMove[20] = 1;
+_root.hackMove[67] = 1;
+addNewMove("Love Me Tender2",0,1,0,0,0,31,1,1,"Shock","0x99FF00","Heal","BOOM_POWERUP","Heal",1,0,141,"Stack Marker");
+_root.hackMove[0] = "Magic";
+_root.hackMove[13] = "SOULGRASP3";
+_root.hackMove[20] = 1;
+_root.hackMove[116] = -17;
+_root.hackMove[21] = 1;
+addNewMove("Soul Grasp",0,1,0,0,0,31,1,1,"Shock","0xFF66FF","Attack","BOOM_SPARKBLUE","Full Damage",1,0,81,"FF20");
+_root.hackMove[0] = "Magic";
+_root.hackMove[4] = 12;
+_root.hackMove[21] = 1;
+_root.hackMove[135] = 1;
+_root.hackMove[116] = -18;
+_root.hackMove[13] = "HONEYBEELIVE4";
+_root.hackMove[20] = 1;
+addNewMove("Tempting Twist3",1,0,0,0,0,31,1,1,"Shock","0xFF66FF","Attack","BOOM_POWERUP","Heal",1,0,81,"FF4");
+_root.hackMove[0] = "Magic";
+_root.hackMove[4] = 0;
+_root.hackMove[116] = -20;
+_root.hackMove[13] = "TEMPTINGTWIST";
+addNewMove("Tempting Twist2",0,1,0,0,0,31,1,99,"Shock","0x99FF00","Attack","BOOM_SLASHRED","Full Damage",1,0,81,"FF7");
+_root.hackMove[0] = "Magic";
+_root.hackMove[2] = 4;
+_root.hackMove[116] = -21;
+_root.hackMove[13] = "BLEED6";
+_root.hackMove[102] = "Melee";
+_root.hackMove[135] = 1;
+_root.hackMove[133] = 99;
+_root.hackMove[20] = 1;
+addNewMove("Honey B. Final2",0,1,0,0,0,31,1,1,"Shock","0xFF66FF","Attack","BOOM_SPARKBLUE","Full Damage",1,0,81,"FF12");
+_root.hackMove[0] = "Magic";
+_root.hackMove[4] = 4;
+_root.hackMove[116] = -22;
+_root.hackMove[20] = 1;
+_root.hackMove[135] = -4;
+_root.hackMove[15] = ["Magic"];
+_root.hackMove[16] = 99;
+_root.hackMove[19] = 1;
+addNewMove("Honeyed Breeze",0,1,0,0,0,31,1,6,"Missile","0xFF66FF","Krin.Magicbolt","BOOM_DARK","Full Damage",1,0,81,"FF26");
+_root.hackMove[0] = "Physical";
+_root.hackMove[2] = 6;
+_root.hackMove[20] = 1;
+_root.hackMove[136] = 0.334;
+_root.hackMove[116] = -23;
+addNewMove("Rotten Heart",0,1,0,0,0,31,1,1,"Shock","0xFF66FF","Attack","BOOM_SPARKBLUE","Full Damage",1,0,81,"FF5");
+_root.hackMove[0] = "Shadow";
+_root.hackMove[4] = 3;
+_root.hackMove[21] = 1;
+_root.hackMove[20] = 1;
+_root.hackMove[137] = "BEELOVEDVENOMA";
+_root.hackMove[116] = -24;
+addNewMove("Call Me Honey2",0,1,0,0,0,31,1,1,"Shock","0xFF66FF","Attack","BOOM_SPARKBLUE","Full Damage",1,0,81,"FF5");
+_root.hackMove[0] = "Magic";
+_root.hackMove[4] = 3;
+_root.hackMove[21] = 1;
+_root.hackMove[20] = 1;
+_root.hackMove[116] = -26;
+addNewMove("Call Me Honey3",0,1,0,0,0,31,1,1,"Shock","0xFF66FF","Attack","BOOM_SPARKBLUE","Full Damage",1,0,81,"FF5");
+_root.hackMove[0] = "Magic";
+_root.hackMove[4] = 3;
+_root.hackMove[21] = 1;
+_root.hackMove[20] = 1;
+_root.hackMove[116] = -28;
+addNewMove("Call Me Honey4",0,1,0,0,0,31,1,1,"Shock","0xFF66FF","Attack","BOOM_SPARKBLUE","Full Damage",1,0,81,"FF5");
+_root.hackMove[0] = "Magic";
+_root.hackMove[4] = 3;
+_root.hackMove[21] = 1;
+_root.hackMove[20] = 1;
+_root.hackMove[116] = -30;
 numberMatrixKrin = new Array();
 numberMatrixKrin = ["Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine"];
 numberSpacingKrin = 19;
@@ -7460,12 +7983,55 @@ AImoveAdder = function(p)
       }
       for(_loc3_ in moveFilterA0)
       {
-         if(_root["KRINABILITYB" + moveFilterA0[_loc3_]][116] + pg.TURN >= 0)
+         FOUNDA = false;
+         FOUNDA2 = false;
+         if(_root["KRINABILITYB" + moveFilterA0[_loc3_]][108] != 0 || _root["KRINABILITYB" + moveFilterA0[_loc3_]][120] != 0 || _root["KRINABILITYB" + moveFilterA0[_loc3_]][119] != 0)
          {
-            if(pg.FOCUSN >= _root["KRINABILITY" + moveFilterA0[_loc3_]][5] && pg.LIFEN > _root["KRINABILITY" + moveFilterA0[_loc3_]][6] + Math.round(pg.LIFEU * _root["KRINABILITY" + moveFilterA0[_loc3_]][16]))
+            f = 0;
+            while(f < _root.maxBuffLimit)
             {
-               moveFilterA1.push(moveFilterA0[_loc3_]);
-               parallelFilterA2.push(parallelFilterA[_loc3_]);
+               if(pg.BUFFARRAYK[f].buffId == _root["KRINABILITYB" + moveFilterA0[_loc3_]][108] && pg.BUFFARRAYK[f].CD != 0)
+               {
+                  FOUNDA = true;
+                  break;
+               }
+               if(pg.BUFFARRAYK[f].buffId == _root["KRINABILITYB" + moveFilterA0[_loc3_]][119] && pg.BUFFARRAYK[f].CD != 0)
+               {
+                  FOUNDA2 = true;
+                  break;
+               }
+               if(pg.BUFFARRAYK[f].buffId == _root["KRINABILITYB" + moveFilterA0[_loc3_]][120] && pg.BUFFARRAYK[f].CD != 0)
+               {
+                  FOUNDA2 = true;
+                  break;
+               }
+               f++;
+            }
+         }
+         if(_root["KRINABILITY" + moveFilterA0[_loc3_]][10] == _root["playerKrin" + 2].CONDITION || _root["playerKrin" + 2].CONDITION == 0 || _root["playerKrin" + 2] == pg)
+         {
+            if(_root["KRINABILITY" + moveFilterA0[_loc3_]][10] != _root["playerKrin" + 2].CONDITION2 || _root["playerKrin" + 2].CONDITION2 == 0 || _root["playerKrin" + 2] == pg)
+            {
+               if(_root["KRINABILITYB" + moveFilterA0[_loc3_]][119] != 0 && FOUNDA2 == true || _root["KRINABILITYB" + moveFilterA0[_loc3_]][119] == 0 && FOUNDA2 == false)
+               {
+                  if(_root["KRINABILITYB" + moveFilterA0[_loc3_]][108] != 0 && FOUNDA == true || _root["KRINABILITYB" + moveFilterA0[_loc3_]][108] == 0 || _root["KRINABILITYB" + moveFilterA0[_loc3_]][107] != 0)
+                  {
+                     if(_root["KRINABILITYB" + moveFilterA0[_loc3_]][113] * -1 <= pg.BMANA && _root["KRINABILITYB" + moveFilterA0[_loc3_]][114] * -1 <= pg.WMANA)
+                     {
+                        if(_root["KRINABILITYB" + moveFilterA0[_loc3_]][104] * -1 <= pg.PALETTEGAUGE)
+                        {
+                           if(_root["KRINABILITYB" + moveFilterA0[_loc3_]][116] + pg.TURN >= 0)
+                           {
+                              if(pg.FOCUSN >= _root["KRINABILITY" + moveFilterA0[_loc3_]][5] && pg.LIFEN > _root["KRINABILITY" + moveFilterA0[_loc3_]][6] + Math.round(pg.LIFEU * _root["KRINABILITY" + moveFilterA0[_loc3_]][16]))
+                              {
+                                 moveFilterA1.push(moveFilterA0[_loc3_]);
+                                 parallelFilterA2.push(parallelFilterA[_loc3_]);
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
             }
          }
       }
@@ -7510,10 +8076,16 @@ AImoveAdder = function(p)
       }
       for(_loc3_ in moveFilterD0)
       {
-         if(pg.FOCUSN >= _root["KRINABILITY" + moveFilterD0[_loc3_]][5] && pg.LIFEN > _root["KRINABILITY" + moveFilterD0[_loc3_]][6] + Math.round(pg.LIFEU * _root["KRINABILITY" + moveFilterD0[_loc3_]][16]))
+         if(_root["KRINABILITY" + moveFilterD0[_loc3_]][10] != _root["playerKrin" + 2].CONDITION2 || _root["playerKrin" + 2].CONDITION2 == 0 || _root["playerKrin" + 2] == pg)
          {
-            moveFilterD1.push(moveFilterD0[_loc3_]);
-            parallelFilterD2.push(parallelFilterD[_loc3_]);
+            if(_root["KRINABILITY" + moveFilterD0[_loc3_]][10] == _root["playerKrin" + 2].CONDITION || _root["playerKrin" + 2].CONDITION == 0 || _root["playerKrin" + 2] == pg)
+            {
+               if(pg.FOCUSN >= _root["KRINABILITY" + moveFilterD0[_loc3_]][5] && pg.LIFEN > _root["KRINABILITY" + moveFilterD0[_loc3_]][6] + Math.round(pg.LIFEU * _root["KRINABILITY" + moveFilterD0[_loc3_]][16]))
+               {
+                  moveFilterD1.push(moveFilterD0[_loc3_]);
+                  parallelFilterD2.push(parallelFilterD[_loc3_]);
+               }
+            }
          }
       }
       gMtYuIo = pg.teamSide;
@@ -9104,7 +9676,7 @@ _root.hackMove2[15] = -30;
 _root.hackMove2[20] = 1;
 _root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[70];
 addNewBuffKrin("LIVINGDEAD",_root.KrinLang[KLangChoosen].AU[71],"Shadow");
-_root.hackMove2[49] = 1;
+_root.hackMove2[164] = 1;
 _root.hackMove2[16] = 5;
 _root.hackMove2[32] = 1;
 _root.hackMove2[27] = 1;
@@ -9147,6 +9719,7 @@ _root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX2[73];
 addNewBuffKrin("THEBLACKESTNIGHT",_root.KrinLang[KLangChoosen].AU[74],"Shadow");
 _root.hackMove2[16] = 4;
 _root.hackMove2[41] = 0.31;
+_root.hackMove2[155] = 1;
 _root.hackMove2[20] = 1;
 _root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[74];
 addNewBuffKrin("DUDRA",_root.KrinLang[KLangChoosen].AU[75],"Earth");
@@ -9401,6 +9974,103 @@ _root.hackMove2[16] = 3;
 _root.hackMove2[28] = 2;
 _root.hackMove2[20] = -1;
 _root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[145];
+addNewBuffKrin("BLEED6",_root.KrinLang[KLangChoosen].AU[150],"Physical");
+_root.hackMove2[16] = 3;
+_root.hackMove2[28] = 2;
+_root.hackMove2[20] = -1;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[150];
+addNewBuffKrin("TEMPTINGTWIST",_root.KrinLang[KLangChoosen].AU[149],"Physical");
+_root.hackMove2[16] = 2;
+_root.hackMove2[165] = "Melee";
+_root.hackMove2[20] = 1;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[149];
+addNewBuffKrin("SPLASHOFVENOM",_root.KrinLang[KLangChoosen].AU[161],"Poison");
+_root.hackMove2[16] = 3;
+_root.hackMove2[168] = 3;
+_root.hackMove2[169] = "POISONVULNERABLITY";
+_root.hackMove2[170] = 1;
+_root.hackMove2[20] = 1;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[161];
+addNewBuffKrin("DROPOFVENOM",_root.KrinLang[KLangChoosen].AU[162],"Poison");
+_root.hackMove2[16] = 3;
+_root.hackMove2[168] = 12;
+_root.hackMove2[169] = "POISONVULNERABLITY";
+_root.hackMove2[170] = 2;
+_root.hackMove2[20] = 1;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[162];
+addNewBuffKrin("HONEYBEELINE",_root.KrinLang[KLangChoosen].AU[151],"Physical");
+_root.hackMove2[16] = 2;
+_root.hackMove2[166] = "Melee";
+_root.hackMove2[20] = 1;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[151];
+addNewBuffKrin("HONEYBEELIVE",_root.KrinLang[KLangChoosen].AU[152],"Magic");
+_root.hackMove2[16] = 5;
+_root.hackMove2[20] = 1;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[152];
+addNewBuffKrin("HONEYBEELIVE1",_root.KrinLang[KLangChoosen].AU[153],"Magic");
+_root.hackMove2[16] = 3;
+_root.hackMove2[20] = 1;
+_root.hackMove2[167] = 1;
+_root.hackMove2[116] = 3;
+_root.hackMove2[109] = 3;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[153];
+addNewBuffKrin("HONEYBEELIVE3",_root.KrinLang[KLangChoosen].AU[152],"Magic");
+_root.hackMove2[16] = 7;
+_root.hackMove2[20] = 1;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[152];
+addNewBuffKrin("BEELOVEDVENOMA",_root.KrinLang[KLangChoosen].AU[165],"Magic");
+_root.hackMove2[16] = 1;
+_root.hackMove2[20] = 1;
+_root.hackMove2[171] = 2.5;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[165];
+addNewBuffKrin("HONEYBEELIVE4",_root.KrinLang[KLangChoosen].AU[164],"Magic");
+_root.hackMove2[16] = 4;
+_root.hackMove2[20] = 1;
+_root.hackMove2[167] = 1;
+_root.hackMove2[116] = 6;
+_root.hackMove2[109] = 6;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[164];
+addNewBuffKrin("BLOWKISS",_root.KrinLang[KLangChoosen].AU[159],"Magic");
+_root.hackMove2[16] = 2;
+_root.hackMove2[20] = 1;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[159];
+addNewBuffKrin("LOVE0",_root.KrinLang[KLangChoosen].AU[158],"Magic");
+_root.hackMove2[16] = 99;
+_root.hackMove2[20] = 1;
+_root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[158];
+addNewBuffKrin("LOVE1",_root.KrinLang[KLangChoosen].AU[154],"Magic");
+_root.hackMove2[16] = 99;
+_root.hackMove2[20] = 1;
+_root.hackMove2[28] = 0.2;
+_root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[154];
+addNewBuffKrin("LOVE2",_root.KrinLang[KLangChoosen].AU[155],"Magic");
+_root.hackMove2[16] = 99;
+_root.hackMove2[20] = 1;
+_root.hackMove2[28] = 0.4;
+_root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[155];
+addNewBuffKrin("LOVE3",_root.KrinLang[KLangChoosen].AU[156],"Magic");
+_root.hackMove2[16] = 99;
+_root.hackMove2[20] = 1;
+_root.hackMove2[28] = 1;
+_root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[156];
+addNewBuffKrin("LOVE4",_root.KrinLang[KLangChoosen].AU[157],"Magic");
+_root.hackMove2[16] = 2;
+_root.hackMove2[20] = 1;
+_root.hackMove2[17] = 1;
+_root.hackMove2[29] = 3;
+_root.hackMove2[168] = 1;
+_root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[157];
 addNewBuffKrin("GOLBEZ2",_root.KrinLang[KLangChoosen].AU[98],"Shadow");
 _root.hackMove2[16] = -1;
 _root.hackMove2[49] = 150;
@@ -9438,6 +10108,10 @@ addNewBuffKrin("SOULGRASP2",_root.KrinLang[KLangChoosen].AU[144],"Magic");
 _root.hackMove2[16] = 2;
 _root.hackMove2[20] = 1;
 _root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[144];
+addNewBuffKrin("SOULGRASP3",_root.KrinLang[KLangChoosen].AU[166],"Magic");
+_root.hackMove2[16] = 2;
+_root.hackMove2[20] = 1;
+_root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[166];
 addNewBuffKrin("BLEED2",_root.KrinLang[KLangChoosen].AU[103],"Physical");
 _root.hackMove2[16] = 3;
 _root.hackMove2[28] = 0.5;
@@ -9455,6 +10129,12 @@ _root.hackMove2[24] = -0.8;
 _root.hackMove2[20] = 1;
 _root.hackMove2[27] = 1;
 _root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[106];
+addNewBuffKrin("POISONVULNERABLITY",_root.KrinLang[KLangChoosen].AU[163],"Poison");
+_root.hackMove2[16] = 1;
+_root.hackMove2[24] = -1;
+_root.hackMove2[20] = 1;
+_root.hackMove2[27] = 1;
+_root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[163];
 addNewBuffKrin("LIGHTNINGRES",_root.KrinLang[KLangChoosen].AU[107],"Lightning");
 _root.hackMove2[16] = 7;
 _root.hackMove2[24] = -0.8;
@@ -9500,7 +10180,7 @@ addNewBuffKrin("SUPERSTUN",_root.KrinLang[KLangChoosen].AU[1],"Physical");
 _root.hackMove2[16] = 2;
 _root.hackMove2[17] = 1;
 _root.hackMove2[20] = -1;
-_root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[1];
+_root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX[1];
 addNewBuffKrin("TEMPERACOAT",_root.KrinLang[KLangChoosen].AU[121],"Earth");
 _root.hackMove2[16] = 5;
 _root.hackMove2[155] = 1;
@@ -9530,6 +10210,12 @@ _root.hackMove2[15] = -6;
 _root.hackMove2[20] = 1;
 _root.hackMove2[32] = 0.5;
 _root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[125];
+addNewBuffKrin("HONEYBEEPOWER",_root.KrinLang[KLangChoosen].AU[160],"Magic");
+_root.hackMove2[16] = 99;
+_root.hackMove2[11] = 0.1;
+_root.hackMove2[20] = 1;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[160];
 addNewBuffKrin("VERAFOCUS",_root.KrinLang[KLangChoosen].AU[125],"Magic");
 _root.hackMove2[16] = 1;
 _root.hackMove2[15] = -30;
@@ -9744,9 +10430,9 @@ addMoveForPlayer = function(txvd)
          }
          KrinCombatText.combatTexter = "You cannot use this move because you don\'t have filled your Palette Gauge enough.";
       }
-      if(mAry6[113] < 0 || mAry6[114] < 0)
+      if(mAry6[113] < 0 && mAry6[114] < 0)
       {
-         if(mAry6[113] * -1 > rovnrevbnr.BMANA && mAry6[114] * -1 > rovnrevbnr.WMANA)
+         if(mAry6[113] * -1 > rovnrevbnr.BMANA || mAry6[114] * -1 > rovnrevbnr.WMANA)
          {
             checkPassforKrinMove = false;
             KrinCombatText.combatTexter = "You cannot use this move because you don\'t have enough Black and White Mana.";
@@ -10327,29 +11013,29 @@ jesivie.DEF = [25,25,25,25,25,25,25,25];
 jesivie.voiceHit = ["ShamanHit1","ShamanHit2","ShamanHit1"];
 jesivie.voiceDie = "ShamanDie";
 createNewUnitKrin("Templar",23,4.200000000000002,12,1.2,8,0.8,8,1,100);
-jesivie.movesA = [42,81,57,69,508];
-jesivie.movesD = [93,31];
+jesivie.movesA = [1733,1212,1222];
+jesivie.movesD = [31,1218,1220];
 jesivie.agressionArray = [50,90,60,40];
 jesivie.PER = [25,25,25,25,25,25,25,25];
 jesivie.DEF = [25,25,25,25,25,25,25,25];
 jesivie.voiceHit = ["ZPCIHit1","ZPCIHit2","ZPCIHit1"];
 jesivie.voiceDie = "Die1";
 createNewUnitKrin("Phantom",30,4,14,1.4000000000000001,0,0,16,1.6,100);
-jesivie.movesA = [56,56,69,62,9,507];
-jesivie.movesD = [51];
+jesivie.movesA = [1243,1248,1728,1271,1222];
+jesivie.movesD = [1240,1267];
 jesivie.agressionArray = [50,90,60,40];
 jesivie.PER = [25,25,25,25,25,25,25,25];
 jesivie.DEF = [25,25,25,25,25,25,25,25];
 jesivie.voiceHit = ["GhostHit1","GhostHit2","GhostHit3"];
 jesivie.voiceDie = "GhostDie";
 createNewUnitKrin("Phaser",20,1.6,10,1.1,20,1.6,10,1.1,100);
-jesivie.movesA = [79,79,96,99,104,69,508,508,580,581];
-jesivie.movesD = [31];
+jesivie.movesA = [1731,1732,1508,1511,1519,69];
+jesivie.movesD = [1522,31,1527];
 jesivie.agressionArray = [50,90,60,40];
 jesivie.PER = [25,25,25,25,25,25,25,25];
 jesivie.DEF = [25,25,25,25,25,25,25,25];
-jesivie.voiceHit = ["BaronHit1","BaronHit2","BaronHit3"];
-jesivie.voiceDie = "BaronDie";
+jesivie.voiceHit = ["hit_fel1","hit_fel2","hit_fel3"];
+jesivie.voiceDie = "dead_fel";
 createNewUnitKrin("Templar",20,1.45,14,2.2,8,1.0500000000000005,8,1.0500000000000005,100);
 jesivie.movesA = [1627,523,1275,1628];
 jesivie.movesD = [512,511,1274];
@@ -11098,6 +11784,18 @@ jesivie.stunresist = 1;
 jesivie.voiceHit = ["hit_fel1","hit_fel2","hit_fel3"];
 jesivie.voiceDie = "dead_fel";
 jesivie.IGNORE = 1;
+createNewUnitKrin("Honey B. Lovely",4000,10.1,10.1,10.1,10.1,10.1,10.1,10.1,100);
+jesivie.movesA = [1800,1801,1802,1803,1804,1805,1806,1807,1808,1809,1810,1811,1812,1813,1814,1815,1816,1817,1818,1819,1820,1821,1822,1823,1824,1825,1826,1827,1828];
+jesivie.movesD = [];
+jesivie.agressionArray = [50,35,25,25];
+jesivie.model = ["MODEL1","MAN","","M"];
+jesivie.PER = [85,85,85,25,25,25,25,25];
+jesivie.DEF = [100,100,100,100,100,100,100,100,100];
+jesivie.equipment = [0,0,0,0,0,77,0];
+jesivie.skinSetter = "FINAL2";
+jesivie.stunresist = 1;
+jesivie.voiceHit = ["hit_fel1","hit_fel2","hit_fel3"];
+jesivie.voiceDie = "dead_fel";
 battleCreationID = 0;
 createNewBattle = function()
 {
@@ -11636,6 +12334,13 @@ rengi.SkyBG = "JUNGLE";
 createNewBattle();
 rengi.players = [74,-1,75,-2,0];
 rengi.playersLevels = [15,0,15,0,0];
+rengi.itemDrops.push({ID:119,CHANCE:100});
+rengi.ZoneBG = "PLAINS2";
+rengi.SkyBG = "DAY2";
+createNewBattle();
+rengi.players = [76,-1,0,-2,0];
+rengi.playersLevels = [15,0,0,0,0];
+rengi.itemDrops.push({ID:119,CHANCE:100});
 rengi.itemDrops.push({ID:119,CHANCE:100});
 rengi.ZoneBG = "PLAINS2";
 rengi.SkyBG = "DAY2";
@@ -12937,7 +13642,7 @@ Krin.SpeedUP = 8;
 Krin.StrengthUP = 8;
 Krin.MagicUP = 12;
 Krin.FocusUP = 15;
-Krin.PIU[7] = 600;
+Krin.PIU[7] = 100;
 Krin.PIU[4] = 15;
 createNewItemKrin("Paladin-Head",2,"Rare",0,10,300);
 gghhjjuu.looks = "USA5";
@@ -12947,7 +13652,7 @@ Krin.SpeedUP = 8;
 Krin.StrengthUP = 8;
 Krin.MagicUP = 12;
 Krin.FocusUP = 15;
-Krin.PIU[7] = 600;
+Krin.PIU[7] = 100;
 Krin.PIU[4] = 15;
 createNewItemKrin("Paladin-Body",3,"Rare",0,10,300);
 gghhjjuu.looks = "USA5";
@@ -12957,7 +13662,7 @@ Krin.SpeedUP = 8;
 Krin.StrengthUP = 8;
 Krin.MagicUP = 12;
 Krin.FocusUP = 15;
-Krin.PIU[7] = 600;
+Krin.PIU[7] = 100;
 Krin.PIU[4] = 15;
 createNewItemKrin("Paladin-Hands",4,"Rare",0,10,300);
 gghhjjuu.looks = "USA5";
@@ -12967,7 +13672,7 @@ Krin.SpeedUP = 8;
 Krin.StrengthUP = 8;
 Krin.MagicUP = 12;
 Krin.FocusUP = 15;
-Krin.PIU[7] = 600;
+Krin.PIU[7] = 100;
 Krin.PIU[4] = 15;
 createNewItemKrin("Paladin-Leg",5,"Rare",0,10,300);
 gghhjjuu.looks = "USA5";
@@ -12977,7 +13682,7 @@ Krin.SpeedUP = 8;
 Krin.StrengthUP = 8;
 Krin.MagicUP = 12;
 Krin.FocusUP = 15;
-Krin.PIU[7] = 600;
+Krin.PIU[7] = 100;
 Krin.PIU[4] = 15;
 createNewItemKrin("Paladin-Feet",6,"Rare",0,10,300);
 gghhjjuu.looks = "USA5";
