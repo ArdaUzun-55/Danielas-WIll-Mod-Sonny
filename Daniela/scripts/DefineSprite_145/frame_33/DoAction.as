@@ -1,0 +1,2 @@
+stop();
+unloadMovie(_parent);

@@ -1,0 +1,1 @@
+inner.combatText = combatTexter;

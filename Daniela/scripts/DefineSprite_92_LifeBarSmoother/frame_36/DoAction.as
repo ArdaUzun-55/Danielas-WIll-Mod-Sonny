@@ -1,0 +1,1 @@
+LCC.gotoAndStop(stopper);

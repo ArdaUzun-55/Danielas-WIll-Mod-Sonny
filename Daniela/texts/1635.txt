@@ -1,0 +1,1 @@
+To make a move, select your target first, then click him. You will see the abilities that you may use on that target.
