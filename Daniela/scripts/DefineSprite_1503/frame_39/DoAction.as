@@ -26,6 +26,14 @@ else
 {
    tit_11 = _root.KrinLang[_root.KLangChoosen].MENU[31];
 }
+if(_root.Krin.diff == "HARD")
+{
+   tit_12 = _root.KrinLang[_root.KLangChoosen].MENU[53];
+}
+else
+{
+   tit_12 = _root.KrinLang[_root.KLangChoosen].MENU[52];
+}
 if(_root.Krin.autoSaver)
 {
    tit_7 = _root.KrinLang[_root.KLangChoosen].MENU[29];

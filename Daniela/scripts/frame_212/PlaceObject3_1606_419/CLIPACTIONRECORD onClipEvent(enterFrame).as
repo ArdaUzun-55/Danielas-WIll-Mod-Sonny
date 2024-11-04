@@ -28,6 +28,12 @@ onClipEvent(enterFrame){
                this["thing" + i].gotoAndStop(_root["KRINABILITYB" + _root.Krin.moveMatrix[i]][125]);
             }
          }
+         if(_root["KRINABILITYB" + _root.Krin.moveMatrix[i]][140] != 0 && _root["KRINABILITYB" + _root.Krin.moveMatrix[i]][120] != 0)
+         {
+            this["thing" + i].toolTipTitle = _root["KRINABILITY" + _root.Krin.moveMatrix[i]][17];
+            this["thing" + i].toolTip = _root["KRINABILITYB" + _root.Krin.moveMatrix[i]][17];
+            this["thing" + i].gotoAndStop(_root["KRINABILITY" + _root.Krin.moveMatrix[i]][0]);
+         }
          if(_root["KRINABILITY" + _root.Krin.moveMatrix[i]][_root.theEnemyToMoveVS2] == 0)
          {
             _root.selector["thing" + i].bfilter._visible = true;

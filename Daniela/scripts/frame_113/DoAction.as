@@ -3,6 +3,7 @@ Krin.autoSaver = true;
 Krin.sound = true;
 Krin.graphics = true;
 Krin.qual = "HIGH";
+Krin.diff = "NORMAL";
 tit_1 = _root.KrinLang[_root.KLangChoosen].MENU[27];
 tit_2 = _root.KrinLang[_root.KLangChoosen].MENU[28];
 tit_8 = _root.KrinLang[_root.KLangChoosen].MENU[35];
@@ -30,6 +31,14 @@ if(_root.Krin.qual == "HIGH")
 else
 {
    tit_11 = _root.KrinLang[_root.KLangChoosen].MENU[32];
+}
+if(_root.Krin.qual == "HARD")
+{
+   tit_11 = _root.KrinLang[_root.KLangChoosen].MENU[52];
+}
+else
+{
+   tit_11 = _root.KrinLang[_root.KLangChoosen].MENU[53];
 }
 if(_root.Krin.autoSaver)
 {

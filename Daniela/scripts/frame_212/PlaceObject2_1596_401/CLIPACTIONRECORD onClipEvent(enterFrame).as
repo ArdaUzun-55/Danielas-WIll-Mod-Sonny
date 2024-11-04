@@ -123,7 +123,7 @@ onClipEvent(enterFrame){
                      while(owegwe < 3)
                      {
                         RandomNumberTB = Math.random();
-                        if(_root["playerKrin" + (mTarget.teamSide + owegwe * 2)].active && RandomNumberTB > mAry2[136])
+                        if(_root["playerKrin" + (mTarget.teamSide + owegwe * 2)].active && RandomNumberTB > mAry2[136] && _root["playerKrin" + (mTarget.teamSide + owegwe * 2)].IGNORE != 2)
                         {
                            if(_root.strikeSuccessmultiple[owegwe + JI] == true || (mAry1[10] == "Shock" || mAry1[10] == "Shock2") && mAry2[133] == 0)
                            {
@@ -189,6 +189,10 @@ onClipEvent(enterFrame){
                            if(mAry2[109] == 1)
                            {
                               mToBeBuffed = mTarget;
+                           }
+                           if(mAry2[29] == "CALORIC")
+                           {
+                              _root["KRINBUFF" + mAry2[29]][187] = 1;
                            }
                            e = 0;
                            while(e < _root.maxBuffLimit)
@@ -300,10 +304,14 @@ onClipEvent(enterFrame){
                   if(mAry2[13] != 0)
                   {
                      numberRandomerBuffHit = Math.random();
-                     if(numberRandomerBuffHit < mAry2[14])
+                     if(numberRandomerBuffHit < mAry2[14] || numberRandomerBuffHit > mAry2[14] && mAry2[147] != 0)
                      {
                         if(mAry2[82] > numberRandomerBuffHit && _root.perKSuccess == true || mAry2[82] == 0)
                         {
+                           if(numberRandomerBuffHit > mAry2[14] && mAry2[147] != 0 && mAry2[20] == 0)
+                           {
+                              mAry2[13] = mAry2[147];
+                           }
                            buffUniqueCheck = true;
                            buffUniqueCheck2 = true;
                            buffUniqueCheck3 = false;
@@ -411,7 +419,13 @@ onClipEvent(enterFrame){
                            G = 0;
                            while(G < 3)
                            {
-                              if(_root.strikeSuccessmultiple[G + JI] == true || (mAry1[10] == "Shock" || mAry1[10] == "Shock2") && mAry2[133] == 0)
+                              numberRandomerBuffHit3 = Math.random();
+                              if(numberRandomerBuffHit3 > mAry2[14] && mAry2[147] != 0 && mAry2[20] == 1)
+                              {
+                                 CLUSTER = mAry2[13];
+                                 mAry2[13] = mAry2[147];
+                              }
+                              if((_root.strikeSuccessmultiple[G + JI] == true || (mAry1[10] == "Shock" || mAry1[10] == "Shock2") && mAry2[133] == 0) && (mAry2[148] - 1 != G && mAry2[148] != 0 || mAry2[148] == 0))
                               {
                                  if(mAry2[21] == 0 && mAry2[20] == 1 && buffUniqueCheck == true)
                                  {
@@ -439,6 +453,10 @@ onClipEvent(enterFrame){
                                  {
                                     _root.applyBuffKrin(_root["playerKrin" + (mCaster.teamSide + G * 2)],mAry2[13],1,mCaster);
                                  }
+                              }
+                              if(numberRandomerBuffHit3 > mAry2[14] && mAry2[147] != 0 && mAry2[20] == 1)
+                              {
+                                 mAry2[13] = CLUSTER;
                               }
                               G++;
                            }
@@ -490,11 +508,11 @@ onClipEvent(enterFrame){
                   _root.applyChangesKrin(mTarget);
                   if(mAry2[45] == JI && mAry1[0] == "Fire Snake")
                   {
-                     _root.checkAbilities(mCaster,mTarget,mAry2,mAry1,FIRE2,FIRE3,FIRE4,FIRE5,FIRE6,FIRE8,FIRE);
+                     _root.checkAbilities(mCaster,mTarget,mAry2,mAry1,FIRE2,FIRE3,FIRE4,FIRE5,FIRE6,FIRE8,FIRE,FIRE9);
                   }
                   else
                   {
-                     _root.checkAbilities(mCaster,mTarget,mAry2,mAry1,FIRE2,FIRE3,FIRE4,FIRE5,FIRE6,FIRE8,FIRE);
+                     _root.checkAbilities(mCaster,mTarget,mAry2,mAry1,FIRE2,FIRE3,FIRE4,FIRE5,FIRE6,FIRE8,FIRE,FIRE9);
                   }
                   _root.checkBuffafter(mCaster,mTarget,mAry2,mAry1,JI);
                }
@@ -507,11 +525,11 @@ onClipEvent(enterFrame){
                   }
                   if(mAry2[45] == JI && mAry1[0] == "Fire Snake")
                   {
-                     _root.checkAbilities(mCaster,mTarget,mAry2,mAry1,FIRE2,FIRE3,FIRE4,FIRE5,FIRE6,FIRE8,FIRE);
+                     _root.checkAbilities(mCaster,mTarget,mAry2,mAry1,FIRE2,FIRE3,FIRE4,FIRE5,FIRE6,FIRE8,FIRE,FIRE9);
                   }
                   else
                   {
-                     _root.checkAbilities(mCaster,mTarget,mAry2,mAry1,FIRE2,FIRE3,FIRE4,FIRE5,FIRE6,FIRE8,FIRE);
+                     _root.checkAbilities(mCaster,mTarget,mAry2,mAry1,FIRE2,FIRE3,FIRE4,FIRE5,FIRE6,FIRE8,FIRE,FIRE9);
                   }
                   if(mAry2[20] == 1)
                   {
@@ -820,7 +838,10 @@ onClipEvent(enterFrame){
                   m++;
                }
             }
-            mCaster.TURN += 1;
+            if(mCaster.IGNORETURN == false)
+            {
+               mCaster.TURN += 1;
+            }
             if(_root[_root.MoveArrayFINAL[_root.PlayerToMove] + "MOVE"][3] != 0 && mTarget.active == true && mCaster.STUN == 0)
             {
                if(moveStart != true)
@@ -836,6 +857,7 @@ onClipEvent(enterFrame){
                   FIRE4 = mAry2[6];
                   FIRE6 = mAry2[20];
                   FIRE8 = mAry2[14];
+                  FIRE9 = mAry2[136];
                   _root.precheckBuff(mCaster,mTarget,mAry2,mAry1);
                   if(mCaster.FOCUSN >= mAry1[5] && mCaster.LIFEN > mAry1[6] + Math.round(mCaster.LIFEU * mAry1[16]))
                   {
@@ -999,6 +1021,39 @@ onClipEvent(enterFrame){
                                     _root.strikeSuccess = true;
                                  }
                               }
+                              if(mAry2[108] != 0)
+                              {
+                                 if(mAry2[108] == "ELECTROPE2" && _root["playerKrin" + (mTarget.teamSide + owegwe * 2)].ELECTROPE2 == 2)
+                                 {
+                                    _root.strikeSuccessmultiple[owegwe + JI] = false;
+                                 }
+                                 else if(mAry2[108] == "ELECTROPE1" && _root["playerKrin" + (mTarget.teamSide + owegwe * 2)].ELECTROPE2 != 1)
+                                 {
+                                    _root.strikeSuccessmultiple[owegwe + JI] = false;
+                                 }
+                                 else
+                                 {
+                                    _root.strikeSuccessmultiple[owegwe + JI] = true;
+                                    _root.strikeSuccess = true;
+                                 }
+                              }
+                              if(mAry2[151] != 0 || mAry2[152] != 0)
+                              {
+                                 if(mAry2[151] == 1 && _root["playerKrin" + (mTarget.teamSide + owegwe * 2)].ELECTROPE2 != 4)
+                                 {
+                                    _root.strikeSuccessmultiple[owegwe + JI] = false;
+                                 }
+                                 else if(mAry2[152] == 1 && _root["playerKrin" + (mTarget.teamSide + owegwe * 2)].ELECTROPE2 != 3)
+                                 {
+                                    _root.strikeSuccessmultiple[owegwe + JI] = false;
+                                 }
+                                 else
+                                 {
+                                    _root.strikeSuccessmultiple[owegwe + JI] = true;
+                                    _root.strikeSuccess = true;
+                                 }
+                                 mAry1[10] = "Missile";
+                              }
                               JI++;
                            }
                            owegwe++;
@@ -1051,9 +1106,9 @@ onClipEvent(enterFrame){
                         JI = 0;
                         while(mAry2[45] > JI)
                         {
+                           _root.Krin.soundToMake = mAry1[18];
                            _root.addSound("Effects","MagicCast");
                            _root.Krin.missToMake = "MagicMiss";
-                           _root.Krin.soundToMake = mAry1[18];
                            _root.BATTLESCREEN[mCaster2].inner.colortobe = mAry1[11];
                            _root.BATTLESCREEN[mCaster2].inner.gotoAndPlay("cast");
                            if(!mAry2[20])
@@ -1083,6 +1138,31 @@ onClipEvent(enterFrame){
                            }
                            JI++;
                         }
+                     }
+                     if(mAry1[10] == "MissileD")
+                     {
+                        _root.Krin.missToMake = undefined;
+                        _root.Krin.soundToMake = undefined;
+                        _root.addSound("Effects",mAry1[18]);
+                        _root.BATTLESCREEN[mCaster2].inner.colortobe = mAry1[11];
+                        _root.BATTLESCREEN[mCaster2].inner.gotoAndPlay("cast");
+                        _root.BATTLESCREEN.attachMovie(mAry1[13],"b1",-9);
+                        _root.BATTLESCREEN.b1._x = _root.BATTLESCREEN[mTarget2]._x;
+                        _root.BATTLESCREEN.b1._y = _root.BATTLESCREEN[mTarget2]._y;
+                        if(_root.KrinSettings.SFX)
+                        {
+                           _root.xPoint1 = _root.BATTLESCREEN[mTarget2]._x + _root.BATTLESCREEN[mTarget2]._width / 2;
+                           _root.yPoint1 = _root.BATTLESCREEN[mTarget2]._y + _root.BATTLESCREEN[mTarget2]._height / 2;
+                           _root.zoomPointX = _root.xPoint1 * -0.3 + 400;
+                           _root.zoomPointY = _root.yPoint1 * -0.3 + 300;
+                           _root.GridZoomer.gotoAndPlay("KrinZoomGo");
+                           _root.zoomPause = 1;
+                        }
+                        if(_root.KrinSettings.SFX && mAry1[9] >= 0)
+                        {
+                           _root.GridShaker.play();
+                        }
+                        _root.BAMBAMBAM = true;
                      }
                      if(mAry1[10] == "Ninjutsu")
                      {
@@ -1268,7 +1348,7 @@ onClipEvent(enterFrame){
                         _root.krinToMove.toolTipTitle = _root.krinToMove.thinger1;
                         _root.krinToMove.toolTip = _root.krinToMove.thinger2;
                         _root.krinToMove._visible = false;
-                        if(_root.turnBasedKrin)
+                        if(!_root.turnBasedKrin)
                         {
                         }
                      }
@@ -1319,7 +1399,7 @@ onClipEvent(enterFrame){
                   _root.krinToMove.toolTipTitle = _root.krinToMove.thinger1;
                   _root.krinToMove.toolTip = _root.krinToMove.thinger2;
                   _root.krinToMove._visible = false;
-                  if(_root.turnBasedKrin)
+                  if(!_root.turnBasedKrin)
                   {
                   }
                }
@@ -1378,7 +1458,7 @@ onClipEvent(enterFrame){
                   if(_root["playerKrin" + _root.AITeamMoveOrder[i]].AION == true && _root["playerKrin" + _root.AITeamMoveOrder[i]].active == true)
                   {
                      k = 0;
-                     while(k < 30)
+                     while(k < 50)
                      {
                         if(_root["playerKrin" + _root.AITeamMoveOrder[i]].CDArrayD[k] != 0)
                         {
@@ -1387,7 +1467,7 @@ onClipEvent(enterFrame){
                         k++;
                      }
                      j = 0;
-                     while(j < 30)
+                     while(j < 50)
                      {
                         if(_root["playerKrin" + _root.AITeamMoveOrder[i]].CDArrayA[j] != 0)
                         {

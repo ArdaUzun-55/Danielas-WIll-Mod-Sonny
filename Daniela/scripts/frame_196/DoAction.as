@@ -95,6 +95,8 @@ while(i < 7)
    shtName.CONDITION = 0;
    shtName.CONDITION2 = 0;
    shtName.CONDITION3 = 0;
+   shtName.CONDITION4 = 0;
+   shtName.CONDITION5 = 0;
    shtName.AINEXTATTACK = 0;
    shtName.DMG = 0;
    shtName.TURN = 0;
@@ -102,6 +104,7 @@ while(i < 7)
    shtName.FOCUSPLUS = 0;
    shtName.POLYGOT = 0;
    shtName.CRIT = 0;
+   shtName.DPS = 0;
    shtName.DMG2 = 0;
    shtName.DEFENSE = 1;
    shtName.IDMG = 0;
@@ -109,6 +112,7 @@ while(i < 7)
    shtName.STANCEMAX = 0;
    shtName.BLEED = 100;
    shtName.BLEED2 = 0;
+   shtName.TENCHIJIN = 0;
    shtName.LIVINGDEAD = 0;
    shtName.LIVINGDEAD10 = 0;
    shtName.BLEEDMAX = 100;
@@ -125,6 +129,8 @@ while(i < 7)
    shtName.IDMG3 = 0;
    shtName.IDMGP = 0;
    shtName.SEDUCED = 0;
+   shtName.ELECTROPE = 0;
+   shtName.ELECTROPE2 = 0;
    shtName.IDMGP2 = 1;
    shtName.IDOT = 1;
    shtName.IHOT = 1;
@@ -135,12 +141,14 @@ while(i < 7)
    shtName.WMANAMAX = 100;
    shtName.FOCUSCHANGE = 0;
    shtName.SSWITCH = 0;
+   shtName.IGNORETURN = false;
    shtName.HEALMOD_PLUS = 1;
    shtName.HEALMOD_MINUS = 1;
    shtName.HEALMOD = 1;
    shtName.STUN = 0;
    shtName.SHIE = 0;
    shtName.BUNSHIN = 0;
+   shtName.CDFORTEN = 0;
    shtName.STUNP = 0;
    shtName.REFLECTDMG = 0;
    shtName.SHIELD = 0;

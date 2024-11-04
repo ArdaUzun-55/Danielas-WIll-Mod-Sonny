@@ -30,11 +30,19 @@ onClipEvent(load){
             if(Key.isDown(49) && _root["KRINABILITYB" + (_root.Krin.abilityXer[krink].ID + bobJimJohn)][120] != 0)
             {
                this["st" + krink].thing2.toolTip = _root["KRINABILITYB" + (_root.Krin.abilityXer[krink].ID + bobJimJohn)][120];
+               if(_root["KRINABILITYB" + (_root.Krin.abilityXer[krink].ID + bobJimJohn)][140] != 0)
+               {
+                  this["st" + krink].thing2.gotoAndStop(_root["KRINABILITYB" + _root.Krin.abilityXer[krink].ID][130]);
+               }
                this["st" + krink].thing2.toolTipTitle = "(" + _root.Krin.talentMainArray[krink] + "/" + _root.Krin.abilityXer[krink].TIER + ")  " + _root["KRINABILITYB" + _root.Krin.abilityXer[krink].ID][130];
             }
             if(Key.isDown(50) && _root["KRINABILITYB" + (_root.Krin.abilityXer[krink].ID + bobJimJohn)][121] != 0)
             {
                this["st" + krink].thing2.toolTip = _root["KRINABILITYB" + (_root.Krin.abilityXer[krink].ID + bobJimJohn)][121];
+               if(_root["KRINABILITYB" + (_root.Krin.abilityXer[krink].ID + bobJimJohn)][140] != 0)
+               {
+                  this["st" + krink].thing2.gotoAndStop(_root["KRINABILITYB" + _root.Krin.abilityXer[krink].ID][131]);
+               }
                this["st" + krink].thing2.toolTipTitle = "(" + _root.Krin.talentMainArray[krink] + "/" + _root.Krin.abilityXer[krink].TIER + ")  " + _root["KRINABILITYB" + _root.Krin.abilityXer[krink].ID][131];
             }
             if(Key.isDown(51) && _root["KRINABILITYB" + (_root.Krin.abilityXer[krink].ID + bobJimJohn)][122] != 0)
@@ -60,6 +68,12 @@ onClipEvent(load){
                this["st" + krink].thing2.toolTip = _root["KRINABILITYB" + (_root.Krin.abilityXer[krink].ID + bobJimJohn)][126];
                this["st" + krink].thing2.toolTipTitle = "(" + _root.Krin.talentMainArray[krink] + "/" + _root.Krin.abilityXer[krink].TIER + ")  " + _root["KRINABILITYB" + _root.Krin.abilityXer[krink].ID][129];
                this["st" + krink].thing2.gotoAndStop(_root["KRINABILITYB" + _root.Krin.abilityXer[krink].ID][129]);
+            }
+            if(Key.isDown(55) && _root["KRINABILITYB" + (_root.Krin.abilityXer[krink].ID + bobJimJohn)][143] != 0)
+            {
+               this["st" + krink].thing2.toolTip = _root["KRINABILITYB" + (_root.Krin.abilityXer[krink].ID + bobJimJohn)][143];
+               this["st" + krink].thing2.toolTipTitle = "(" + _root.Krin.talentMainArray[krink] + "/" + _root.Krin.abilityXer[krink].TIER + ")  " + _root["KRINABILITYB" + _root.Krin.abilityXer[krink].ID][142];
+               this["st" + krink].thing2.gotoAndStop(_root["KRINABILITYB" + _root.Krin.abilityXer[krink].ID][142]);
             }
          }
          if(_root.Krin.talentMainArray[krink] < _root.Krin.abilityXer[krink].TIER)
