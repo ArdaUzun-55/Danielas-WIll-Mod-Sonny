@@ -1,0 +1,10 @@
+Abilities:
+[29] = Applies a second Buff/Debuff
+[30] = How much percent chance it has to afflict [29]
+[33-5] = To dispell buffs from yourself
+[40] = Applies a third Buff/Debuff
+[45] = How many times it hits the enemy
+[53] = used for acide bomb, deals damage to yourself after usage of ability
+[57] = Drill Strike, if the targets HP is lower than [57]% then the damage increases by 50%
+[58] = ignore defense (only if defense is implemented)
+[59] = Deals damage based on target's current HP. 
