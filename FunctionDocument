@@ -1,4 +1,5 @@
 Abilities:
+Note: Not all things are generalized, meaning some things are special for certain abilities, though I started to generalize later (at the start of doing these things I did not generalize much).
 [29] = Applies a second Buff/Debuff
 [30] = How much percent chance it has to afflict [29]
 [33-5] = To dispell buffs from yourself
@@ -8,3 +9,13 @@ Abilities:
 [57] = Drill Strike, if the targets HP is lower than [57]% then the damage increases by 50%
 [58] = ignore defense (only if defense is implemented)
 [59] = Deals damage based on target's current HP. 
+[60] = if casters HP is less or equal to [60]% then it is AOE
+[63] = used for Flame Jet, ice drill
+[65] = If target's HP is below [65]%, gain 2x multi-strike. 
+[67] = used in combination with [13] + [29] to make the buff[29] apply to self
+[68] = if less than [68] ability deals 140%
+[69] = if target has physical debuff deals 80% more damage.
+[70] = crit damage increase (example: Arcflash)
+[71] = damages caster for [71]% instinct
+[72] = used together with [70]
+[73] = 
