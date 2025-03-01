@@ -18,4 +18,5 @@ Note: Not all things are generalized, meaning some things are special for certai
 [70] = crit damage increase (example: Arcflash)
 [71] = damages caster for [71]% instinct
 [72] = used together with [70]
-[73] = 
+[73] = recover [73]% of the dmg dealt
+[74] = 50% chance to apply [29] if crit
