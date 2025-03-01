@@ -20,3 +20,14 @@ Note: Not all things are generalized, meaning some things are special for certai
 [72] = used together with [70]
 [73] = recover [73]% of the dmg dealt
 [74] = 50% chance to apply [29] if crit
+[75] = Used for abilities with cooldownonStarts (negative cooldowns), this [75] will be the abilitys cooldown
+[76] =  if the target was not hit at the previous turn, ability will be strengthened by [76]%
+[77] = Defense scaling 
+[78] = Used to determine whether an ability is a basic ability
+[79] = Bleed Buildup
+[80] = Frost Buildup
+[81] = secondary element piercing
+[82] = Buff only applies when crit [13]
+[83] = if ability bleeds then apply [83]
+[84] = heals 25% of targets HP (add)
+[85] = 
