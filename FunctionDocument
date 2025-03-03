@@ -40,11 +40,40 @@ also I for whatever reason skipped some numbers e.g. 36 dont mind it, you can us
 [92] = For combo abilities
 [93] = used to determine whether the targets ability was "Heal" for example, in the case of APostles Blackflame ability this is used with [94] to increase the damage by [94]% (if target has "Heal", "Focus3", but [93] can be anything even "Full Damage")
 [94] = used to increase damage against targets which used [93] type abilities
-[95] = used to make the ability usable at [95]% of HP. E.g. 0.5 would be that the ability is usable while the caster has 50% of its HP left or below.
+[95] = used to make the ability usable at [95]% of HP. E.g. 0.5 would be that the ability is usable while the caster has 50% of its HP left or below. FOR AI.s
+[96] = used to make the ability not usable at [96]% of HP. FOR AI.s
 [97] = Applies [97] if target has a buff with [144] not equal to 0
 [98] = used to mimic
 [99] = see [90]
 [100] = used for Firesnake (strength or instinct determination)
 [101] = needs [101] to be usable
 ADDED With the release of Danielas WIll Sonny 1:
-[102] = 
+[102] = Used to make ability only deal damage to those who did not use [102] abilites (in this case its melee, shock, missile etc.)
+[103] = used for combo abilites 
+[104] = used for Subtractive Palette
+[105] = used to make the Aoe deal less damage to other targets but full damage to the actual target
+[106] = Used for Manafication to make the ability Riposte (combo) aply Manafication at the end after full usage
+[107] = Used to apply [107] buff by cleansing [108] buff
+[108] = Used for many abilities which require you to have [108] Buff to make you cast it (not for subtractive palette)
+[110] = Used for Wicked Thunders ability witchhunt so that the Physical vulnerablity only applies to those which got hit.
+[111] = used to make ability heal casters team for [111]% of your magic
+[112] = something to do with DUALCAST
+[113] = White Mana increase
+[114] = Black Mana increase
+[115] = ability deals  damage equal to [115] * (how much life you dont have)
+[116] = Used to make cooldown on starts (functions exactly like Sonny 2017)
+[117] = Used to dispel another buff from self
+[118] = Used to dispel another buff from self
+[119] = ability requires [119] to be usable | A.I.
+[120] = ability can not be used if [120] Buff is on yourself | A.I.
+[121-124,126,143] = Used to make more descriptions available (for Ninjutsu for example if you press shift)
+[125,127-131,142] = Used to make more icons/text visible (BE CAREFUL 130-131 is generally the thing you want to use for combo abilites like Fire in red for example)
+[133] = used for abilities like tempting twist, is important
+[134] = Used to make ability only deal damage to those who used [134] abilites (in this case its melee, shock, missile etc.)
+[135] =  used to increase heart gauge
+[136] = These type of abilities only hit 2 targets. [136]% chance to hit the first target. If it doesnt manage to hit the hitchance for all the other hits is increased to 100% meaning it will always hit 2 targets. If it hits 2 targets it doesnt continue.
+[137] = 
+
+
+
+
