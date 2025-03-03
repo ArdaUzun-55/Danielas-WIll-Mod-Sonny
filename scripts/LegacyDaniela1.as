@@ -954,7 +954,7 @@ function addNewBuffKrin(a, b, c)
    _root["KRINBUFF" + a][0] = b;
    _root["KRINBUFF" + a][1] = c;
    i = 2;
-   while(i < 188)
+   while(i < 189)
    {
       _root["KRINBUFF" + a][i] = 0;
       i++;
@@ -1125,6 +1125,11 @@ function applyBuffKrin(ukcb2, bn, iftbc, ukcb4, debuffValue, limo)
    ukcb2.FLAMED += iftbc * bffker[151];
    ukcb2.FLAMED2 += iftbc * bffker[152];
    ukcb2.ELECTROPE2 += iftbc * bffker[181];
+   ukcb2.CALORIC += iftbc * bffker[187];
+   if(iftbc < 0 && bffker[187] != 0)
+   {
+      ukcb2.CALORIC = 0;
+   }
    if(iftbc < 0 && bffker[140] != 0)
    {
       ukcb2.AINEXTATTACK = 0;
@@ -1931,6 +1936,80 @@ function precheckBuff(mCaster, mTarget, mAry2, mAry1)
       }
       FIREBLIZZARDIV = false;
       FIREBLIZZARDIV2 = false;
+      if(mAry1[0] == "Edge of")
+      {
+         if(mCaster.BUFFARRAYK[f].buffId == "LIGHTG" && mCaster.BUFFARRAYK[f].CD != 0)
+         {
+            mAry2[0] = "Lightning";
+            mAry1[13] = "BOOM1";
+            mAry2[13] = "DAMAGEUPL";
+            mAry2[21] = 1;
+         }
+         if(mCaster.BUFFARRAYK[f].buffId == "DARKNESSG" && mCaster.BUFFARRAYK[f].CD != 0)
+         {
+            mAry2[0] = "Shadow";
+            mAry1[13] = "BOOM_STAR_PURPLE";
+            mAry2[13] = "DMGDOWNS";
+            mAry2[21] = 0;
+         }
+      }
+      if(mAry1[0] == "Akh Morn")
+      {
+         if(mCaster.BUFFARRAYK[f].buffId == "LIGHTG" && mCaster.BUFFARRAYK[f].CD != 0)
+         {
+            mAry2[0] = "Lightning";
+            mAry2[2] = 1;
+            mAry2[45] = 4;
+         }
+         if(mCaster.BUFFARRAYK[f].buffId == "DARKNESSG" && mCaster.BUFFARRAYK[f].CD != 0)
+         {
+            mAry2[0] = "Shadow";
+            mAry2[2] = 4;
+            mAry2[45] = 1;
+         }
+      }
+      if(mAry1[0] == "Smash of")
+      {
+         if(mCaster.BUFFARRAYK[f].buffId == "LIGHTG" && mCaster.BUFFARRAYK[f].CD != 0)
+         {
+            mAry2[0] = "Lightning";
+            mAry2[7] = 5;
+         }
+         if(mCaster.BUFFARRAYK[f].buffId == "DARKNESSG" && mCaster.BUFFARRAYK[f].CD != 0)
+         {
+            mAry2[0] = "Shadow";
+            mAry2[7] = 5;
+         }
+      }
+      if(mAry1[0] == "Shield of")
+      {
+         if(mCaster.BUFFARRAYK[f].buffId == "LIGHTG" && mCaster.BUFFARRAYK[f].CD != 0)
+         {
+            mAry2[0] = "Lightning";
+            mAry2[13] = "LIGHTSHIELD";
+         }
+         if(mCaster.BUFFARRAYK[f].buffId == "DARKNESSG" && mCaster.BUFFARRAYK[f].CD != 0)
+         {
+            mAry2[0] = "Shadow";
+            mAry2[110] = "DARKSHIELD2";
+            mAry2[13] = "DARKSHIELD";
+         }
+      }
+      if(mAry1[0] == "Bio")
+      {
+         if(mCaster.BUFFARRAYK[f].buffId == "LIGHTG" && mCaster.BUFFARRAYK[f].CD != 0)
+         {
+            mAry2[0] = "Lightning";
+            mAry2[29] = "BIODMG";
+            mAry2[21] = 0;
+         }
+         if(mCaster.BUFFARRAYK[f].buffId == "DARKNESSG" && mCaster.BUFFARRAYK[f].CD != 0)
+         {
+            mAry2[0] = "Shadow";
+            mAry2[29] = "BIOBREACH";
+            mAry2[21] = 0;
+         }
+      }
       if(mAry1[0] == "Flare")
       {
          if(mCaster.BUFFARRAYK[f].buffId == "BLIZZARDI" && mCaster.BUFFARRAYK[f].CD != 0)
@@ -2001,7 +2080,7 @@ function precheckBuff(mCaster, mTarget, mAry2, mAry1)
             mAry1[5] = 8;
          }
       }
-      if(mAry1[0] == "Aeolian Edge")
+      if(mAry2[131] == "Aeolian Edge")
       {
          if(mCaster.BUFFARRAYK[f].buffId == "RAIJUREADY" && mCaster.BUFFARRAYK[f].CD != 0)
          {
@@ -2202,17 +2281,9 @@ function precheckBuff(mCaster, mTarget, mAry2, mAry1)
             if(_root["playerKrin" + (mCaster.teamSide + G * 2)].active)
             {
                ModifyHP(_root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][185] * mCaster.STRENGTHU,_root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][1],0,mCaster,_root["playerKrin" + (mCaster.teamSide + G * 2)]);
+               _root["playerKrin" + (mCaster.teamSide + G * 2)].CALORIC += 1;
             }
             G++;
-         }
-         x = 0;
-         while(x < _root.maxBuffLimit)
-         {
-            if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][187] != 0 && mCaster.BUFFARRAYK[x].CD != 0)
-            {
-               _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][187] += 1;
-            }
-            x++;
          }
       }
       if(_root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][186] != 0 && mAry1[10] != "Melee" && mCaster.BUFFARRAYK[f].CD == 1)
@@ -2226,23 +2297,6 @@ function precheckBuff(mCaster, mTarget, mAry2, mAry1)
             }
             G++;
          }
-      }
-      if(_root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][187] != 0 && mAry1[10] == "Melee" && mCaster.BUFFARRAYK[f].CD != 0)
-      {
-         _root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][187] += 1;
-      }
-      if(_root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][187] == 5 && mCaster.BUFFARRAYK[f].CD != 0)
-      {
-         G = 0;
-         while(G < 3)
-         {
-            if(_root["playerKrin" + (mCaster.teamSide + G * 2)].active)
-            {
-               ModifyHP(99 * mCaster.STRENGTHU,_root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][1],0,mCaster,_root["playerKrin" + (mCaster.teamSide + G * 2)]);
-            }
-            G++;
-         }
-         _root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][187] = 1;
       }
       if(_root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][52] > 0 && mAry2[0] == "Fire" % BLIZZARDCHECK == false && mCaster.BUFFARRAYK[f].CD != 0)
       {
@@ -2454,6 +2508,23 @@ function precheckBuff(mCaster, mTarget, mAry2, mAry1)
       {
          mAry2[45] = 2;
       }
+   }
+   if(mCaster.CALORIC != 0 && mAry1[10] == "Melee")
+   {
+      mCaster.CALORIC += 1;
+   }
+   if(mCaster.CALORIC == 5)
+   {
+      G = 0;
+      while(G < 3)
+      {
+         if(_root["playerKrin" + (mCaster.teamSide + G * 2)].active)
+         {
+            ModifyHP(99 * mCaster.STRENGTHU,"Fire",0,mCaster,_root["playerKrin" + (mCaster.teamSide + G * 2)]);
+         }
+         G++;
+      }
+      mCaster.CALORIC = 1;
    }
    if(mCaster.SPEEDU >= mTarget.SPEEDU && mAry2[85] > 2 && mAry2[85] < 7)
    {
@@ -2765,6 +2836,10 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE5, owegwe)
    if(mAry2[110] != 0 && owegwe == 0 && mAry2[116] == 0)
    {
       _root.applyBuffKrin(mCaster,mAry2[110],1,mCaster);
+      if(mAry2[158] != 0)
+      {
+         _root.applyBuffKrin(mCaster,mAry2[158],1,mCaster);
+      }
    }
    if(mAry2[110] != 0 && mAry2[116] != 0)
    {
@@ -2808,6 +2883,11 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE5, owegwe)
    x = 0;
    while(x < _root.maxBuffLimit)
    {
+      if((mCaster.BUFFARRAYK[x].buffId == "LIGHTG" || mCaster.BUFFARRAYK[x].buffId == "DARKNESSG") && mCaster.BUFFARRAYK[x].CD != 0 && mCaster.FOCUSN == 0)
+      {
+         mCaster.BUFFARRAYK[x].CD = 0;
+         _root.applyBuffKrin(mCaster,mCaster.BUFFARRAYK[x].buffId,-1,0,mCaster.BUFFARRAYK[x].buffValue,x);
+      }
       if(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][155] != 0 && mTarget.BUFFARRAYK[x].CD != 0)
       {
          if(mTarget.SHIELD <= 0)
@@ -2936,6 +3016,19 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE5, owegwe)
             _root.applyBuffKrin(mCaster,mCaster.BUFFARRAYK[x].buffId,-1,0,mCaster.BUFFARRAYK[x].buffValue,x);
          }
       }
+      if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][188] > 0 && mCaster.BUFFARRAYK[x].CD > 0)
+      {
+         if(mAry2[106] != 0 && (owegwe == 0 || mAry2[20] != 1))
+         {
+            mCaster.PALETTE -= 1;
+         }
+         if(mCaster.PALETTE == 0)
+         {
+            mCaster.PALETTE = _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][188];
+            mCaster.BUFFARRAYK[x].CD = 0;
+            _root.applyBuffKrin(mCaster,mCaster.BUFFARRAYK[x].buffId,-1,0,mCaster.BUFFARRAYK[x].buffValue,x);
+         }
+      }
       if(_root["KRINBUFF" + mTarget.BUFFARRAYK[x].buffId][97] != 0 && ((mAry2[2] != 0 || mAry2[4] != 0) && mAry1[14] == "Heal") && mTarget.BUFFARRAYK[x].CD != 0)
       {
          G = 0;
@@ -2966,6 +3059,15 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE5, owegwe)
          if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][57] != 0 && mCaster.BUFFARRAYK[x].CD != 0)
          {
             ModifyHP(-1 * _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][57] * _root.DamageOutputKrinFinal,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][1],0,mTarget,mCaster);
+         }
+         if(mCaster.BUFFARRAYK[x].buffId == "DARKSHIELD2" && mCaster.BUFFARRAYK[x].CD != 0)
+         {
+            G = 0;
+            while(G < 3)
+            {
+               ModifyHP(-1 * _root.DamageOutputKrinFinal,_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][1],0,_root["playerKrin" + (mCaster.teamSide + G * 2)],_root["playerKrin" + (mCaster.teamSide + G * 2)]);
+               G++;
+            }
          }
          if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][163] != 0 && mCaster.BUFFARRAYK[x].CD != 0)
          {
@@ -3243,7 +3345,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
       mAry2[45] = 1;
    }
    CHANGEISCONDITION = false;
-   if(mCaster.abilityhistoryIDKM[0] != mAry1[0] && (mAry2[141] == 1 || mCaster.abilityhistoryIDKM[0] == "Aeolian Edge"))
+   if(mCaster.abilityhistoryIDKM[0] != mAry1[0] && (mAry2[141] == 1 || mCaster.abilityhistoryIDKM2[131] == "Aeolian Edge"))
    {
       n = 0;
       while(19 > n)
@@ -3318,6 +3420,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
       }
       if(mAry2[103] == "Stoneinyellow" && CHANGEISCONDITION == false)
       {
+         mAry1[0] = "Stone in Yellow";
          mAry1[13] = "BOOM_SLASHORANGE";
          mAry1[18] = "Stoneinyellow";
          mAry1[17] = "Stone in Yellow";
@@ -3329,6 +3432,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
       }
       if(mAry2[103] == "Thunderinmagenta" && CHANGEISCONDITION == false)
       {
+         mAry1[0] = "Thunder in Magenta";
          mAry1[13] = "BOOM3";
          mAry1[18] = "Thunderinmagenta";
          mAry1[17] = "Thunder in Magenta";
@@ -3341,6 +3445,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
       }
       if(mAry2[103] == "Blizzardincyan" && CHANGEISCONDITION == false)
       {
+         mAry1[0] = "Blizzardincyan";
          mAry1[13] = "BOOM2";
          mAry1[17] = "Blizzard in Cyan";
          mAry1[18] = "Blizzardincyan";
@@ -3353,6 +3458,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
       }
       if(mAry2[103] == "Stoneinyellow2" && CHANGEISCONDITION == false)
       {
+         mAry1[0] = "Stone II in Yellow";
          mAry1[17] = "Stone II in Yellow";
          mAry1[13] = "BOOM_SLASHORANGE";
          mAry1[18] = "Stoneinyellow2";
@@ -3364,6 +3470,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
       }
       if(mAry2[103] == "Thunderinmagenta2" && CHANGEISCONDITION == false)
       {
+         mAry1[0] = "Thunder II in Magenta";
          mAry1[17] = "Thunder II in Magenta";
          mAry1[13] = "BOOM_SLASHGREEN";
          mAry1[18] = "Thunderinmagenta2";
@@ -3376,6 +3483,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
       }
       if(mAry2[103] == "Blizzardincyan2" && CHANGEISCONDITION == false)
       {
+         mAry1[0] = "Blizzardincyan2";
          mAry1[13] = "BOOM2";
          mAry1[17] = "Blizzard II in Cyan";
          mAry1[18] = "Blizzardincyan2";
@@ -3388,6 +3496,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
       }
       if(mAry2[103] == "Fireinred" && CHANGEISCONDITION == false)
       {
+         mAry1[0] = "Fireinred";
          mAry1[12] = "Krin.Firebolt";
          mAry1[13] = "BOOM1";
          mAry1[17] = "Fire in Red";
@@ -3402,6 +3511,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
       }
       if(mAry2[103] == "Waterinblue" && CHANGEISCONDITION == false)
       {
+         mAry1[0] = "Water in BLue";
          mAry1[12] = "Krin.Icebolt";
          mAry1[13] = "BOOM_SLASHBLUE";
          mAry1[17] = "Water in Blue";
@@ -3455,6 +3565,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
       }
       if(mAry2[103] == "Aeroingreen" && CHANGEISCONDITION == false)
       {
+         mAry1[0] = "Aero in Green";
          mAry1[12] = "Krin.Poisonbolt";
          mAry1[13] = "BOOM_SLASHGREEN";
          mAry1[17] = "Aero in Green";
@@ -3467,6 +3578,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
       }
       if(mAry2[103] == "Gust Slash" && CHANGEISCONDITION == false)
       {
+         mAry1[0] = "Gust Slash";
          mAry1[13] = "BOOM_SLASHORANGE";
          mAry1[17] = "Gust Slash";
          mAry1[18] = "Gustslash";
@@ -3477,6 +3589,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
       }
       if(mAry2[103] == "Aeolian Edge" && CHANGEISCONDITION == false)
       {
+         mAry1[0] = "Aeolian Edge";
          mAry1[13] = "BOOM_SLASHGREEN";
          mAry1[17] = "Aeolian Edge";
          mAry1[18] = "Aeolian Edge";
@@ -3488,6 +3601,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
       }
       if(mAry2[103] == "Spinning Edge" && CHANGEISCONDITION == false)
       {
+         mAry1[0] = "Spinning Edge";
          mAry1[13] = "BOOM_RED";
          mAry1[17] = "Spinning Edge";
          mAry1[18] = "Spinningedge";
@@ -3499,6 +3613,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
       }
       if(mAry2[103] == "Fireinred2" && CHANGEISCONDITION == false)
       {
+         mAry1[0] = "Fireinred2";
          mAry1[17] = "Fire II in Red";
          mAry1[12] = "Krin.Firebolt";
          mAry1[13] = "BOOM1";
@@ -3508,12 +3623,13 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
          mAry2[4] -= 0.4;
          mAry2[104] = 0;
          mAry2[29] = 0;
-         mAry2[103] = "Aeroingreen";
+         mAry2[103] = "Aeroingreen2";
          mAry2[17] = krinABC1[149] + mAry2[4] * 100 + krinABC2[149];
          CHANGEISCONDITION = true;
       }
       if(mAry2[103] == "Waterinblue2" && CHANGEISCONDITION == false)
       {
+         mAry1[0] = "Water II in Blue";
          mAry1[17] = "Water II in Blue";
          mAry1[12] = "Krin.Icebolt";
          mAry1[13] = "BOOM_SLASHBLUE";
@@ -3528,6 +3644,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
       }
       if(mAry2[103] == "Aeroingreen2" && CHANGEISCONDITION == false)
       {
+         mAry1[0] = "Aero II in Green";
          mAry1[17] = "Aero II in Green";
          mAry1[12] = "Krin.Poisonbolt";
          mAry1[13] = "BOOM_SLASHGREEN";
@@ -3609,7 +3726,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
          mAry1[18] = "Starrymuse";
          mAry2[20] = 1;
          mAry2[13] = "STARRYMUSE";
-         mAry2[29] = "SUBTRACTIVEPALETTE";
+         mAry2[158] = "SUBTRACTIVEPALETTE";
          mAry2[40] = "STARSTRUCK";
          mAry2[110] = "STARRYMUSE2";
          mAry2[103] = "Starryskymotif";
@@ -3631,6 +3748,7 @@ function checkAbilities(mCaster, mTarget, mAry2, mAry1, FIRE2, FIRE3, FIRE4, FIR
          mAry2[13] = 0;
          mAry2[29] = 0;
          mAry2[40] = 0;
+         mAry2[158] = 0;
          mAry2[110] = 0;
          mAry2[20] = 0;
          mAry2[103] = "Starrymuse";
@@ -3891,6 +4009,11 @@ function checkBuffStun(mCaster, mTarget, mAry2, mAry1)
    f = 0;
    while(f < _root.maxBuffLimit)
    {
+      if((mCaster.BUFFARRAYK[f].buffId == "LIGHTG" || mCaster.BUFFARRAYK[f].buffId == "DARKNESSG") && mCaster.BUFFARRAYK[f].CD != 0 && mCaster.FOCUSN == 0)
+      {
+         mCaster.BUFFARRAYK[f].CD = 0;
+         _root.applyBuffKrin(mCaster,mCaster.BUFFARRAYK[f].buffId,-1,0,mCaster.BUFFARRAYK[f].buffValue,f);
+      }
       if(_root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][185] != 0 && mAry1[10] == "Melee" && mCaster.BUFFARRAYK[f].CD == 1)
       {
          ModifyHP(99999999 * mCaster.STRENGTHU,_root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][1],0,mCaster,mCaster);
@@ -3903,17 +4026,9 @@ function checkBuffStun(mCaster, mTarget, mAry2, mAry1)
             if(_root["playerKrin" + (mCaster.teamSide + G * 2)].active)
             {
                ModifyHP(_root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][185] * mCaster.STRENGTHU,_root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][1],0,mCaster,_root["playerKrin" + (mCaster.teamSide + G * 2)]);
+               _root["playerKrin" + (mCaster.teamSide + G * 2)].CALORIC += 1;
             }
             G++;
-         }
-         x = 0;
-         while(x < _root.maxBuffLimit)
-         {
-            if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][187] != 0 && mCaster.BUFFARRAYK[x].CD != 0)
-            {
-               _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][187] += 1;
-            }
-            x++;
          }
       }
       if(_root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][186] != 0 && mAry1[10] != "Melee" && mCaster.BUFFARRAYK[f].CD == 1)
@@ -3928,24 +4043,20 @@ function checkBuffStun(mCaster, mTarget, mAry2, mAry1)
             G++;
          }
       }
-      if(_root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][187] != 0 && mAry1[10] == "Melee" && mCaster.BUFFARRAYK[f].CD != 0)
-      {
-         _root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][187] += 1;
-      }
-      if(_root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][187] == 5 && mCaster.BUFFARRAYK[f].CD != 0)
-      {
-         G = 0;
-         while(G < 3)
-         {
-            if(_root["playerKrin" + (mCaster.teamSide + G * 2)].active)
-            {
-               ModifyHP(99 * mCaster.STRENGTHU,_root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][1],0,mCaster,_root["playerKrin" + (mCaster.teamSide + G * 2)]);
-            }
-            G++;
-         }
-         _root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][187] = 1;
-      }
       f++;
+   }
+   if(mCaster.CALORIC == 5)
+   {
+      G = 0;
+      while(G < 3)
+      {
+         if(_root["playerKrin" + (mCaster.teamSide + G * 2)].active)
+         {
+            ModifyHP(99 * mCaster.STRENGTHU,"Fier",0,mCaster,_root["playerKrin" + (mCaster.teamSide + G * 2)]);
+         }
+         G++;
+      }
+      mCaster.CALORIC = 1;
    }
    x = 0;
    while(x < _root.maxBuffLimit)
@@ -4751,7 +4862,7 @@ addNewMove = function(a, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s)
    short[16] = q;
    short[17] = _root.KrinLang[KLangChoosen].SKILLNAME[r];
    short[18] = s;
-   var s = undefined;
+   s = undefined;
    short2[0] = "Physical";
    short2[1] = 0;
    short2[2] = 0;
@@ -4899,6 +5010,10 @@ addNewMove = function(a, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s)
    short2[154] = 0;
    short2[155] = 0;
    short2[156] = 0;
+   short2[157] = 0;
+   short2[158] = 0;
+   short2[159] = 0;
+   short2[160] = 0;
    if(f > 0)
    {
       short2[18] += f + " Focus";
@@ -7233,32 +7348,37 @@ _root.hackMove[0] = "Physical";
 _root.hackMove[6] = 1.75;
 _root.hackMove[45] = 3;
 _root.hackMove[17] = krinABC3[80] + _root.hackMove[6] * 100 + krinABC2[80];
-addNewMove("Aeolian Edge",0,1,0,-5,0,0,1,2,"Melee","0xFF66FF","Attack","BOOM_RED","Full Damage",1,0,130,"Spinningedge");
+addNewMove("Spinning Edge",0,1,0,-5,0,0,1,2,"Melee","0xFF66FF","Attack","BOOM_RED","Full Damage",1,0,130,"Spinningedge");
 _root.hackMove[0] = "Physical";
 _root.hackMove[6] = 1.8;
+_root.hackMove[157] = 1;
 _root.hackMove[120] = krinABC1[312] + (_root.hackMove[6] + 1) * 100 + krinABC2[312];
 _root.hackMove[121] = krinABC1[313] + (_root.hackMove[6] + 2) * 100 + krinABC2[313];
 _root.hackMove[103] = "Gust Slash";
 _root.hackMove[130] = "Gust Slash";
 _root.hackMove[131] = "Aeolian Edge";
 _root.hackMove[17] = krinABC1[130] + _root.hackMove[6] * 100 + krinABC2[130];
-addNewMove("Aeolian Edge",0,1,0,-5,0,0,1,2,"Melee","0xFF66FF","Attack","BOOM_RED","Full Damage",1,0,130,"Spinningedge");
+addNewMove("Spinning Edge",0,1,0,-5,0,0,1,2,"Melee","0xFF66FF","Attack","BOOM_RED","Full Damage",1,0,130,"Spinningedge");
 _root.hackMove[0] = "Physical";
 _root.hackMove[6] = 2.2;
+_root.hackMove[157] = 1;
 _root.hackMove[120] = krinABC1[312] + (_root.hackMove[6] + 1) * 100 + krinABC2[312];
 _root.hackMove[121] = krinABC1[313] + (_root.hackMove[6] + 2) * 100 + krinABC2[313];
 _root.hackMove[103] = "Gust Slash";
 _root.hackMove[130] = "Gust Slash";
 _root.hackMove[131] = "Aeolian Edge";
 _root.hackMove[17] = krinABC1[130] + _root.hackMove[6] * 100 + krinABC2[130];
-addNewMove("Aeolian Edge",0,1,0,-5,0,0,1,2,"Melee","0xFF66FF","Attack","BOOM_RED","Full Damage",1,0,130,"Spinningedge");
+addNewMove("Spinning Edge",0,1,0,-5,0,0,1,2,"Melee","0xFF66FF","Attack","BOOM_RED","Full Damage",1,0,130,"Spinningedge");
 _root.hackMove[0] = "Physical";
 _root.hackMove[6] = 2.5;
+_root.hackMove[157] = 1;
 _root.hackMove[120] = krinABC1[312] + (_root.hackMove[6] + 1) * 100 + krinABC2[312];
 _root.hackMove[121] = krinABC1[313] + (_root.hackMove[6] + 2) * 100 + krinABC2[313];
 _root.hackMove[103] = "Gust Slash";
+_root.hackMove[130] = "Gust Slash";
+_root.hackMove[131] = "Aeolian Edge";
 _root.hackMove[17] = krinABC1[130] + _root.hackMove[6] * 100 + krinABC2[130];
-addNewMove("Aeolian Edge",0,1,0,-5,0,0,1,2,"Melee","0xFF66FF","Attack","BOOM_RED","Full Damage",1,0,130,"Spinningedge");
+addNewMove("Spinning Edge",0,1,0,-5,0,0,1,2,"Melee","0xFF66FF","Attack","BOOM_RED","Full Damage",1,0,130,"Spinningedge");
 _root.hackMove[0] = "Physical";
 _root.hackMove[6] = 3;
 _root.hackMove[120] = krinABC1[312] + (_root.hackMove[6] + 1) * 100 + krinABC2[312];
@@ -7747,6 +7867,7 @@ addNewMove("Fireinred",0,1,0,3,0,0,1,2,"Missile","0xFF9900","Krin.Firebolt","BOO
 _root.hackMove[0] = "Fire";
 _root.hackMove[4] = 2.2;
 _root.hackMove[21] = 1;
+_root.hackMove[157] = 1;
 _root.hackMove[103] = "Aeroingreen";
 _root.hackMove[130] = "Aero in Green";
 _root.hackMove[131] = "Water in Blue";
@@ -7757,6 +7878,7 @@ addNewMove("Fireinred",0,1,0,3,0,0,1,2,"Missile","0xFF9900","Krin.Firebolt","BOO
 _root.hackMove[0] = "Fire";
 _root.hackMove[4] = 2.8;
 _root.hackMove[21] = 1;
+_root.hackMove[157] = 1;
 _root.hackMove[103] = "Aeroingreen";
 _root.hackMove[130] = "Aero in Green";
 _root.hackMove[131] = "Water in Blue";
@@ -7767,6 +7889,7 @@ addNewMove("Fireinred",0,1,0,3,0,0,1,2,"Missile","0xFF9900","Krin.Firebolt","BOO
 _root.hackMove[0] = "Fire";
 _root.hackMove[4] = 3.4;
 _root.hackMove[21] = 1;
+_root.hackMove[157] = 1;
 _root.hackMove[120] = krinABC1[147] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[147];
 _root.hackMove[121] = krinABC1[148] + (_root.hackMove[4] + 0.8) * 100 + krinABC2[148];
 _root.hackMove[103] = "Aeroingreen";
@@ -7777,6 +7900,7 @@ addNewMove("Fireinred",0,1,0,3,0,0,1,2,"Missile","0xFF9900","Krin.Firebolt","BOO
 _root.hackMove[0] = "Fire";
 _root.hackMove[4] = 3.8;
 _root.hackMove[21] = 1;
+_root.hackMove[157] = 1;
 _root.hackMove[120] = krinABC1[147] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[147];
 _root.hackMove[121] = krinABC1[148] + (_root.hackMove[4] + 0.8) * 100 + krinABC2[148];
 _root.hackMove[103] = "Aeroingreen";
@@ -7787,6 +7911,7 @@ addNewMove("Fireinred",0,1,0,3,0,0,1,2,"Missile","0xFF9900","Krin.Firebolt","BOO
 _root.hackMove[0] = "Fire";
 _root.hackMove[4] = 4.4;
 _root.hackMove[21] = 1;
+_root.hackMove[157] = 1;
 _root.hackMove[120] = krinABC1[147] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[147];
 _root.hackMove[121] = krinABC1[148] + (_root.hackMove[4] + 0.8) * 100 + krinABC2[148];
 _root.hackMove[103] = "Aeroingreen";
@@ -7798,6 +7923,7 @@ _root.hackMove[0] = "Fire";
 _root.hackMove[4] = 1.2;
 _root.hackMove[21] = 1;
 _root.hackMove[20] = 1;
+_root.hackMove[157] = 1;
 _root.hackMove[120] = krinABC1[300] + (_root.hackMove[4] + 0.2) * 100 + krinABC2[300];
 _root.hackMove[121] = krinABC1[301] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[301];
 _root.hackMove[103] = "Aeroingreen2";
@@ -7809,6 +7935,7 @@ _root.hackMove[0] = "Fire";
 _root.hackMove[4] = 1.4;
 _root.hackMove[21] = 1;
 _root.hackMove[20] = 1;
+_root.hackMove[157] = 1;
 _root.hackMove[120] = krinABC1[300] + (_root.hackMove[4] + 0.2) * 100 + krinABC2[300];
 _root.hackMove[121] = krinABC1[301] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[301];
 _root.hackMove[103] = "Aeroingreen2";
@@ -7819,6 +7946,7 @@ addNewMove("Fireinred2",0,1,0,3,0,0,1,2,"Missile","0xFF9900","Krin.Firebolt","BO
 _root.hackMove[0] = "Fire";
 _root.hackMove[4] = 1.6;
 _root.hackMove[21] = 1;
+_root.hackMove[157] = 1;
 _root.hackMove[120] = krinABC1[300] + (_root.hackMove[4] + 0.2) * 100 + krinABC2[300];
 _root.hackMove[121] = krinABC1[301] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[301];
 _root.hackMove[20] = 1;
@@ -7864,6 +7992,7 @@ addNewMove("Blizzardincyan",0,1,0,4,0,0,1,1,"Shock","0xFF9900","Krin.Firebolt","
 _root.hackMove[0] = "Ice";
 _root.hackMove[4] = 5.2;
 _root.hackMove[21] = 1;
+_root.hackMove[157] = 1;
 _root.hackMove[103] = "Stoneinyellow";
 _root.hackMove[106] = 3;
 _root.hackMove[130] = "Stone in Yellow";
@@ -7876,6 +8005,7 @@ addNewMove("Blizzardincyan",0,1,0,4,0,0,1,1,"Shock","0xFF9900","Krin.Firebolt","
 _root.hackMove[0] = "Ice";
 _root.hackMove[4] = 6.3;
 _root.hackMove[21] = 1;
+_root.hackMove[157] = 1;
 _root.hackMove[130] = "Stone in Yellow";
 _root.hackMove[131] = "Thunder in Magenta";
 _root.hackMove[120] = krinABC1[302] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[302];
@@ -7888,6 +8018,7 @@ addNewMove("Blizzardincyan",0,1,0,4,0,0,1,1,"Shock","0xFF9900","Krin.Firebolt","
 _root.hackMove[0] = "Ice";
 _root.hackMove[4] = 7;
 _root.hackMove[21] = 1;
+_root.hackMove[157] = 1;
 _root.hackMove[130] = "Stone in Yellow";
 _root.hackMove[131] = "Thunder in Magenta";
 _root.hackMove[120] = krinABC1[302] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[302];
@@ -7900,6 +8031,7 @@ addNewMove("Blizzardincyan",0,1,0,4,0,0,1,1,"Shock","0xFF9900","Krin.Firebolt","
 _root.hackMove[0] = "Ice";
 _root.hackMove[4] = 8;
 _root.hackMove[21] = 1;
+_root.hackMove[157] = 1;
 _root.hackMove[130] = "Stone in Yellow";
 _root.hackMove[131] = "Thunder in Magenta";
 _root.hackMove[120] = krinABC1[302] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[302];
@@ -7912,6 +8044,7 @@ addNewMove("Blizzardincyan2",0,1,0,4,0,0,1,1,"Shock","0xFF9900","Krin.Firebolt",
 _root.hackMove[0] = "Ice";
 _root.hackMove[4] = 2;
 _root.hackMove[21] = 1;
+_root.hackMove[157] = 1;
 _root.hackMove[120] = krinABC1[304] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[304];
 _root.hackMove[121] = krinABC1[305] + (_root.hackMove[4] + 0.8) * 100 + krinABC2[305];
 _root.hackMove[20] = 1;
@@ -7925,6 +8058,7 @@ addNewMove("Blizzardincyan2",0,1,0,4,0,0,1,1,"Shock","0xFF9900","Krin.Firebolt",
 _root.hackMove[0] = "Ice";
 _root.hackMove[4] = 2.4;
 _root.hackMove[21] = 1;
+_root.hackMove[157] = 1;
 _root.hackMove[120] = krinABC1[304] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[304];
 _root.hackMove[121] = krinABC1[305] + (_root.hackMove[4] + 0.8) * 100 + krinABC2[305];
 _root.hackMove[20] = 1;
@@ -7938,6 +8072,7 @@ addNewMove("Blizzardincyan2",0,1,0,4,0,0,1,1,"Shock","0xFF9900","Krin.Firebolt",
 _root.hackMove[0] = "Ice";
 _root.hackMove[4] = 2.6;
 _root.hackMove[21] = 1;
+_root.hackMove[157] = 1;
 _root.hackMove[120] = krinABC1[304] + (_root.hackMove[4] + 0.4) * 100 + krinABC2[304];
 _root.hackMove[121] = krinABC1[305] + (_root.hackMove[4] + 0.8) * 100 + krinABC2[305];
 _root.hackMove[20] = 1;
@@ -9092,7 +9227,7 @@ _root.hackMove[95] = 0.5;
 _root.hackMove[20] = 1;
 addNewMove("Ultima",0,1,0,0,0,13,1,1,"Shock","0xFF66FF","Attack","BOOM3","Full Damage",1,0,81,"Ultima2");
 _root.hackMove[0] = "Magic";
-_root.hackMove[4] = 3.5;
+_root.hackMove[4] = 2.25;
 _root.hackMove[21] = 1;
 _root.hackMove[116] = -1;
 _root.hackMove[95] = 0.5;
@@ -9100,7 +9235,7 @@ _root.hackMove[20] = 1;
 _root.hackMove[154] = "HARD";
 addNewMove("Palladion Grasp",0,1,0,0,0,13,1,1,"Melee","0xFF66FF","Attack","BOOM_SLASHRED","Full Damage",1,0,81,"Palladiongrasp");
 _root.hackMove[0] = "Physical";
-_root.hackMove[2] = 6;
+_root.hackMove[2] = 5;
 _root.hackMove[154] = "HARD";
 _root.hackMove[13] = "PHYSICALVULNERABLITY3";
 _root.hackMove[29] = "DPS";
@@ -9109,14 +9244,14 @@ _root.hackMove[116] = -2;
 _root.hackMove[95] = 0.5;
 addNewMove("Palladion Grasp",0,1,0,0,0,13,1,1,"Melee","0xFF66FF","Attack","BOOM_SLASHRED","Full Damage",1,0,81,"Palladiongrasp");
 _root.hackMove[0] = "Physical";
-_root.hackMove[2] = 6;
+_root.hackMove[2] = 5;
 _root.hackMove[154] = "HARD";
 _root.hackMove[155] = 1;
 _root.hackMove[116] = -3;
 _root.hackMove[95] = 0.5;
 addNewMove("Gaiachos",0,1,0,0,0,13,1,1,"Shock","0xFF66FF","Attack","BOOM3","Full Damage",1,0,81,"Gaiachos");
 _root.hackMove[0] = "Magic";
-_root.hackMove[4] = 4.5;
+_root.hackMove[4] = 3;
 _root.hackMove[13] = "HOLYCHAIN";
 _root.hackMove[116] = -4;
 _root.hackMove[95] = 0.5;
@@ -9139,7 +9274,7 @@ _root.hackMove[95] = 0.5;
 _root.hackMove[154] = "HARD";
 addNewMove("Ultima",0,1,0,0,0,13,1,1,"Shock","0xFF66FF","Attack","BOOM3","Full Damage",1,0,81,"Ultima2");
 _root.hackMove[0] = "Magic";
-_root.hackMove[4] = 3.5;
+_root.hackMove[4] = 2.25;
 _root.hackMove[21] = 1;
 _root.hackMove[116] = -7;
 _root.hackMove[95] = 0.5;
@@ -9147,13 +9282,13 @@ _root.hackMove[20] = 1;
 _root.hackMove[154] = "HARD";
 addNewMove("Laser Beam2",0,1,0,0,0,13,1,1,"Missile","0xFF66FF","Krin.Electrobolt2","BOOM1","Full Damage",1,0,81,"Laser Beam2");
 _root.hackMove[0] = "Fire";
-_root.hackMove[4] = 4;
+_root.hackMove[4] = 2.5;
 _root.hackMove[20] = 1;
 _root.hackMove[116] = -6;
 _root.hackMove[154] = "HARD";
 addNewMove("Caloric",0,1,0,0,0,13,1,1,"Shock","0xFF66FF","Attack","BOOM3","Full Damage",1,0,81,"Caloric");
 _root.hackMove[0] = "Magic";
-_root.hackMove[4] = 4.5;
+_root.hackMove[4] = 3;
 _root.hackMove[13] = "PYRE";
 _root.hackMove[29] = "CALORIC";
 _root.hackMove[147] = "ATMOS";
@@ -9182,7 +9317,7 @@ _root.hackMove[95] = 0.5;
 _root.hackMove[154] = "HARD";
 addNewMove("Ultima",0,1,0,0,0,13,1,1,"Shock","0xFF66FF","Attack","BOOM3","Full Damage",1,0,81,"Ultima2");
 _root.hackMove[0] = "Magic";
-_root.hackMove[4] = 3.5;
+_root.hackMove[4] = 2.5;
 _root.hackMove[21] = 1;
 _root.hackMove[116] = -12;
 _root.hackMove[95] = 0.5;
@@ -9195,6 +9330,47 @@ _root.hackMove[17] = "Deal damage equal to your strength and stun the target for
 _root.hackMove[13] = "STUN1";
 _root.hackMove[29] = "SUPRESSION2";
 _root.hackMove[67] = 1;
+addNewMove("Smash",0,1,0,15,0,6,8,1,"Melee","0xFF0000","Attack","BOOM_SLASHORANGE","Full Damage",1,0,0,"Hit3");
+_root.hackMove[2] = 2.45;
+_root.hackMove[9] = 20;
+_root.hackMove[17] = krinABC1[0] + "350%" + krinABC2[0] + "30" + krinABC3[0];
+MoveCount = 2200;
+addNewMove("Light and Darkness",1,0,0,0,0,5,1,1,"Shock","0xFF66FF","Attack","BOOM_POWERUP","Focus",1,0,81,"PowerupOffense");
+_root.hackMove[0] = "Lightning";
+_root.hackMove[13] = "LIGHTG";
+_root.hackMove[14] = 0.5;
+_root.hackMove[9] = 100;
+_root.hackMove[120] = "LIGHTG";
+_root.hackMove[160] = "DARKNESSG";
+_root.hackMove[147] = "DARKNESSG";
+_root.hackMove[96] = 0.2;
+addNewMove("Edge of",0,1,0,20,0,5,1,2,"Melee","0xFF66FF","Attack","BOOM_SLASHORANGE","Full Damage",1,0,68,"Edge of Shadow");
+_root.hackMove[0] = "Physical";
+_root.hackMove[2] = 4;
+_root.hackMove[119] = "LIGHTG";
+_root.hackMove[159] = "LIGHTG";
+addNewMove("Akh Morn",0,1,0,20,0,5,1,1,"Shock","0xFF66FF","Attack","BOOM1","Full Damage",1,0,81,"Akhmorn");
+_root.hackMove[0] = "Magic";
+_root.hackMove[2] = 4;
+_root.hackMove[20] = 1;
+_root.hackMove[119] = "LIGHTG";
+_root.hackMove[159] = "LIGHTG";
+addNewMove("Shield of",1,0,0,20,0,8,1,3,"Shock","0xFFCC00","Krin.Electrobolt2","BOOM_SHIELD","Heal",1,0,156,"The Blackest Night");
+_root.hackMove[0] = "Earth";
+_root.hackMove[2] = 0;
+_root.hackMove[20] = 1;
+_root.hackMove[119] = "LIGHTG";
+_root.hackMove[159] = "LIGHTG";
+addNewMove("Smash of",0,1,0,20,0,2,1,1,"Melee","0xFF0000","Attack","BOOM_SLASHORANGE","Full Damage",1,0,0,"Hit3");
+_root.hackMove[2] = 2.75;
+_root.hackMove[119] = "LIGHTG";
+_root.hackMove[159] = "LIGHTG";
+addNewMove("Bio",0,1,0,20,0,4,1,1,"Missile","0x9966CC","KRIN.SHADOWSHOCK","BOOM3","Full Damage",1,0,163,"PoisonHit");
+_root.hackMove[0] = "Physical";
+_root.hackMove[13] = "BIO";
+_root.hackMove[2] = 0;
+_root.hackMove[119] = "LIGHTG";
+_root.hackMove[159] = "LIGHTG";
 numberMatrixKrin = new Array();
 numberMatrixKrin = ["Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine"];
 numberSpacingKrin = 19;
@@ -9557,6 +9733,10 @@ AImoveAdder = function(p)
                if(pg.BUFFARRAYK[f].buffId == _root["KRINABILITYB" + moveFilterA0[_loc3_]][108] && pg.BUFFARRAYK[f].CD != 0)
                {
                   FOUNDA = true;
+                  if(_root["KRINABILITYB" + moveFilterA0[_loc3_]][108] == "ELECTROPE2" && pg.BUFFARRAYK[f].CD != 1 || _root["KRINABILITYB" + moveFilterA0[_loc3_]][108] == "ELECTROPE1" && pg.BUFFARRAYK[f].CD != 1)
+                  {
+                     FOUNDA = false;
+                  }
                   break;
                }
                if(pg.BUFFARRAYK[f].buffId == _root["KRINABILITYB" + moveFilterA0[_loc3_]][119] && pg.BUFFARRAYK[f].CD != 0)
@@ -9564,7 +9744,25 @@ AImoveAdder = function(p)
                   FOUNDA2 = true;
                   break;
                }
+               if(_root["KRINABILITYB" + moveFilterA0[_loc3_]][159] != 0)
+               {
+                  if(pg.BUFFARRAYK[f].buffId == "LIGHTG" && pg.BUFFARRAYK[f].CD != 0)
+                  {
+                     FOUNDA2 = true;
+                     break;
+                  }
+                  if(pg.BUFFARRAYK[f].buffId == "DARKNESSG" && pg.BUFFARRAYK[f].CD != 0)
+                  {
+                     FOUNDA2 = true;
+                     break;
+                  }
+               }
                if(pg.BUFFARRAYK[f].buffId == _root["KRINABILITYB" + moveFilterA0[_loc3_]][120] && pg.BUFFARRAYK[f].CD != 0)
+               {
+                  FOUNDA2 = true;
+                  break;
+               }
+               if(pg.BUFFARRAYK[f].buffId == _root["KRINABILITYB" + moveFilterA0[_loc3_]][160] && pg.BUFFARRAYK[f].CD != 0)
                {
                   FOUNDA2 = true;
                   break;
@@ -9905,6 +10103,12 @@ AImoveAdder = function(p)
             {
                HIGHESTDPS3 = true;
             }
+         }
+         if(_root["playerKrin" + (5 - gMtYuIo)].active == false && _root["playerKrin" + (7 - gMtYuIo)].active == false && _root["playerKrin" + (3 - gMtYuIo)].active == true || _root["playerKrin" + (3 - gMtYuIo)].active == false && _root["playerKrin" + (7 - gMtYuIo)].active == false && _root["playerKrin" + (5 - gMtYuIo)].active == true || _root["playerKrin" + (5 - gMtYuIo)].active == false && _root["playerKrin" + (3 - gMtYuIo)].active == false && _root["playerKrin" + (7 - gMtYuIo)].active == true)
+         {
+            HIGHESTDPS1 = true;
+            HIGHESTDPS2 = true;
+            HIGHESTDPS3 = true;
          }
          if((_root["KRINABILITYB" + selectedMoveToMake][155] == 1 && HIGHESTDPS1 == true || _root["KRINABILITYB" + selectedMoveToMake][155] == 0) && _root["playerKrin" + (7 - gMtYuIo)].active == true && _root["playerKrin" + (7 - gMtYuIo)].IGNORE == 0 && (_root["playerKrin" + (7 - gMtYuIo)].abilityhistoryIDKM[10] == pg.CONDITION4 || pg.CONDITION4 == 0) && (_root["playerKrin" + (7 - gMtYuIo)].abilityhistoryIDKM[10] != pg.CONDITION5 || pg.CONDITION5 == 0))
          {
@@ -10296,11 +10500,29 @@ _root.hackMove2[27] = 1;
 _root.hackMove2[28] = 0.33000000000000007;
 _root.hackMove2[20] = -1;
 _root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX[11];
+addNewBuffKrin("BIO","Gligus Poison","Poison");
+_root.hackMove2[16] = 5;
+_root.hackMove2[27] = 1;
+_root.hackMove2[28] = 2;
+_root.hackMove2[20] = -1;
+_root.hackMove2[25] = "This unit is rotting away, taking damage equal to 200% of the casters strength.";
 addNewBuffKrin("POWERUP",_root.KrinLang[KLangChoosen].AU[10],"Physical");
 _root.hackMove2[16] = 2;
 _root.hackMove2[11] = 4;
 _root.hackMove2[20] = 1;
 _root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX[10];
+addNewBuffKrin("LIGHTG","Light","Lightning");
+_root.hackMove2[16] = 99;
+_root.hackMove2[23] = 0.5;
+_root.hackMove2[20] = 1;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = "Gligus infused himself with Lightning! All of his attacks now deal Lightning damage.";
+addNewBuffKrin("DARKNESSG","Darkness","Shadow");
+_root.hackMove2[16] = 99;
+_root.hackMove2[23] = 0.5;
+_root.hackMove2[20] = 1;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = "Gligus infused himself with Darkness! All of his attacks now deal Shadow damage.";
 addNewBuffKrin("SUPRESSION",_root.KrinLang[KLangChoosen].AU[9],"Physical");
 _root.hackMove2[16] = 4;
 _root.hackMove2[13] = -0.7000000000000001;
@@ -12201,7 +12423,7 @@ _root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[117];
 addNewBuffKrin("SUBTRACTIVEPALETTE",_root.KrinLang[KLangChoosen].AU[118],"Magic");
 _root.hackMove2[16] = 10;
 _root.hackMove2[20] = 1;
-_root.hackMove2[153] = 3;
+_root.hackMove2[188] = 3;
 _root.hackMove2[32] = 1;
 _root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[118];
 addNewBuffKrin("BLIND",_root.KrinLang[KLangChoosen].AU[119],"Magic");
@@ -12219,6 +12441,21 @@ _root.hackMove2[16] = 2;
 _root.hackMove2[11] = -0.8;
 _root.hackMove2[20] = -1;
 _root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[168];
+addNewBuffKrin("DMGDOWNS","Shadow Mark","Shadow");
+_root.hackMove2[16] = 3;
+_root.hackMove2[11] = -0.2;
+_root.hackMove2[20] = -1;
+_root.hackMove2[25] = "This units damage done is decreased by 20%.";
+addNewBuffKrin("BIODMG","Weakness","Lightning");
+_root.hackMove2[16] = 2;
+_root.hackMove2[11] = -0.3;
+_root.hackMove2[20] = -1;
+_root.hackMove2[25] = "The Lightning and Poison combined weakened this unit! Damage done decreased by 30%.";
+addNewBuffKrin("BIOBREACH","Breached","Shadow");
+_root.hackMove2[16] = 3;
+_root.hackMove2[24] = -0.3;
+_root.hackMove2[20] = -1;
+_root.hackMove2[25] = "The Shadow and Poison combined opened this units weakspots! Shadow Defense decreased by 30%.";
 addNewBuffKrin("SUPERSTUN",_root.KrinLang[KLangChoosen].AU[1],"Physical");
 _root.hackMove2[16] = 2;
 _root.hackMove2[17] = 1;
@@ -12230,6 +12467,22 @@ _root.hackMove2[155] = 1;
 _root.hackMove2[41] = 0.2;
 _root.hackMove2[20] = 1;
 _root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[121];
+addNewBuffKrin("DARKSHIELD","Shield of Darkness","Shadow");
+_root.hackMove2[16] = 5;
+_root.hackMove2[155] = 1;
+_root.hackMove2[41] = 0.2;
+_root.hackMove2[20] = 1;
+_root.hackMove2[25] = "You are shieleded for 20% of your maximum HP.";
+addNewBuffKrin("LIGHTSHIELD","Shield of Light","Lightning");
+_root.hackMove2[16] = 5;
+_root.hackMove2[28] = -2;
+_root.hackMove2[41] = 0.2;
+_root.hackMove2[20] = 1;
+_root.hackMove2[25] = "You are shieleded for 20% of your maximum HP and you regenerate HP each turn equal to 200% of the caster\'s strength.";
+addNewBuffKrin("DARKSHIELD2","Shield of Darkness","Shadow");
+_root.hackMove2[16] = 5;
+_root.hackMove2[20] = 1;
+_root.hackMove2[25] = "Whenever you deal damage your allies are healed an equal amount.";
 addNewBuffKrin("STARRYMUSE",_root.KrinLang[KLangChoosen].AU[122],"Magic");
 _root.hackMove2[16] = 6;
 _root.hackMove2[11] = 0.2;
@@ -12271,6 +12524,12 @@ _root.hackMove2[11] = 0.05;
 _root.hackMove2[20] = 1;
 _root.hackMove2[32] = 1;
 _root.hackMove2[25] = _root.KrinLang[KLangChoosen].AUX1[224];
+addNewBuffKrin("DAMAGEUPL","Holyness","Lightning");
+_root.hackMove2[16] = 4;
+_root.hackMove2[11] = 0.2;
+_root.hackMove2[20] = 1;
+_root.hackMove2[32] = 1;
+_root.hackMove2[25] = "Gligus damage is increased by 20% and damage taken is decreased by 20%.";
 addNewBuffKrin("VERAFOCUS",_root.KrinLang[KLangChoosen].AU[125],"Magic");
 _root.hackMove2[16] = 1;
 _root.hackMove2[15] = -30;
@@ -12593,14 +12852,6 @@ addMoveForPlayer = function(txvd)
          }
          KrinCombatText.combatTexter = "You cannot use this move because you don\'t have filled your Palette Gauge enough.";
       }
-      if(mAry6[113] < 0 && mAry6[114] < 0)
-      {
-         if(mAry6[113] * -1 > rovnrevbnr.BMANA || mAry6[114] * -1 > rovnrevbnr.WMANA)
-         {
-            checkPassforKrinMove = false;
-            KrinCombatText.combatTexter = "You cannot use this move because you don\'t have enough Black and White Mana.";
-         }
-      }
       if(mAry5[0] == "Fire IV" || mAry5[0] == "Flare")
       {
          f = 0;
@@ -12642,7 +12893,6 @@ addMoveForPlayer = function(txvd)
                KrinCombatText.combatTexter = "You cannot use this move because you are chained.";
                break;
             }
-            checkPassforKrinMove = true;
             f++;
          }
       }
@@ -12661,7 +12911,7 @@ addMoveForPlayer = function(txvd)
             f++;
          }
       }
-      if(mAry5[0] == "Aeroingreen")
+      if(mAry5[0] == "Aero in Green")
       {
          f = 0;
          while(f < _root.maxBuffLimit)
@@ -12691,7 +12941,7 @@ addMoveForPlayer = function(txvd)
             f++;
          }
       }
-      if(mAry5[0] == "Aeroingreen2")
+      if(mAry5[0] == "Aero II in Green")
       {
          f = 0;
          while(f < _root.maxBuffLimit)
@@ -12706,7 +12956,22 @@ addMoveForPlayer = function(txvd)
             f++;
          }
       }
-      if(mAry5[0] == "Waterinblue")
+      if(mAry5[0] == "Water II in Blue")
+      {
+         f = 0;
+         while(f < _root.maxBuffLimit)
+         {
+            if(rovnrevbnr.BUFFARRAYK[f].buffId == "SUBTRACTIVEPALETTE" && rovnrevbnr.BUFFARRAYK[f].CD != 0)
+            {
+               checkPassforKrinMove = false;
+               KrinCombatText.combatTexter = "You cannot use this move because you have subtractive pallete active.";
+               break;
+            }
+            checkPassforKrinMove = true;
+            f++;
+         }
+      }
+      if(mAry5[0] == "Water in BLue")
       {
          f = 0;
          while(f < _root.maxBuffLimit)
@@ -13108,6 +13373,14 @@ addMoveForPlayer = function(txvd)
          }
          f++;
       }
+      if(mAry6[113] < 0 && mAry6[114] < 0)
+      {
+         if(mAry6[113] * -1 >= rovnrevbnr.BMANA || mAry6[114] * -1 >= rovnrevbnr.WMANA)
+         {
+            checkPassforKrinMove = false;
+            KrinCombatText.combatTexter = "You cannot use this move because you don\'t have enough Black and White Mana.";
+         }
+      }
       mAry5[5] = FIRE;
       if(checkPassforKrinMove)
       {
@@ -13189,8 +13462,8 @@ createNewUnitKrin = function(a, b, c, d, e, f, g, h, i, j)
    _root["KNU" + createUnitKrinCount].voiceHit = new Array();
 };
 createNewUnitKrin("Dreadnaught",45,2.5,15,1.5,0,0,10,1.2,100);
-jesivie.movesA = [8,68,5,69,38];
-jesivie.movesD = [17,30];
+jesivie.movesA = [2200,2201,2202,2203,2204];
+jesivie.movesD = [2205];
 jesivie.agressionArray = [50,90,60,40];
 jesivie.PER = [25,25,25,25,25,25,25,25];
 jesivie.DEF = [25,25,25,25,25,25,25,25];
@@ -13221,8 +13494,8 @@ jesivie.DEF = [25,25,25,25,25,25,25,25];
 jesivie.voiceHit = ["hit_fel1","hit_fel2","hit_fel3"];
 jesivie.voiceDie = "dead_fel";
 createNewUnitKrin("Templar",20,1.45,14,2.2,8,1.0500000000000005,8,1.0500000000000005,100);
-jesivie.movesA = [1627,523,1275,1628];
-jesivie.movesD = [512,511,1274];
+jesivie.movesA = [1627,523,1628];
+jesivie.movesD = [512,511,1274,1275];
 jesivie.agressionArray = [30,90,75,40];
 jesivie.PER = [25,25,25,25,25,25,25,25];
 jesivie.DEF = [25,25,25,25,25,25,25,25];
@@ -13532,7 +13805,7 @@ jesivie.equipment = [0,0,0,0,0,78,0];
 jesivie.skinSetter = "SHAMAN2";
 jesivie.voiceHit = ["ShamanHit1","ShamanHit2","ShamanHit1"];
 jesivie.voiceDie = "ShamanDie";
-createNewUnitKrin("Dokebi the Striker",60,8,8,8,8,8,8,6,200);
+createNewUnitKrin("Dokebi the Striker",60,5,5,5,5,5,5,5,200);
 jesivie.movesA = [500,2,6,20,565,564,1269];
 jesivie.movesD = [28,508];
 jesivie.agressionArray = [50,75,40,65];
@@ -13544,7 +13817,7 @@ jesivie.skinSetter = "SHAMAN1";
 jesivie.voiceHit = ["ShamanHit1","ShamanHit2","ShamanHit1"];
 jesivie.voiceDie = "ShamanDie";
 createNewUnitKrin("Galiant the Paladin",150,8,15,6,15,6,10,3,4000);
-jesivie.movesA = [5,501,505,81,500,4,4,5,1324];
+jesivie.movesA = [501,505,81,500,2101,2101,2101,1324];
 jesivie.movesD = [520,521];
 jesivie.agressionArray = [50,50,40,25];
 jesivie.model = ["MODEL1","MAN","","M"];
