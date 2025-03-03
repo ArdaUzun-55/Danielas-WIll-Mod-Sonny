@@ -30,5 +30,21 @@ also I for whatever reason skipped some numbers e.g. 36 dont mind it, you can us
 [81] = secondary element piercing
 [82] = Buff only applies when crit [13]
 [83] = if ability bleeds then apply [83]
-[84] = heals 25% of targets HP (add)
-[85] = 
+[84] = heals [84]% of targets HP (add)
+[85] = used for several things, for example Dark Snake
+[86] = if ability kills then apply [86]
+[87] = if ability bleeds then apply [83] [to target]
+[89] = Crit damage is increased by 50%
+[90] = used by Rani the queens Electrocution ability, if target has [99] element then apply [90]
+[91] = Last hit deals [91] more damage than the previous hits
+[92] = For combo abilities
+[93] = used to determine whether the targets ability was "Heal" for example, in the case of APostles Blackflame ability this is used with [94] to increase the damage by [94]% (if target has "Heal", "Focus3", but [93] can be anything even "Full Damage")
+[94] = used to increase damage against targets which used [93] type abilities
+[95] = used to make the ability usable at [95]% of HP. E.g. 0.5 would be that the ability is usable while the caster has 50% of its HP left or below.
+[97] = Applies [97] if target has a buff with [144] not equal to 0
+[98] = used to mimic
+[99] = see [90]
+[100] = used for Firesnake (strength or instinct determination)
+[101] = needs [101] to be usable
+ADDED With the release of Danielas WIll Sonny 1:
+[102] = 
