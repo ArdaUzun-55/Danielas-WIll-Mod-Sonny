@@ -72,7 +72,23 @@ ADDED With the release of Danielas WIll Sonny 1:
 [134] = Used to make ability only deal damage to those who used [134] abilites (in this case its melee, shock, missile etc.)
 [135] =  used to increase heart gauge
 [136] = These type of abilities only hit 2 targets. [136]% chance to hit the first target. If it doesnt manage to hit the hitchance for all the other hits is increased to 100% meaning it will always hit 2 targets. If it hits 2 targets it doesnt continue.
-[137] = 
+[137] = Used to make the buff CD  + 2 after each hit e.g. sonny Buff cd is 1 and vera 3 and gligus 5  (Rotten heart)
+[138] = reduces the cd by [138] if ability kills the target
+[139] = Makes the ability only usable if the caster is forced to use a melee attack (e.g. because tempting twist, IS ONLY FOR ALLIES A.I.)
+[140,144] = used for ninjutsu
+[141,145] = used for ten chi jin
+[146] = Changes the Music of the fight into [146]; Used by Danielas Will
+[147] = Applies [147] if [13] isnt applied
+[148] = used so Wicked thunder doesnt apply Electrope to herself
+[149] = used to increase Electrope
+[150] = So the a.i. only uses the ability when focus reaches [150] value
+[151,2] = used for Positron Negatron
+[153] = So the ability is not being used when the player in the middle has 20% of hp left or lower
+[154] = So the A.i. only uses the ability on [154] difficulty
+[155] = So the A.i. targets the enemy with the largest damage done at the last turn
+[156] = increases stunresistance and starts the cooldownonstart
+[157] = used for combo ability icons
+[159-160] = for gligus. 
 
 
 
