@@ -1,5 +1,5 @@
 Abilities:
-Note: Not all things are generalized, meaning some things are special for certain abilities, though I started to generalize later (at the start of doing these things I did not generalize much).
+Note: Not all things are generalized, meaning some things are special for certain abilities, though I started to generalize later same for buffs (at the start of doing these things I did not generalize much).
 also I for whatever reason skipped some numbers e.g. 36 dont mind it, you can use them for whatever you want.
 [29] = Applies a second Buff/Debuff
 [30] = How much percent chance it has to afflict [29]
@@ -89,6 +89,39 @@ ADDED With the release of Danielas WIll Sonny 1:
 [156] = increases stunresistance and starts the cooldownonstart
 [157] = used for combo ability icons
 [159-160] = for gligus. 
+Buffs:
+[50-55] = Used for Fire and Blizzzard (Destroyer in Danielas WIll Sonny 1 Mod, can be ignored)
+[57] = Lifesteal
+[60-63] = used for dudras
+[64] = Wound from Sonny 2017 basically
+[65] = For Fundas Cure
+[66] = Black Mirror from sonny 2017
+[67] = Wood weave
+[68] = if melee attack then take damage
+[69] = used to apply [139] for example Expose, be careful the condition is that the ability element is fire (can be changed/removed)
+[70] = each turn apply [70]
+[71] = Buff is removed after one hit Example: Expose (2017)
+[72] = Deals damage to opponent only when the ability Type [Melee,Shock,etc.] is equal [147] (radiation burn)
+[73] = Hungermark (Charges)
+[74] = Apply [74] each hit
+[75] = Silence
+[76] = used for PHoenix cycle (useless, can be ignored and now implemented with the abilityhistory array)
+[77] = Blind
+[78] = Frostarrow Charge
+[79] = When unit dies, applies [79] to opposing team
+[80] = Slowresist + Stunresist
+[81] = A.i. IGNORE and when hit heals opposing team (MAna orb arcanis)
+[82] = Defense increase
+[83] = When dodge, get [83] buff
+[84] = Focus (2017, useless)
+[85] = When hp above [85]% get [88], when below get [114]
+[86] = Crit chance increase
+[87] = For Combo
+[88] = see [85]
+[90-2] = Increases Stats Sterngth, instinct, speed NOTE: THIS IS LIKE BOOSTGROWTH not LIKE EMPOWER!
+[94,100-107] = used for Chroma Screen
+[95] = if caster kills, opposing team is inflicted with [95]
+[96] = 
 
 
 
