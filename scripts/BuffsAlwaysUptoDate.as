@@ -1338,12 +1338,12 @@ function checkBuff(mCaster, mTarget, mAry2, mAry1, FIRE5)
       {
          if(mAry2[0] == "Blackflame" && _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][151] != 0 && mCaster.BUFFARRAYK[x].CD != 0)
          {
-            _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][151] -= 1;
-            if(_root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][151] == 0)
+            mCaster.FLAMED -= 1;
+            if(mCaster.FLAMED == 0)
             {
                _root.addSound("Effects","Fury");
                _root.applyBuffKrin(mCaster,"FLAMEDFRIEND",1,mCaster);
-               _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][151] = mCaster.FLAMED;
+               mCaster.FLAMED = _root["KRINBUFF" + mCaster.BUFFARRAYK[x].buffId][151];
             }
          }
       }
@@ -7384,7 +7384,7 @@ _root.hackMove2[25] = BUFF_DESC1[511];
 addNewBuffKrin("EXPOSE",BUFF_NAME[632],"Fire");
 _root.hackMove2[16] = -1;
 _root.hackMove2[69] = 0.2;
-_root.hackMove2[139] = 0.2;
+_root.hackMove2[139] = "EXPOSE2";
 _root.hackMove2[20] = 1;
 _root.hackMove2[27] = 1;
 _root.hackMove2[32] = 1;
