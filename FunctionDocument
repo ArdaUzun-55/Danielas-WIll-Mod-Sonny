@@ -121,7 +121,25 @@ Buffs:
 [90-2] = Increases Stats Sterngth, instinct, speed NOTE: THIS IS LIKE BOOSTGROWTH not LIKE EMPOWER!
 [94,100-107] = used for Chroma Screen
 [95] = if caster kills, opposing team is inflicted with [95]
-[96] = 
+[96] = If hit then you get [96]
+[97] = ShadowHex, see conditions
+[108] = if you miss an ability take damage equal to [108]%
+[109] =  charges used by abilities like hydrogenshell or divinecharge 
+[110] = if alone unit gets [110] buff
+[111] = when this unit hits an attack it [110] buff
+[112] = damages the unit which killed this unit
+[113] = when hit loses/gains [113] focus
+[115] = when stunned, gets [115] buff
+[116] = included for some abilities with charges
+[117] = when target is hit then the caster is healed
+[118] = When user hits target [118] is applied
+[119] = Abilities apply [119] Bleed buildup (maybe Physical only)
+[120] = Abilities apply [120] Frost buildup (maybe Ice only)
+[123] = If bleed you get [123] buff
+[124] = combined with [125] to make [125] ability stronger/ increase scaling 
+[126] = combined with [125] to make [125] apply [126] Buff (SAME FOR [137] + [138])
+[127] = Your abilities deal damage [127]% extra (separate) damage (see Bloodflame Blade)
+[128] = Used to make Bloodyfury not activate even when its already on
 
 
 
