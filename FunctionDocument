@@ -116,7 +116,7 @@ Buffs:
 [84] = Focus (2017, useless)
 [85] = When hp above [85]% get [88], when below get [114]
 [86] = Crit chance increase
-[87] = For Combo
+[87] = buff fades away after making a hit
 [88] = see [85]
 [90-2] = Increases Stats Sterngth, instinct, speed NOTE: THIS IS LIKE BOOSTGROWTH not LIKE EMPOWER!
 [94,100-107] = used for Chroma Screen
@@ -138,8 +138,60 @@ Buffs:
 [123] = If bleed you get [123] buff
 [124] = combined with [125] to make [125] ability stronger/ increase scaling 
 [126] = combined with [125] to make [125] apply [126] Buff (SAME FOR [137] + [138])
-[127] = Your abilities deal damage [127]% extra (separate) damage (see Bloodflame Blade)
+[127] = Your melee abilities deal damage [127]% extra (separate) damage (see Bloodflame Blade)
 [128] = Used to make Bloodyfury not activate even when its already on
+[129] = Fire barrier (1000% healing when the shield is gone + buff, can technically be be rewritten to make it more generic)
+[130] = Revenge Snake buff (makes Fire Snake AOE)
+[131] = Dodge chance
+[132] = attacks now apply [132] Bleed buildup
+[133] = Your missile/shock abilities deal damage [133]% extra (separate) damage (see Bloodflame Ritual)
+[134] = Crits deal more damage (missile/shock)
+[135] = If shield is gone dispell this buff and apply [135]
+[136] = Makes so that [135] has the same cd as the dispelled buff
+[137,138] = see [126]
+[139] = see [69]
+[140] = for combo a.i.
+[141] = When cd is 1 [141] is applied (used by apostle)
+[142] = restores Stance / increase
+[143] = attacks now deal additional separate damage equal to [143]% of targets HP
+[144] = Used by Hava's Icy Creation Frosty"
+[145] = Living dead, basically every -1 counts as an additional life
+[146] = Grants [146] upon being revived 
+[147] = see radiationburn
+[148] = Increases the attack of [125] ability 
+[149] = if attack deals more 10% of HP than [149] is applied
+[150] = increases either strength or instinct by [150]%
+[151] = for the ZPCI passive
+[152] = for the ZPCI passive buff
+---------Added in Danielas WIll Sonny 1
+[153] = Manafication stacks
+[155] = So that the shield fades away after the shield is depleted (only some shields have this)
+[157] = Dualcast [passive]
+[158] = Decreases cooldown of some abilities (see Dualcast)
+[159] = The buff which Manafication gives you after successfully doing the Riposte Combo
+[160] = increases the chance to apply a buff by 50% (See veraero, verthunder)
+[161] = Transforms an ability into [161] (used for acceleration and Scatter/impact -> Grand impact)
+[162] = Increases the potency of Bhavacakra and Hellfrog medium
+[163] = Makes you deal additional damage [163]% of the damage done is dealed as additional separate damage
+[164] = to make you livingdead
+[165] = So that the a.i. makes a melee attack (Tempting twist)
+[166] = So that the a.i. doesnt make a melee attack (Honeybee line)
+[167] = Love me Tender, Makes you need to dispell the buff else it is going to make you take more damage and increase your heart stack
+[168] = used in conjuction with [169] and [170] to make a buff which deal damage upon using a specific ability and apply [169], damage depends on [168] and whether full team is alive [170] (if its 2, else when its 1 it hits one unit twice if somebody is dead)
+[171] = Deals damage [171]% at the end of the debuff to units team
+[172] = for Polygot
+[173] = if unit dies apply [173] to all friendly units
+[174,175,176] =  Used together to make a unit which has this debuff get [176] if [175] is not used (e.g. Melee)
+[177] = used for tenchijin
+[178] = Hollowed nozuchi passive
+[179] = For a.i. first tries to hit units which used a [179] (melee, whatever) if there is no one than another unit is instead hit
+[180] =  For a.i. first tries to hit units did not use a [180] (melee, whatever) if there is no one than another unit is instead hit
+[181-184] = Used for electrope mechanic and Positron, negatron
+[185] = Units team takes damage equal to [185]% but if the unit used a melee attack it is going to die (at the end of CD)
+[186] = Unit must use a melee attack else friendly allies take damage equal to [186]% (at the end of CD)
+[187] = Each melee attack adds one Close caloric stack, having too many kills you
+[188] = Subtractive Palette (adds charges)
+
 
 
 
