@@ -117,6 +117,10 @@ while(i < 7)
    _root["playerKrin" + i].SPEEDU = 0;
    i++;
 }
+if(!Krin.progressFight && !Krin.progressFight2 && !Krin.progressFight3 && !Krin.progressFight4 && !Krin.progressFight5 && !Krin.progressFight6)
+{
+   Krin.numberOfTrainingUsed += 1;
+}
 phase = 1;
 playerKrin0 = new Object();
 playerKrin0.active = true;
@@ -182,24 +186,39 @@ while(i < 7)
    shtName.FLAMED2 = 0;
    shtName.HIT = 0;
    shtName.DODGE = 0;
+   shtName.CONDITION = 0;
+   shtName.CONDITION2 = 0;
+   shtName.CONDITION3 = 0;
+   shtName.CONDITION4 = 0;
+   shtName.CONDITION5 = 0;
    shtName.AINEXTATTACK = 0;
    shtName.DMG = 0;
    shtName.TURN = 0;
    shtName.PHASE = 0;
    shtName.FOCUSPLUS = 0;
+   shtName.DPS = 0;
    shtName.CRIT = 0;
    shtName.DMG2 = 0;
    shtName.DEFENSE = 1;
    shtName.IDMG = 0;
    shtName.STANCE = 0;
    shtName.STANCEMAX = 0;
+   shtName.ENRAGE = 0;
    shtName.BLEED = 100;
    shtName.BLEED2 = 0;
+   shtName.PILLAR = 0;
+   shtName.TARGET = 0;
    shtName.LIVINGDEAD = 0;
+   shtName.LIVINGDEAD10 = 0;
    shtName.BLEEDMAX = 100;
    shtName.FROSTBITTEN = 100;
    shtName.FROSTBITTEN2 = 0;
    shtName.FROSTBITTENMAX = 100;
+   shtName.BLACKFLAMEGAUGE = 0;
+   shtName.BLACKFLAMEGAUGEMAX = 100;
+   shtName.STOREDPOWER2 = false;
+   shtName.STOREDPOWER = 0;
+   shtName.STOREDPOWERMAX = 100;
    shtName.IDMG2 = 0;
    shtName.IDMGP = 0;
    shtName.IDMGP2 = 1;
@@ -208,12 +227,16 @@ while(i < 7)
    shtName.IHOT = 1;
    shtName.ODOT = 1;
    shtName.NODAMAGE = true;
+   shtName.IGNORETURN = false;
+   shtName.IGNORETURN2 = false;
    shtName.FOCUSCHANGE = 0;
    shtName.SSWITCH = 0;
    shtName.HEALMOD_PLUS = 1;
    shtName.HEALMOD_MINUS = 1;
    shtName.HEALMOD = 1;
    shtName.STUN = 0;
+   shtName.MAGICALELEMENTS = new Array();
+   shtName.MAGICALELEMENTS = [0,0,0];
    shtName.abilityhistoryIDKM = new Array();
    f = 0;
    while(f < 19)
@@ -223,7 +246,7 @@ while(i < 7)
    }
    f = 0;
    shtName.abilityhistoryIDKM2 = new Array();
-   while(f < 102)
+   while(f < 200)
    {
       shtName.abilityhistoryIDKM2[f] = 0;
       f++;
@@ -282,6 +305,7 @@ winCondition = -1;
 winDate = _root["KBR" + Krin.BattlePick].winDate;
 winDateCondition = _root["KBR" + Krin.BattlePick].winDateCondition;
 GOTIPPER = Krin.BattlePick;
+Krin.CurrentBattle = Krin.BattlePick;
 Krin.dropArray = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 pewPewItemDrop = 0;
 Krin.ZoneBG = _root["KBR" + Krin.BattlePick].ZoneBG;
