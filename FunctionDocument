@@ -7,15 +7,15 @@ also I for whatever reason skipped some numbers e.g. 36 dont mind it, you can us
 [40] = Applies a third Buff/Debuff
 [45] = How many times it hits the enemy
 [53] = used for acide bomb, deals damage to yourself after usage of ability
-[57] = Drill Strike, if the targets HP is lower than [57]% then the damage increases by 50%
+[57] = Drill Strike, if the targets HP is lower than [57][0]% then the damage increases by [57][1]%
 [58] = ignore defense (only if defense is implemented)
 [59] = Deals damage based on target's current HP. 
 [60] = if casters HP is less or equal to [60]% then it is AOE
 [63] = used for Flame Jet, ice drill
-[65] = If target's HP is below [65]%, gain 2x multi-strike. 
+[65] = If target's HP is below [65][0]%, gain [65][1]x multi-strike. 
 [67] = used in combination with [13] + [29] to make the buff[29] apply to self
-[68] = if less than [68] ability deals 140%
-[69] = if target has physical debuff deals 80% more damage.
+[68] = if less than [68][0] ability deals [68][1]% additional damage
+[69] = if target has [69][0] (element) debuff deals [69][1]% more damage.
 [70] = crit damage increase (example: Arcflash)
 [71] = damages caster for [71]% instinct
 [72] = used together with [70]
@@ -89,6 +89,19 @@ ADDED With the release of Danielas WIll Sonny 1:
 [156] = increases stunresistance and starts the cooldownonstart
 [157] = used for combo ability icons
 [159-160] = for gligus. 
+ADDED With the release of Danielas WIll Sonny 2 Legacy Port:
+[166] =  [166][0] is to make the [13] buff not apply if the target has [166][0] [1][2][3] element debuffs
+[167] =  [167][1] is applied if [167][0] is on  the target (also dispells it) , [167][3] is applied if [167][2] is on the target and [167][0] not (also dispelled. Deals damage equal to  [167][5]% if [167][4] is on the target (also dispelled)
+[168] = Used for culmination
+[169] = Used for MAgical eruption etc.
+[170] = To make the ability deal damage based on how many units are alive on the enemys side
+[171] = To make the ability only be usable during the turn it became available ( Has something to do with cooldown on start [116], SET to true if you want it)
+[172] = To make the ability deal damage based on how many units are alive on the casters side
+[173] = if casters hp is above [173][0]  then abilitys scaling is added by [174][1]
+[174] = If the ability hits Sonny loses  (if set to 1, if set to 2 Sonny wins only works if its used by an enemy.)
+[175] = To turn on Stored Power
+[176] = To increase/decrease Stored Power (set to -100 if its an ability which uses it for damage calculation)
+
 Buffs:
 [50-55] = Used for Fire and Blizzzard (Destroyer in Danielas WIll Sonny 1 Mod, can be ignored)
 [57] = Lifesteal
