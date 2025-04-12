@@ -12,8 +12,7 @@ This mod is huge so I recommend taking your time to play it.
 - enemies
 + allies
 * (etc.)
-- 4 new classes + 4 new abilities for each of 
-the original classes
+- 4 new classes + 4 new abilities for each of the original classes
 + adds one new zone (Utopia)
 * new mechanics (like: Sonny 2017 ones = lifesteal, aoe, multihit and more, and Bleed, Frostbitten Stance and more!)
 - new themes + sound effects (mostly from Sonny 2017)
