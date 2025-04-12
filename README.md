@@ -35,6 +35,8 @@ Every Zone is accessible in every difficulty. No achievements are needed.
 | Challenging  | 80% Instinct/Strength, 85% of Health 100% of Speed  |No|No|
 | Hard  | 110% Instinct/Strength, 110% of Health 100% of Speed  |No|No|
 | Heroic  |  100% Instinct/Strength, 100% of Health 100% of Speed |Yes|Yes|
+> [!NOTE]
+> IF IT IS YOUR FIRST PLAYTHROUGH, PLEASE DO NOT START ON HEROIC.
 ## Code
 The code is available in the Github.
 Specifically under the branch main
