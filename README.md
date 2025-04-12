@@ -10,14 +10,14 @@ This mod is huge so I recommend taking your time to play it.
 
 ## What's this Mod? 
 - enemies
-+ allies
-* (etc.)
+- allies
+- (etc.)
 - 4 new classes + 4 new abilities for each of the original classes
-+ adds one new zone (Utopia)
-* new mechanics (like: Sonny 2017 ones = lifesteal, aoe, multihit and more, and Bleed, Frostbitten Stance and more!)
+- adds one new zone (Utopia)
+- new mechanics (like: Sonny 2017 ones = lifesteal, aoe, multihit and more, and Bleed, Frostbitten Stance and more!)
 - new themes + sound effects (mostly from Sonny 2017)
-* 3 new endings
-+ New Element, which got its own battle animations
+- 3 new endings
+- New Element, which got its own battle animations
 - New Allies
 - Three starting skills
 - Roald, Felicity and Veradux also have 1 more ability (vera 2)
