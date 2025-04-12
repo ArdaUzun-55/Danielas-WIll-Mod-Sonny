@@ -1217,7 +1217,8 @@ function addNewMove(a, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s)
    short2[54] = 0;
    short2[55] = 0;
    short2[56] = 0;
-   short2[57] = 0;
+   short2[57] = new Array();
+   short2[57] = [0];
    short2[58] = 1;
    short2[59] = 0;
    short2[60] = 0;
@@ -1230,7 +1231,8 @@ function addNewMove(a, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s)
    short2[67] = 0;
    short2[68] = new Array();
    short2[68] = [0,0];
-   short2[69] = 0;
+   short2[69] = new Array();
+   short2[69] = [0];
    short2[70] = 0;
    short2[71] = 0;
    short2[72] = 1;
@@ -2020,9 +2022,9 @@ function executeMove(IDKM, IDKM2, IDKC, IDKT, JI)
             }
          }
       }
-      if(IDKM2[57] > IDKT.LIFEN / IDKT.LIFEU)
+      if(IDKM2[57][0] > IDKT.LIFEN / IDKT.LIFEU)
       {
-         _root.DamageOutputKrinFinal *= 1.5;
+         _root.DamageOutputKrinFinal *= IDKM2[57][1];
       }
       if(IDKM2[59] > 0)
       {
@@ -3493,8 +3495,10 @@ function addNewBuffKrin(a, b, c)
       _root["KRINBUFF" + a][i] = 0;
       i++;
    }
+   _root["KRINBUFF" + a][189] = new Array();
+   _root["KRINBUFF" + a][189] = [0];
    _root["KRINBUFF" + a][203] = new Array();
-   _root["KRINBUFF" + a][203] = [0,0];
+   _root["KRINBUFF" + a][203] = [0];
    _root.hackMove2 = _root["KRINBUFF" + a];
 }
 function checkDispellAoe(mCaster, mTarget, mAry1, mAry2)
@@ -4834,6 +4838,7 @@ function precheckBuff(mCaster, mTarget, mAry2, mAry1)
    }
    MAGICBUFFS = 0;
    f = 0;
+   BLOOD = false;
    while(f < _root.maxBuffLimit)
    {
       for(abilityName in _root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][189])
@@ -4915,17 +4920,18 @@ function precheckBuff(mCaster, mTarget, mAry2, mAry1)
             _root.applyBuffKrin(mCaster,mCaster.BUFFARRAYK[f].buffId,-1,0,mCaster.BUFFARRAYK[f].buffValue);
          }
       }
-      if(_root["KRINBUFF" + mTarget.BUFFARRAYK[f].buffId][1] == "Physical" && mAry2[69] > 0 && mTarget.BUFFARRAYK[f].CD != 0)
+      if(_root["KRINBUFF" + mTarget.BUFFARRAYK[f].buffId][1] == mAry2[69][0] && mAry2[69][0] != 0 && mTarget.BUFFARRAYK[f].CD != 0 && BLOOD == false)
       {
-         if(mAry1[0] == "Bloody Claw")
+         if(mAry2[69][1] > 0)
          {
-            mAry2[2] += 0.8;
-            mAry2[4] += 0.8;
+            mAry2[2] += mAry2[69][1];
+            mAry2[4] += mAry2[69][1];
          }
-         if(mAry1[0] == "Bloody Claw2")
+         if(mAry2[69][2] > 0)
          {
-            mAry2[7] += 10;
+            mAry2[7] += mAry2[69][2];
          }
+         BLOOD = true;
       }
       f++;
    }
@@ -5758,6 +5764,7 @@ function checkBuffAoe(mCaster, mTarget, mAry2, mAry1)
 }
 function checkBuffStun(mCaster, mTarget, mAry2, mAry1)
 {
+   mCaster.DPS = 0;
    f = 0;
    while(f < _root.maxBuffLimit)
    {
@@ -12648,7 +12655,7 @@ addNewMove("Bloody Claw",0,1,0,0,0,0,99,2,"Melee","0xFF0000","Attack","BOOM_STAR
 _root.hackMove[0] = "Physical";
 _root.hackMove[2] = 0.8;
 _root.hackMove[4] = 0.8;
-_root.hackMove[69] = 0.8;
+_root.hackMove[69] = ["Physical",0.8];
 addNewMove("Stone I",0,1,0,4,0,0,1,2,"Missile","0x5E503C","KRIN.EARTHBOLT2","BOOM_EARTH","Full Damage",1,0,210,"Stone I");
 _root.hackMove[0] = "Earth";
 _root.hackMove[2] = 1.4;
@@ -12781,11 +12788,11 @@ _root.hackMove[2] = 1.35;
 addNewMove("Bloody Claw2",0,1,0,0,0,1,1,1,"Melee","0xFF0000","Attack","BOOM_STAR","Full Damage",1,0,9,"Claw");
 _root.hackMove[0] = "Physical";
 _root.hackMove[2] = 1.7;
-_root.hackMove[69] = 10;
+_root.hackMove[69] = ["Physical",0,10];
 addNewMove("Drill Strike",0,1,0,0,0,4,1,1,"Melee","0xFF0000","Attack","BOOM_RED","Full Damage",1,0,9,"DrillStrike");
 _root.hackMove[0] = "Physical";
 _root.hackMove[2] = 1.65;
-_root.hackMove[57] = 0.35;
+_root.hackMove[57] = [0.35,1.5];
 _root.hackMove[58] = 0;
 addNewMove("Snap Kick",0,1,0,0,0,6,1,1,"Melee","0xFF0000","Attack","BOOM_SLASH2RED","Full Damage",1,0,9,"SnapKick");
 _root.hackMove[0] = "Physical";
@@ -16486,12 +16493,12 @@ _root.hackMove2[19] = 3000;
 _root.hackMove2[14] = -300;
 _root.hackMove2[16] = 99;
 _root.hackMove2[25] = BUFF_DESC1[373];
-addNewBuffKrin("VETO2",BUFF_NAME[373],"Magic");
+addNewBuffKrin("VETO2",BUFF_NAME[842],"Magic");
 _root.hackMove2[19] = 20000;
 _root.hackMove2[16] = 99;
 _root.hackMove2[155] = 1;
 _root.hackMove2[201] = true;
-_root.hackMove2[25] = BUFF_DESC1[373];
+_root.hackMove2[25] = BUFF_DESC1[842];
 addNewBuffKrin("FORCEOFLAW",BUFF_NAME[338],"Magic");
 _root.hackMove2[7] = 0.2;
 _root.hackMove2[16] = 4;
