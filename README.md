@@ -1,7 +1,9 @@
 # Daniela's WIll 2 #
 Mod Name : Daniela's WIll 2
+
 Release Date: 12.04.2025 (Beta)
-Story
+
+## Story
 You are followed by Danielas apprentices into new alcatraz, oberursel, the ivory train, the tunnel and hew because you fought Danielas WIll and stole the scroll. After defeating the mayor you wanted to enter Utopia, but the borders were closed to Kshatriyana. So you did not have any other choice than to fight Daniela (The current Leader of the country and the apprentices) and end the civil War in Kshatriyana. After bringing peace you entered Utopia. .... the story continues!
 
 This mod is huge so I recommend taking your time to play it.
