@@ -3282,6 +3282,20 @@ function AImoveAdder(p)
       }
       if(_root["KRINABILITY" + selectedMoveToMake][3] == 1)
       {
+         owegwe = 0;
+         while(owegwe < 3)
+         {
+            if(_root["playerKrin" + (7 - (pg.teamSide + owegwe * 2))].active == true)
+            {
+               _root.simulation(_root["KRINABILITY" + selectedMoveToMake],_root["KRINABILITYB" + selectedMoveToMake],pg,_root["playerKrin" + (7 - (pg.teamSide + owegwe * 2))]);
+               _root["playerKrin" + (7 - (pg.teamSide + owegwe * 2))].SimulationDPS = _root.SIMULATIONDPS;
+            }
+            else
+            {
+               _root["playerKrin" + (7 - (pg.teamSide + owegwe * 2))].SimulationDPS = 0;
+            }
+            owegwe++;
+         }
          if(pg.CONDITION4 != 0 && (_root["playerKrin" + (7 - gMtYuIo)].abilityhistoryIDKM[10] != pg.CONDITION4 || _root["playerKrin" + (7 - gMtYuIo)].active == false) && (_root["playerKrin" + (5 - gMtYuIo)].abilityhistoryIDKM[10] != pg.CONDITION4 || _root["playerKrin" + (5 - gMtYuIo)].active == false) && (_root["playerKrin" + (3 - gMtYuIo)].abilityhistoryIDKM[10] != pg.CONDITION4 || _root["playerKrin" + (3 - gMtYuIo)].active == false))
          {
             pg.CONDITION4 = 0;
@@ -3352,7 +3366,17 @@ function AImoveAdder(p)
             aliveEnemies.push(5 - gMtYuIo);
             if(_root["playerKrin" + (5 - gMtYuIo)].LIFEN + _root["playerKrin" + (5 - gMtYuIo)].SHIELD < _root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD || weakestEnemyNow == 0)
             {
-               weakestEnemyNow = 5 - gMtYuIo;
+               if(_root["playerKrin" + (5 - gMtYuIo)].SimulationDPS >= _root["playerKrin" + weakestEnemyNow].SimulationDPS || (_root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD - _root["playerKrin" + (5 - gMtYuIo)].LIFEN + _root["playerKrin" + (5 - gMtYuIo)].SHIELD) / _root["playerKrin" + (5 - gMtYuIo)].LIFEN + _root["playerKrin" + (5 - gMtYuIo)].SHIELD > 0.2 || weakestEnemyNow == 0)
+               {
+                  weakestEnemyNow = 5 - gMtYuIo;
+               }
+            }
+            else if(_root["playerKrin" + (5 - gMtYuIo)].LIFEN + _root["playerKrin" + (5 - gMtYuIo)].SHIELD >= _root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD)
+            {
+               if(_root["playerKrin" + (5 - gMtYuIo)].SimulationDPS / 2 > _root["playerKrin" + weakestEnemyNow].SimulationDPS || _root["playerKrin" + (5 - gMtYuIo)].SimulationDPS > _root["playerKrin" + weakestEnemyNow].SimulationDPS && (_root["playerKrin" + (5 - gMtYuIo)].LIFEN + _root["playerKrin" + (5 - gMtYuIo)].SHIELD - _root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD) / _root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD <= 0.2)
+               {
+                  weakestEnemyNow = 5 - gMtYuIo;
+               }
             }
          }
          if((_root["KRINABILITYB" + selectedMoveToMake][155] == 1 && HIGHESTDPS3 == true || _root["KRINABILITYB" + selectedMoveToMake][155] == 0) && _root["playerKrin" + (3 - gMtYuIo)].active == true && _root["playerKrin" + (3 - gMtYuIo)].IGNORE == 0 && (_root["playerKrin" + (3 - gMtYuIo)].abilityhistoryIDKM[10] == pg.CONDITION4 || pg.CONDITION4 == 0) && (_root["playerKrin" + (3 - gMtYuIo)].abilityhistoryIDKM[10] != pg.CONDITION5 || pg.CONDITION5 == 0))
@@ -3360,23 +3384,33 @@ function AImoveAdder(p)
             aliveEnemies.push(3 - gMtYuIo);
             if(_root["playerKrin" + (3 - gMtYuIo)].LIFEN + _root["playerKrin" + (3 - gMtYuIo)].SHIELD < _root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD || weakestEnemyNow == 0)
             {
-               weakestEnemyNow = 3 - gMtYuIo;
+               if(_root["playerKrin" + (3 - gMtYuIo)].SimulationDPS >= _root["playerKrin" + weakestEnemyNow].SimulationDPS || (_root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD - _root["playerKrin" + (3 - gMtYuIo)].LIFEN + _root["playerKrin" + (3 - gMtYuIo)].SHIELD) / _root["playerKrin" + (3 - gMtYuIo)].LIFEN + _root["playerKrin" + (3 - gMtYuIo)].SHIELD > 0.2 || weakestEnemyNow == 0)
+               {
+                  weakestEnemyNow = 3 - gMtYuIo;
+               }
+            }
+            else if(_root["playerKrin" + (3 - gMtYuIo)].LIFEN + _root["playerKrin" + (3 - gMtYuIo)].SHIELD >= _root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD)
+            {
+               if(_root["playerKrin" + (3 - gMtYuIo)].SimulationDPS / 2 > _root["playerKrin" + weakestEnemyNow].SimulationDPS || _root["playerKrin" + (3 - gMtYuIo)].SimulationDPS > _root["playerKrin" + weakestEnemyNow].SimulationDPS && (_root["playerKrin" + (3 - gMtYuIo)].LIFEN + _root["playerKrin" + (3 - gMtYuIo)].SHIELD - _root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD) / _root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD <= 0.2)
+               {
+                  weakestEnemyNow = 3 - gMtYuIo;
+               }
             }
          }
          f = 0;
          while(f < _root.maxBuffLimit)
          {
-            if(_root["playerKrin" + (7 - gMtYuIo)].BUFFARRAYK[f][203][0] != 0 && _root["playerKrin" + (7 - gMtYuIo)].active == true && _root["playerKrin" + (7 - gMtYuIo)].BUFFARRAYK[f].CD == 1 && _root["playerKrin" + (7 - gMtYuIo)].IGNORE == 0)
+            if(_root["KRINBUFF" + _root["playerKrin" + (7 - gMtYuIo)].BUFFARRAYK[f].buffId][203][0] != 0 && _root["playerKrin" + (7 - gMtYuIo)].active == true && _root["playerKrin" + (7 - gMtYuIo)].BUFFARRAYK[f].CD == 1 && _root["playerKrin" + (7 - gMtYuIo)].IGNORE == 0)
             {
                aliveEnemies.push(7 - gMtYuIo);
                weakestEnemyNow = 7 - gMtYuIo;
             }
-            if(_root["playerKrin" + (5 - gMtYuIo)].BUFFARRAYK[f][203][0] != 0 && _root["playerKrin" + (5 - gMtYuIo)].active == true && _root["playerKrin" + (5 - gMtYuIo)].BUFFARRAYK[f].CD == 1 && _root["playerKrin" + (5 - gMtYuIo)].IGNORE == 0)
+            if(_root["KRINBUFF" + _root["playerKrin" + (5 - gMtYuIo)].BUFFARRAYK[f].buffId][203][0] != 0 && _root["playerKrin" + (5 - gMtYuIo)].active == true && _root["playerKrin" + (5 - gMtYuIo)].BUFFARRAYK[f].CD == 1 && _root["playerKrin" + (5 - gMtYuIo)].IGNORE == 0)
             {
                aliveEnemies.push(5 - gMtYuIo);
                weakestEnemyNow = 5 - gMtYuIo;
             }
-            if(_root["playerKrin" + (3 - gMtYuIo)].BUFFARRAYK[f][203][0] != 0 && _root["playerKrin" + (3 - gMtYuIo)].active == true && _root["playerKrin" + (3 - gMtYuIo)].BUFFARRAYK[f].CD == 1 && _root["playerKrin" + (3 - gMtYuIo)].IGNORE == 0)
+            if(_root["KRINBUFF" + _root["playerKrin" + (3 - gMtYuIo)].BUFFARRAYK[f].buffId][203][0] != 0 && _root["playerKrin" + (3 - gMtYuIo)].active == true && _root["playerKrin" + (3 - gMtYuIo)].BUFFARRAYK[f].CD == 1 && _root["playerKrin" + (3 - gMtYuIo)].IGNORE == 0)
             {
                aliveEnemies.push(3 - gMtYuIo);
                weakestEnemyNow = 3 - gMtYuIo;
@@ -12655,7 +12689,7 @@ addNewMove("Bloody Claw",0,1,0,0,0,0,99,2,"Melee","0xFF0000","Attack","BOOM_STAR
 _root.hackMove[0] = "Physical";
 _root.hackMove[2] = 0.8;
 _root.hackMove[4] = 0.8;
-_root.hackMove[69] = ["Physical",0.8];
+_root.hackMove[69] = ["Physical",0.8,0];
 addNewMove("Stone I",0,1,0,4,0,0,1,2,"Missile","0x5E503C","KRIN.EARTHBOLT2","BOOM_EARTH","Full Damage",1,0,210,"Stone I");
 _root.hackMove[0] = "Earth";
 _root.hackMove[2] = 1.4;
@@ -15914,230 +15948,6 @@ _root.hackMove[174] = 1;
 _root.hackMove[11] = 1;
 _root.hackMove[13] = "NOMANALEFT";
 _root.hackMove[21] = 1;
-MoveCount = 6010;
-addNewMove("Mayor Enrage",1,0,0,0,0,99,1,1,"Shock","0xFFCC00","Attack","BOOM_POWERUP","Heal",1,0,0,"sfx_powerup");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[13] = "MAYORENRAGE";
-_root.hackMove[116] = -1;
-addNewMove("Justice",0,1,0,12,0,99,1,1,"Melee","0xFFCC00","Attack_Upper","BOOM3","Full Damage",1,0,0,"sfx_shock");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[4] = 2.5;
-_root.hackMove[13] = "JUSTICE";
-_root.hackMove[21] = 1;
-_root.hackMove[116] = -2;
-addNewMove("Peace",0,1,0,12,0,99,2,1,"Melee","0xFFCC00","Attack","ex_AnasOut2","Full Damage",1,0,0,"sfx_magichit");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[9] = 15;
-_root.hackMove[13] = "PEACE";
-_root.hackMove[116] = -3;
-addNewMove("Unity",0,1,0,10,0,99,1,1,"Melee","0xFFCC00","Attack_Stab","BOOM_STAR_YELLOW","Full Damage",1,0,0,"sfx_dark");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[4] = 2.2;
-_root.hackMove[13] = "UNITY";
-_root.hackMove[116] = -4;
-addNewMove("Equality",0,1,0,32,0,99,1,1,"Melee","0xFFCC00","Attack_Upper","BOOM3","Full Damage",1,0,0,"sfx_shock");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[2] = 2.2;
-_root.hackMove[13] = "EQUALITY";
-_root.hackMove[116] = -5;
-addNewMove("Un-Enrage",1,0,0,0,0,99,1,1,"Shock","0xFFCC00","Attack","BOOM_SUN_PURPLE","Heal",1,0,0,"sfx_restore");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[15] = ["Earth"];
-_root.hackMove[16] = 10;
-_root.hackMove[19] = 1;
-_root.hackMove[116] = -6;
-addNewMove("Justice",0,1,0,12,0,99,1,1,"Melee","0xFFCC00","Attack_Upper","BOOM3","Full Damage",1,0,0,"sfx_shock");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[4] = 2.5;
-_root.hackMove[13] = "JUSTICE";
-_root.hackMove[21] = 1;
-_root.hackMove[116] = -7;
-addNewMove("Peace",0,1,0,12,0,99,2,1,"Melee","0xFFCC00","Attack","ex_AnasOut2","Full Damage",1,0,0,"sfx_magichit");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[9] = 15;
-_root.hackMove[13] = "PEACE";
-_root.hackMove[116] = -8;
-addNewMove("Unity",0,1,0,10,0,99,1,1,"Melee","0xFFCC00","Attack_Stab","BOOM_STAR_YELLOW","Full Damage",1,0,0,"sfx_dark");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[4] = 2.2;
-_root.hackMove[13] = "UNITY";
-_root.hackMove[116] = -9;
-addNewMove("Robot Shield",1,0,0,-100,0,99,1,1,"Shock","0xFFFFFF","Attack_Upper","BOOM_SHIELD","Heal",1,0,0,"sfx_shell");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[175] = "VETO2";
-_root.hackMove[13] = "VETO2";
-_root.hackMove[116] = -10;
-addNewMove("Power",1,0,0,0,0,99,1,1,"Shock","0xFFFFFF","Attack_Upper","BOOM3","Heal",1,0,0,"sfx_shock");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[176] = 10;
-_root.hackMove[116] = -11;
-addNewMove("Power",1,0,0,0,0,99,1,1,"Shock","0xFFFFFF","Attack_Upper","BOOM3","Heal",1,0,0,"sfx_shock");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[176] = 10;
-_root.hackMove[116] = -12;
-addNewMove("Power",1,0,0,0,0,99,1,1,"Shock","0xFFFFFF","Attack_Upper","BOOM3","Heal",1,0,0,"sfx_shock");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[176] = 10;
-_root.hackMove[116] = -12;
-addNewMove("Explosion",0,1,0,0,0,99,1,1,"Shock2","0xFF66FF","Attack","BOOM1","Full Damage",1,0,81,"Shockwave");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[2] = 20;
-_root.hackMove[116] = -13;
-_root.hackMove[176] = -100;
-_root.hackMove[20] = 1;
-addNewMove("Team Sacrifice",0,1,0,0,0,99,1,1,"Shock","0xFFCC00","Attack","ex_AnasOut2","Full Damage",1,0,0,"sfx_trauma");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[9] = 15;
-_root.hackMove[116] = -14;
-_root.hackMove[13] = "TEAMSACRIFICE";
-addNewMove("Block Healing",0,1,0,0,0,99,1,1,"Shock","0xFFCC00","Attack","BOOM_SUN_BLUE","Full Damage",1,0,0,"sfx_slash");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[9] = 15;
-_root.hackMove[116] = -15;
-_root.hackMove[13] = "BLOCKHEALING";
-addNewMove("Block Damage",0,1,0,0,0,99,1,1,"Shock","0xFFCC00","Attack","BOOM_SUN_BLUE","Full Damage",1,0,0,"sfx_slash");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[9] = 15;
-_root.hackMove[116] = -16;
-_root.hackMove[13] = "BLOCKDAMAGE";
-addNewMove("Magistrate",1,0,0,0,0,99,1,1,"Shock","0xFFCC00","Attack","BOOM_HEAL2","Heal",1,0,0,"sfx_restore");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[13] = "MAGISTRATE";
-_root.hackMove[29] = "MAGISTRATE2";
-_root.hackMove[15] = ["Physical","Magic","Ice","Fire","Lightning","Earth","Shadow","Poison"];
-_root.hackMove[16] = 1;
-_root.hackMove[116] = -17;
-_root.hackMove[19] = -1;
-addNewMove("Justice",0,1,0,12,0,99,1,1,"Melee","0xFFCC00","Attack_Upper","BOOM3","Full Damage",1,0,0,"sfx_shock");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[4] = 2.5;
-_root.hackMove[13] = "JUSTICE";
-_root.hackMove[21] = 1;
-_root.hackMove[116] = -18;
-addNewMove("Peace",0,1,0,12,0,99,2,1,"Melee","0xFFCC00","Attack","ex_AnasOut2","Full Damage",1,0,0,"sfx_magichit");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[9] = 15;
-_root.hackMove[13] = "PEACE";
-_root.hackMove[116] = -19;
-addNewMove("Unity",0,1,0,10,0,99,1,1,"Melee","0xFFCC00","Attack_Stab","BOOM_STAR_YELLOW","Full Damage",1,0,0,"sfx_dark");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[4] = 2.2;
-_root.hackMove[13] = "UNITY";
-_root.hackMove[116] = -20;
-addNewMove("Equality",0,1,0,18,0,99,1,1,"Melee","0xFFCC00","Attack_Upper","BOOM3","Full Damage",1,0,0,"sfx_shock");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[2] = 2.2;
-_root.hackMove[13] = "EQUALITY";
-_root.hackMove[116] = -21;
-addNewMove("Magistrate",1,0,0,0,0,99,1,1,"Shock","0xFFCC00","Attack","BOOM_HEAL2","Heal",1,0,0,"sfx_restore");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[13] = "MAGISTRATE";
-_root.hackMove[29] = "MAGISTRATE2";
-_root.hackMove[15] = ["Physical","Magic","Ice","Fire","Lightning","Earth","Shadow","Poison"];
-_root.hackMove[16] = 1;
-_root.hackMove[116] = -22;
-_root.hackMove[19] = -1;
-addNewMove("Equality",0,1,0,12,0,99,1,1,"Melee","0xFFCC00","Attack_Upper","BOOM3","Full Damage",1,0,0,"sfx_shock");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[2] = 2.2;
-_root.hackMove[13] = "CLARITY";
-_root.hackMove[116] = -23;
-_root.hackMove[21] = 1;
-addNewMove("Unity",0,1,0,10,0,99,1,1,"Melee","0xFFCC00","Attack_Stab","BOOM_STAR_YELLOW","Full Damage",1,0,0,"sfx_dark");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[4] = 2.2;
-_root.hackMove[13] = "DAMAGEDOWN";
-_root.hackMove[82] = 1;
-_root.hackMove[116] = -24;
-addNewMove("Subversion",0,1,0,0,0,99,1,1,"Shock","0x6633CC","Shock","BOOM_DARK","Heal",1,0,26,"sfx_shadow");
-_root.hackMove[0] = "Magic";
-_root.hackMove[13] = "DOOM2";
-_root.hackMove[14] = 1;
-_root.hackMove[20] = 1;
-_root.hackMove[21] = 0;
-_root.hackMove[116] = -25;
-_root.hackMove[17] = krinABC1[26];
-addNewMove("Equality",0,1,0,12,0,99,1,1,"Melee","0xFFCC00","Attack_Upper","BOOM3","Full Damage",1,0,0,"sfx_shock");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[2] = 2.2;
-_root.hackMove[13] = "CLARITY";
-_root.hackMove[116] = -26;
-_root.hackMove[21] = 1;
-addNewMove("Unity",0,1,0,10,0,99,1,1,"Melee","0xFFCC00","Attack_Stab","BOOM_STAR_YELLOW","Full Damage",1,0,0,"sfx_dark");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[4] = 2.2;
-_root.hackMove[13] = "DAMAGEDOWN";
-_root.hackMove[82] = 1;
-_root.hackMove[116] = -27;
-addNewMove("Power",1,0,0,0,0,99,1,1,"Shock","0xFFFFFF","Attack_Upper","BOOM3","Heal",1,0,0,"sfx_shock");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[176] = 100;
-_root.hackMove[116] = -29;
-addNewMove("Explosion",0,1,0,0,0,99,1,1,"Shock2","0xFF66FF","Attack","BOOM1","Full Damage",1,0,81,"Shockwave");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[2] = 20;
-_root.hackMove[116] = -30;
-_root.hackMove[176] = -100;
-_root.hackMove[20] = 1;
-MoveCount = 6150;
-addNewMove("Life",0,0,1,0,0,12,2,2,"Shock","0xFF66FF","Krin.Magicbolt","BOOM_HEAL","Focus3",1,0,59,"Paradeigma");
-_root.hackMove[0] = "Magic";
-_root.hackMove[9] = 6500;
-_root.hackMove[15] = ["Physical","Magic","Ice","Fire","Lightning","Earth","Shadow","Poison"];
-_root.hackMove[16] = 99;
-_root.hackMove[19] = 5;
-_root.hackMove[136] = 1;
-_root.hackMove[20] = 1;
-addNewMove("Laser Beam2",0,1,0,0,0,6,1,1,"Missile","0xFF66FF","Krin.Electrobolt2","BOOM1","Full Damage",1,0,81,"Laser Beam2");
-_root.hackMove[0] = "Fire";
-_root.hackMove[4] = 3;
-addNewMove("Laser Beam",0,1,0,0,0,6,1,1,"Missile","0xFF66FF","Krin.Magicbolt","BOOM1","Full Damage",1,0,81,"Laser Beam");
-_root.hackMove[0] = "Shadow";
-_root.hackMove[4] = 4;
-_root.hackMove[23] = "Lightning";
-_root.hackMove[24] = 3;
-_root.hackMove[13] = "SHADOWRES";
-_root.hackMove[15] = ["Lightning"];
-_root.hackMove[16] = 3;
-_root.hackMove[19] = 1;
-addNewMove("Laser Beam",0,1,0,0,0,6,1,1,"Missile","0xFF66FF","Krin.Magicbolt","BOOM1","Full Damage",1,0,81,"Laser Beam");
-_root.hackMove[0] = "Lightning";
-_root.hackMove[4] = 4;
-_root.hackMove[23] = "Shadow";
-_root.hackMove[24] = 3;
-_root.hackMove[13] = "LIGHTNINGRES";
-_root.hackMove[15] = ["Shadow"];
-_root.hackMove[16] = 3;
-_root.hackMove[19] = 1;
-addNewMove("Laser Beam2",0,1,0,0,0,6,1,1,"Missile","0xFF66FF","Krin.Electrobolt2","BOOM1","Full Damage",1,0,81,"Laser Beam2");
-_root.hackMove[0] = "Fire";
-_root.hackMove[4] = 4;
-_root.hackMove[20] = 1;
-addNewMove("Life",1,0,0,0,0,99,2,2,"Shock","0xFF66FF","Krin.Magicbolt","BOOM_HEAL","Heal",1,0,59,"Paradeigma");
-_root.hackMove[0] = "Magic";
-_root.hackMove[9] = 10000;
-_root.hackMove[15] = ["Physical","Magic","Ice","Fire","Lightning","Earth","Shadow","Poison"];
-_root.hackMove[16] = 99;
-_root.hackMove[19] = 5;
-_root.hackMove[175] = "VETO2";
-_root.hackMove[13] = "LIVINGDEADNO";
-_root.hackMove[148] = 1;
-_root.hackMove[20] = 1;
-addNewMove("Palladion",0,1,0,0,0,2,1,1,"Melee","0xFF66FF","Attack","BOOM_SLASH","Full Damage",1,0,81,"Palladion");
-_root.hackMove[0] = "Magic";
-_root.hackMove[4] = 3.5;
-_root.hackMove[176] = 5;
-_root.hackMove[13] = "FLY";
-_root.hackMove[21] = 1;
-addNewMove("Ultima",0,1,0,0,0,99,1,1,"Shock","0xFF66FF","Attack","BOOM1","Full Damage",1,0,81,"Mug");
-_root.hackMove[0] = "Magic";
-_root.hackMove[2] = 56;
-_root.hackMove[21] = 1;
-_root.hackMove[176] = -100;
-_root.hackMove[170] = true;
-_root.hackMove[20] = 1;
-addNewMove("Divine Wind",1,0,0,0,0,99,1,1,"Shock","0xFFCC00","Attack_Upper","BOOM_SHIELD","Heal",1,0,0,"sfx_shell");
-_root.hackMove[13] = "LIVINGDEADNO1";
 numberMatrixKrin = new Array();
 numberMatrixKrin = ["Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine"];
 numberSpacingKrin = 19;
