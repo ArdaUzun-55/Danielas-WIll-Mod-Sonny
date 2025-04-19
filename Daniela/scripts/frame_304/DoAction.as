@@ -1,2 +1,0 @@
-stop();
-_quality = "HIGH";

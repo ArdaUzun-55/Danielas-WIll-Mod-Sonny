@@ -1,2 +1,0 @@
-gotoAndStop("soundExport");
-play();

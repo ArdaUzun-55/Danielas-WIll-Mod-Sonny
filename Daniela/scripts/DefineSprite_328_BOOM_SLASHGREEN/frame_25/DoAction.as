@@ -1,1 +1,0 @@
-unloadMovie(this);

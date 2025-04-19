@@ -1,2 +1,0 @@
-stop();
-unloadMovie(_parent);
