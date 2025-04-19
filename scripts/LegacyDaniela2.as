@@ -1326,7 +1326,8 @@ function addNewMove(a, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s)
    short2[159] = 0;
    short2[160] = 0;
    short2[161] = 0;
-   short2[162] = 0;
+   short2[162] = new Array();
+   short2[162] = [0];
    short2[163] = 0;
    short2[164] = 0;
    short2[165] = 0;
@@ -3366,14 +3367,14 @@ function AImoveAdder(p)
             aliveEnemies.push(5 - gMtYuIo);
             if(_root["playerKrin" + (5 - gMtYuIo)].LIFEN + _root["playerKrin" + (5 - gMtYuIo)].SHIELD < _root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD || weakestEnemyNow == 0)
             {
-               if(_root["playerKrin" + (5 - gMtYuIo)].SimulationDPS >= _root["playerKrin" + weakestEnemyNow].SimulationDPS || (_root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD - _root["playerKrin" + (5 - gMtYuIo)].LIFEN + _root["playerKrin" + (5 - gMtYuIo)].SHIELD) / _root["playerKrin" + (5 - gMtYuIo)].LIFEN + _root["playerKrin" + (5 - gMtYuIo)].SHIELD > 0.2 || weakestEnemyNow == 0)
+               if(_root["playerKrin" + (5 - gMtYuIo)].SimulationDPS > _root["playerKrin" + weakestEnemyNow].SimulationDPS / 2 && (_root["playerKrin" + (5 - gMtYuIo)].SimulationDPS >= _root["playerKrin" + weakestEnemyNow].SimulationDPS || (_root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD - _root["playerKrin" + (5 - gMtYuIo)].LIFEN + _root["playerKrin" + (5 - gMtYuIo)].SHIELD) / _root["playerKrin" + (5 - gMtYuIo)].LIFEN + _root["playerKrin" + (5 - gMtYuIo)].SHIELD > 0.2) || weakestEnemyNow == 0)
                {
                   weakestEnemyNow = 5 - gMtYuIo;
                }
             }
             else if(_root["playerKrin" + (5 - gMtYuIo)].LIFEN + _root["playerKrin" + (5 - gMtYuIo)].SHIELD >= _root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD)
             {
-               if(_root["playerKrin" + (5 - gMtYuIo)].SimulationDPS / 2 > _root["playerKrin" + weakestEnemyNow].SimulationDPS || _root["playerKrin" + (5 - gMtYuIo)].SimulationDPS > _root["playerKrin" + weakestEnemyNow].SimulationDPS && (_root["playerKrin" + (5 - gMtYuIo)].LIFEN + _root["playerKrin" + (5 - gMtYuIo)].SHIELD - _root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD) / _root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD <= 0.2)
+               if(_root["playerKrin" + (5 - gMtYuIo)].SimulationDPS / 2 >= _root["playerKrin" + weakestEnemyNow].SimulationDPS || _root["playerKrin" + (5 - gMtYuIo)].SimulationDPS > _root["playerKrin" + weakestEnemyNow].SimulationDPS && (_root["playerKrin" + (5 - gMtYuIo)].LIFEN + _root["playerKrin" + (5 - gMtYuIo)].SHIELD - _root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD) / _root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD <= 0.2)
                {
                   weakestEnemyNow = 5 - gMtYuIo;
                }
@@ -3384,14 +3385,14 @@ function AImoveAdder(p)
             aliveEnemies.push(3 - gMtYuIo);
             if(_root["playerKrin" + (3 - gMtYuIo)].LIFEN + _root["playerKrin" + (3 - gMtYuIo)].SHIELD < _root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD || weakestEnemyNow == 0)
             {
-               if(_root["playerKrin" + (3 - gMtYuIo)].SimulationDPS >= _root["playerKrin" + weakestEnemyNow].SimulationDPS || (_root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD - _root["playerKrin" + (3 - gMtYuIo)].LIFEN + _root["playerKrin" + (3 - gMtYuIo)].SHIELD) / _root["playerKrin" + (3 - gMtYuIo)].LIFEN + _root["playerKrin" + (3 - gMtYuIo)].SHIELD > 0.2 || weakestEnemyNow == 0)
+               if(_root["playerKrin" + (3 - gMtYuIo)].SimulationDPS > _root["playerKrin" + weakestEnemyNow].SimulationDPS / 2 && (_root["playerKrin" + (3 - gMtYuIo)].SimulationDPS >= _root["playerKrin" + weakestEnemyNow].SimulationDPS || (_root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD - _root["playerKrin" + (3 - gMtYuIo)].LIFEN + _root["playerKrin" + (3 - gMtYuIo)].SHIELD) / _root["playerKrin" + (3 - gMtYuIo)].LIFEN + _root["playerKrin" + (3 - gMtYuIo)].SHIELD > 0.2) || weakestEnemyNow == 0)
                {
                   weakestEnemyNow = 3 - gMtYuIo;
                }
             }
             else if(_root["playerKrin" + (3 - gMtYuIo)].LIFEN + _root["playerKrin" + (3 - gMtYuIo)].SHIELD >= _root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD)
             {
-               if(_root["playerKrin" + (3 - gMtYuIo)].SimulationDPS / 2 > _root["playerKrin" + weakestEnemyNow].SimulationDPS || _root["playerKrin" + (3 - gMtYuIo)].SimulationDPS > _root["playerKrin" + weakestEnemyNow].SimulationDPS && (_root["playerKrin" + (3 - gMtYuIo)].LIFEN + _root["playerKrin" + (3 - gMtYuIo)].SHIELD - _root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD) / _root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD <= 0.2)
+               if(_root["playerKrin" + (3 - gMtYuIo)].SimulationDPS / 2 >= _root["playerKrin" + weakestEnemyNow].SimulationDPS || _root["playerKrin" + (3 - gMtYuIo)].SimulationDPS > _root["playerKrin" + weakestEnemyNow].SimulationDPS && (_root["playerKrin" + (3 - gMtYuIo)].LIFEN + _root["playerKrin" + (3 - gMtYuIo)].SHIELD - _root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD) / _root["playerKrin" + weakestEnemyNow].LIFEN + _root["playerKrin" + weakestEnemyNow].SHIELD <= 0.2)
                {
                   weakestEnemyNow = 3 - gMtYuIo;
                }
@@ -3524,7 +3525,7 @@ function addNewBuffKrin(a, b, c)
    _root["KRINBUFF" + a][0] = b;
    _root["KRINBUFF" + a][1] = c;
    i = 2;
-   while(i < 206)
+   while(i < 207)
    {
       _root["KRINBUFF" + a][i] = 0;
       i++;
@@ -3533,6 +3534,8 @@ function addNewBuffKrin(a, b, c)
    _root["KRINBUFF" + a][189] = [0];
    _root["KRINBUFF" + a][203] = new Array();
    _root["KRINBUFF" + a][203] = [0];
+   _root["KRINBUFF" + a][206] = new Array();
+   _root["KRINBUFF" + a][206] = [0];
    _root.hackMove2 = _root["KRINBUFF" + a];
 }
 function checkDispellAoe(mCaster, mTarget, mAry1, mAry2)
@@ -4824,25 +4827,25 @@ function precheckBuff(mCaster, mTarget, mAry2, mAry1)
       {
          if(NUMBEROFBUFFS != 4 && mTarget.BUFFARRAYK[eged].CD > 0 && mAry2[161][neinh] == _root["KRINBUFF" + mTarget.BUFFARRAYK[eged].buffId][1])
          {
-            mAry2[2] *= mAry2[162];
+            mAry2[2] *= mAry2[162][0];
             NUMBEROFBUFFS++;
          }
       }
       eged++;
    }
-   if(mAry2[163] != 0)
+   if(mAry2[162][1] != 0)
    {
       if(NUMBEROFBUFFS >= 1)
       {
-         mAry2[13] = mAry2[163];
+         mAry2[13] = mAry2[162][1];
       }
       if(NUMBEROFBUFFS >= 2)
       {
-         mAry2[29] = mAry2[164];
+         mAry2[29] = mAry2[162][2];
       }
       if(NUMBEROFBUFFS >= 3)
       {
-         mAry2[40] = mAry2[165];
+         mAry2[40] = mAry2[162][3];
       }
    }
    if(mCaster.LIFEN / mCaster.LIFEU < mAry2[68][0])
@@ -4896,6 +4899,11 @@ function precheckBuff(mCaster, mTarget, mAry2, mAry1)
       if(_root["KRINBUFF" + mTarget.BUFFARRAYK[f].buffId][200] == 1 && mTarget.BUFFARRAYK[f].CD != 0)
       {
          MAGICBUFFS++;
+      }
+      if(_root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][206][0] != 0 && _root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][206][0] == mAry2[0] && mCaster.BUFFARRAYK[f].CD != 0)
+      {
+         mAry2[2] *= _root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][206][1];
+         mAry2[4] *= _root["KRINBUFF" + mCaster.BUFFARRAYK[f].buffId][206][1];
       }
       if(MAGICBUFFS == mAry2[166][0] && mAry2[166][0] != 0)
       {
@@ -6946,7 +6954,7 @@ expWorkOut = function(enemyXP, yourXP)
    {
       Krin.totalXP = 0;
    }
-   if(_root.Krin.BattlePick >= 95999)
+   if(_root.Krin.BattlePick >= 95999 && _root.Krin.BattlePick < 100000)
    {
       Krin.totalXP = 0;
    }
@@ -16952,7 +16960,7 @@ _root.hackMove2[20] = 1;
 _root.hackMove2[32] = 1;
 _root.hackMove2[25] = BUFF_DESC1[115];
 addNewBuffKrin("KNIFEFACE",BUFF_NAME[114],"Physical");
-_root.hackMove2[7] = 0.5;
+_root.hackMove2[7] = -0.25;
 _root.hackMove2[15] = 10;
 _root.hackMove2[16] = 3;
 _root.hackMove2[20] = -1;
@@ -18137,7 +18145,7 @@ _root.hackMove2[13] = 0.2;
 _root.hackMove2[16] = 5;
 _root.hackMove2[20] = -1;
 _root.hackMove2[32] = 0.09;
-_root.hackMove2[23] = -0.3;
+_root.hackMove2[24] = -0.3;
 _root.hackMove2[27] = 1;
 _root.hackMove2[25] = BUFF_DESC1[12] + _root.hackMove2[13] * 100 + BUFF_DESC2[12] + _root.hackMove2[23] * -100 + BUFF_DESC3[12];
 addNewBuffKrin("CAUTERIZE2",BUFF_NAME[12],"Poison");
@@ -18145,7 +18153,7 @@ _root.hackMove2[13] = 0.25;
 _root.hackMove2[16] = 8;
 _root.hackMove2[20] = -1;
 _root.hackMove2[32] = 0.16;
-_root.hackMove2[23] = -0.3;
+_root.hackMove2[24] = -0.3;
 _root.hackMove2[27] = 1;
 _root.hackMove2[25] = BUFF_DESC1[12] + _root.hackMove2[13] * 100 + BUFF_DESC2[12] + _root.hackMove2[23] * -100 + BUFF_DESC3[12];
 addNewBuffKrin("CAUTERIZE3",BUFF_NAME[12],"Poison");
@@ -18153,7 +18161,7 @@ _root.hackMove2[13] = 0.3;
 _root.hackMove2[16] = 8;
 _root.hackMove2[20] = -1;
 _root.hackMove2[32] = 0.23;
-_root.hackMove2[23] = -0.3;
+_root.hackMove2[24] = -0.3;
 _root.hackMove2[27] = 1;
 _root.hackMove2[25] = BUFF_DESC1[12] + _root.hackMove2[13] * 100 + BUFF_DESC2[12] + _root.hackMove2[23] * -100 + BUFF_DESC3[12];
 addNewBuffKrin("CAUTERIZE4",BUFF_NAME[12],"Poison");
@@ -18161,7 +18169,7 @@ _root.hackMove2[13] = 0.35000000000000003;
 _root.hackMove2[16] = 8;
 _root.hackMove2[20] = -1;
 _root.hackMove2[32] = 0.3;
-_root.hackMove2[23] = -0.3;
+_root.hackMove2[24] = -0.3;
 _root.hackMove2[27] = 1;
 _root.hackMove2[25] = BUFF_DESC1[12] + _root.hackMove2[13] * 100 + BUFF_DESC2[12] + _root.hackMove2[23] * -100 + BUFF_DESC3[12];
 addNewBuffKrin("POISON1",BUFF_NAME[13],"Poison");
@@ -18260,19 +18268,19 @@ _root.hackMove2[25] = BUFF_DESC1[16] + _root.hackMove2[11] * -100 + BUFF_DESC2[1
 addNewBuffKrin("ACIDIC1"," This character is aware of the chinks in the enemy’s armour.","Poison");
 _root.hackMove2[16] = -1;
 _root.hackMove2[20] = 1;
-_root.hackMove2[23] = 5.200000000000002;
+_root.hackMove2[206] = ["Poison",10];
 addNewBuffKrin("ACIDIC2"," This character is aware of the chinks in the enemy’s armour.","Poison");
 _root.hackMove2[16] = -1;
 _root.hackMove2[20] = 1;
-_root.hackMove2[23] = 5.700000000000002;
+_root.hackMove2[206] = ["Poison",20];
 addNewBuffKrin("ACIDIC3"," This character is aware of the chinks in the enemy’s armour.","Poison");
 _root.hackMove2[16] = -1;
 _root.hackMove2[20] = 1;
-_root.hackMove2[23] = 6.200000000000002;
+_root.hackMove2[206] = ["Poison",25];
 addNewBuffKrin("ACIDIC4"," This character is aware of the chinks in the enemy’s armour.","Poison");
 _root.hackMove2[16] = -1;
 _root.hackMove2[20] = 1;
-_root.hackMove2[23] = 6.700000000000002;
+_root.hackMove2[206] = ["Poison",25];
 addNewBuffKrin("AWARENESS1",BUFF_NAME[17],"Physical");
 _root.hackMove2[16] = 3;
 _root.hackMove2[20] = 1;
