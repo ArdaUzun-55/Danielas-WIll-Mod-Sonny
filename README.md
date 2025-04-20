@@ -43,9 +43,13 @@ Specifically under the branch main
 Dont copy the code! You can ask questions if you like about the functions I can help you implementing stuff. 
 ## Updates History & Bugs & Planned Changes 
 Update History:
-
+14.04.2025 = Fixed a bug wherein the A.I. may target the wrong target for example during the first heroic exclusive fight. 
+17.04.2025 = Changed Acidic Blood. Fixed a bug wherein the player does not get xp in certain fights.
+Changed Knifed buff effect. Now decreases speed by 25%.
+18.04.2025 = Fixed a bug wherein the player loses against Ceyda The Human Spider even though the player wins.
+21.04.2025 = Fixed an issue wherein Acidic Blood does not increase the damage of Poison abilities whose scaling is Speed.
 Planned Changes:
-- [ ] A.I changes
+- [x] A.I changes
 
 Regarding Bugs:
 Please report any unusual behavior from the A.I. and report any bugs be it major or minor. (Open an issue on github if you want)
